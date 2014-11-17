@@ -16,8 +16,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F8AA3B691A19C50900C934E0"
                BuildableName = "Prod.app"
-               BlueprintName = "Prod"
-               ReferencedContainer = "container:Prod.xcodeproj">
+               BlueprintName = "fuck"
+               ReferencedContainer = "container:fuck.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -30,8 +30,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F8AA3B851A19C50B00C934E0"
                BuildableName = "ProdTests.xctest"
-               BlueprintName = "ProdTests"
-               ReferencedContainer = "container:Prod.xcodeproj">
+               BlueprintName = "fuckTests"
+               ReferencedContainer = "container:fuck.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -48,8 +48,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F8AA3B851A19C50B00C934E0"
                BuildableName = "ProdTests.xctest"
-               BlueprintName = "ProdTests"
-               ReferencedContainer = "container:Prod.xcodeproj">
+               BlueprintName = "fuckTests"
+               ReferencedContainer = "container:fuck.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -58,8 +58,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F8AA3B691A19C50900C934E0"
             BuildableName = "Prod.app"
-            BlueprintName = "Prod"
-            ReferencedContainer = "container:Prod.xcodeproj">
+            BlueprintName = "fuck"
+            ReferencedContainer = "container:fuck.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -77,8 +77,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F8AA3B691A19C50900C934E0"
             BuildableName = "Prod.app"
-            BlueprintName = "Prod"
-            ReferencedContainer = "container:Prod.xcodeproj">
+            BlueprintName = "fuck"
+            ReferencedContainer = "container:fuck.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -95,8 +95,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F8AA3B691A19C50900C934E0"
             BuildableName = "Prod.app"
-            BlueprintName = "Prod"
-            ReferencedContainer = "container:Prod.xcodeproj">
+            BlueprintName = "fuck"
+            ReferencedContainer = "container:fuck.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

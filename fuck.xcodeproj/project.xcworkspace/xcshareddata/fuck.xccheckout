@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>D3AF3FDA-E876-469E-9234-7A6B1C9681E7</string>
+	<key>IDESourceControlProjectName</key>
+	<string>fuck</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>8BF24EDA35A3D5705CEDF5978346658A74E44080</key>
+		<string>https://github.com/kittburglar/ProdList.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>fuck.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>8BF24EDA35A3D5705CEDF5978346658A74E44080</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/kittburglar/ProdList.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>8BF24EDA35A3D5705CEDF5978346658A74E44080</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>8BF24EDA35A3D5705CEDF5978346658A74E44080</string>
+			<key>IDESourceControlWCCName</key>
+			<string>fuck</string>
+		</dict>
+	</array>
+</dict>
+</plist>

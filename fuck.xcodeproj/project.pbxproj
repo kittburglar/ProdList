@@ -28,7 +28,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		F8AA3B6A1A19C50900C934E0 /* Prod.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Prod.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8AA3B6A1A19C50900C934E0 /* fuck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fuck.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8AA3B6E1A19C50A00C934E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F8AA3B6F1A19C50A00C934E0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F8AA3B711A19C50A00C934E0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -39,7 +39,7 @@
 		F8AA3B7B1A19C50A00C934E0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F8AA3B7D1A19C50A00C934E0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F8AA3B801A19C50A00C934E0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		F8AA3B861A19C50B00C934E0 /* ProdTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProdTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8AA3B861A19C50B00C934E0 /* fuckTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = fuckTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8AA3B8B1A19C50B00C934E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F8AA3B8C1A19C50B00C934E0 /* fuckTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = fuckTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -74,8 +74,8 @@
 		F8AA3B6B1A19C50900C934E0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F8AA3B6A1A19C50900C934E0 /* Prod.app */,
-				F8AA3B861A19C50B00C934E0 /* ProdTests.xctest */,
+				F8AA3B6A1A19C50900C934E0 /* fuck.app */,
+				F8AA3B861A19C50B00C934E0 /* fuckTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -125,9 +125,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		F8AA3B691A19C50900C934E0 /* Prod */ = {
+		F8AA3B691A19C50900C934E0 /* fuck */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F8AA3B901A19C50B00C934E0 /* Build configuration list for PBXNativeTarget "Prod" */;
+			buildConfigurationList = F8AA3B901A19C50B00C934E0 /* Build configuration list for PBXNativeTarget "fuck" */;
 			buildPhases = (
 				F8AA3B661A19C50900C934E0 /* Sources */,
 				F8AA3B671A19C50900C934E0 /* Frameworks */,
@@ -137,14 +137,14 @@
 			);
 			dependencies = (
 			);
-			name = Prod;
+			name = fuck;
 			productName = fuck;
-			productReference = F8AA3B6A1A19C50900C934E0 /* Prod.app */;
+			productReference = F8AA3B6A1A19C50900C934E0 /* fuck.app */;
 			productType = "com.apple.product-type.application";
 		};
-		F8AA3B851A19C50B00C934E0 /* ProdTests */ = {
+		F8AA3B851A19C50B00C934E0 /* fuckTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F8AA3B931A19C50B00C934E0 /* Build configuration list for PBXNativeTarget "ProdTests" */;
+			buildConfigurationList = F8AA3B931A19C50B00C934E0 /* Build configuration list for PBXNativeTarget "fuckTests" */;
 			buildPhases = (
 				F8AA3B821A19C50B00C934E0 /* Sources */,
 				F8AA3B831A19C50B00C934E0 /* Frameworks */,
@@ -155,9 +155,9 @@
 			dependencies = (
 				F8AA3B881A19C50B00C934E0 /* PBXTargetDependency */,
 			);
-			name = ProdTests;
+			name = fuckTests;
 			productName = fuckTests;
-			productReference = F8AA3B861A19C50B00C934E0 /* ProdTests.xctest */;
+			productReference = F8AA3B861A19C50B00C934E0 /* fuckTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -178,7 +178,7 @@
 					};
 				};
 			};
-			buildConfigurationList = F8AA3B651A19C50900C934E0 /* Build configuration list for PBXProject "Prod" */;
+			buildConfigurationList = F8AA3B651A19C50900C934E0 /* Build configuration list for PBXProject "fuck" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -191,8 +191,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				F8AA3B691A19C50900C934E0 /* Prod */,
-				F8AA3B851A19C50B00C934E0 /* ProdTests */,
+				F8AA3B691A19C50900C934E0 /* fuck */,
+				F8AA3B851A19C50B00C934E0 /* fuckTests */,
 			);
 		};
 /* End PBXProject section */
@@ -242,7 +242,7 @@
 /* Begin PBXTargetDependency section */
 		F8AA3B881A19C50B00C934E0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = F8AA3B691A19C50900C934E0 /* Prod */;
+			target = F8AA3B691A19C50900C934E0 /* fuck */;
 			targetProxy = F8AA3B871A19C50B00C934E0 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -349,7 +349,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = fuck/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = Prod;
+				PRODUCT_NAME = fuck;
 			};
 			name = Debug;
 		};
@@ -359,7 +359,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = fuck/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = Prod;
+				PRODUCT_NAME = fuck;
 			};
 			name = Release;
 		};
@@ -377,7 +377,7 @@
 				);
 				INFOPLIST_FILE = fuckTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = ProdTests;
+				PRODUCT_NAME = fuckTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/fuck.app/fuck";
 			};
 			name = Debug;
@@ -392,7 +392,7 @@
 				);
 				INFOPLIST_FILE = fuckTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = ProdTests;
+				PRODUCT_NAME = fuckTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/fuck.app/fuck";
 			};
 			name = Release;
@@ -400,7 +400,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		F8AA3B651A19C50900C934E0 /* Build configuration list for PBXProject "Prod" */ = {
+		F8AA3B651A19C50900C934E0 /* Build configuration list for PBXProject "fuck" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F8AA3B8E1A19C50B00C934E0 /* Debug */,
@@ -409,7 +409,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F8AA3B901A19C50B00C934E0 /* Build configuration list for PBXNativeTarget "Prod" */ = {
+		F8AA3B901A19C50B00C934E0 /* Build configuration list for PBXNativeTarget "fuck" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F8AA3B911A19C50B00C934E0 /* Debug */,
@@ -417,7 +417,7 @@
 			);
 			defaultConfigurationIsVisible = 0;
 		};
-		F8AA3B931A19C50B00C934E0 /* Build configuration list for PBXNativeTarget "ProdTests" */ = {
+		F8AA3B931A19C50B00C934E0 /* Build configuration list for PBXNativeTarget "fuckTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F8AA3B941A19C50B00C934E0 /* Debug */,
