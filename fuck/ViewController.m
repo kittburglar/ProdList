@@ -84,6 +84,7 @@
     [self.tableView insertRowsAtIndexPaths:@[indexPath]withRowAnimation:UITableViewRowAnimationBottom];
     [self.tableView endUpdates];
     
+    self.textField.text = nil;
     //Get rid of keyboard
     [sender resignFirstResponder];
 }
