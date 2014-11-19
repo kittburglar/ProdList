@@ -69,6 +69,54 @@
     
 }
 
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    return YES;
+    
+}
+
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
+    
+    NSString *stringToMove = [anArray objectAtIndex:sourceIndexPath.row];
+    
+    [anArray removeObjectAtIndex:sourceIndexPath.row];
+    
+    [anArray insertObject:stringToMove atIndex:destinationIndexPath.row];
+    
+}
+
+- (NSIndexPath *)tableView:(UITableView *)tableView
+
+targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath
+
+       toProposedIndexPath:(NSIndexPath *)proposedDestinationIndexPath {
+    
+    NSDictionary *section = [anArray objectAtIndex:sourceIndexPath.section];
+    
+    NSUInteger sectionCount = [[section valueForKey:@"content"] count];
+    
+    if (sourceIndexPath.section != proposedDestinationIndexPath.section) {
+        
+        NSUInteger rowInSourceSection =
+        
+        (sourceIndexPath.section > proposedDestinationIndexPath.section) ?
+        
+        0 : sectionCount - 1;
+        
+        return [NSIndexPath indexPathForRow:rowInSourceSection inSection:sourceIndexPath.section];
+        
+    } else if (proposedDestinationIndexPath.row >= sectionCount) {
+        
+        return [NSIndexPath indexPathForRow:sectionCount - 1 inSection:sourceIndexPath.section];
+        
+    }
+    
+    // Allow the proposed destination.
+    
+    return proposedDestinationIndexPath;
+    
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
