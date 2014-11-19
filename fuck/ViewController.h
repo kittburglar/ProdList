@@ -15,5 +15,6 @@
 @property (strong, nonatomic) IBOutlet UITextField *textField;
 @property (strong, nonatomic) IBOutlet UILabel *dateLabel;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
+- (IBAction)editButton:(UIButton *)sender;
 - (IBAction)textReturn:(id)sender;
 @end

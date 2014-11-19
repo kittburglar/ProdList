@@ -30,7 +30,6 @@
 }
 
 
-
 #pragma mark - UITableView Datasource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -61,6 +60,14 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSLog(@"delete pressed!");
+    [anArray removeObjectAtIndex:indexPath.row];
+    
+    [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    
+}
 
 
 - (void)didReceiveMemoryWarning {
@@ -81,7 +88,7 @@
     
     //UITableView *tv = (UITableView *)self.tableView;
     [self.tableView beginUpdates];
-    [self.tableView insertRowsAtIndexPaths:@[indexPath]withRowAnimation:UITableViewRowAnimationBottom];
+    [self.tableView insertRowsAtIndexPaths:@[indexPath]withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.tableView endUpdates];
     
     self.textField.text = nil;
@@ -99,4 +106,7 @@
     [super touchesBegan:touches withEvent:event];
 }
 
+- (IBAction)editButton:(UIButton *)sender {
+    [self.tableView setEditing:!self.tableView.editing animated:true];
+}
 @end
