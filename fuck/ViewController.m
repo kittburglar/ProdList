@@ -138,7 +138,13 @@ targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath
         // ...
         //NSString *text = [[swipedCell textLabel] text];
         if (anArray.count != 0) {
-            NSLog(anArray[swipedIndexPath.row]);
+            NSDictionary* attributes = @{
+                                         NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle]
+                                         };
+            
+            NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:anArray[swipedIndexPath.row] attributes:attributes];
+
+            swipedCell.textLabel.attributedText = attrText;
         }
     }
     
