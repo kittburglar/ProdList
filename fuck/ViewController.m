@@ -27,6 +27,10 @@
     self.dateLabel.text = todayString;
     
     anArray = [[NSMutableArray alloc] init];
+    
+    UISwipeGestureRecognizer *gesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipe:)];
+    gesture.direction = UISwipeGestureRecognizerDirectionRight;
+    [self.tableView addGestureRecognizer:gesture];
 }
 
 
@@ -75,6 +79,7 @@
     
 }
 
+
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
     
     NSString *stringToMove = [anArray objectAtIndex:sourceIndexPath.row];
@@ -121,6 +126,22 @@ targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)didSwipe:(UIGestureRecognizer *)gestureRecognizer {
+    NSLog(@"Swiped!");
+    
+    if ((gestureRecognizer.state == UIGestureRecognizerStateEnded) && !self.tableView.editing) {
+        CGPoint swipeLocation = [gestureRecognizer locationInView:self.tableView];
+        NSIndexPath *swipedIndexPath = [self.tableView indexPathForRowAtPoint:swipeLocation];
+        UITableViewCell* swipedCell = [self.tableView cellForRowAtIndexPath:swipedIndexPath];
+        // ...
+        //NSString *text = [[swipedCell textLabel] text];
+        if (anArray.count != 0) {
+            NSLog(anArray[swipedIndexPath.row]);
+        }
+    }
+    
 }
 
 
