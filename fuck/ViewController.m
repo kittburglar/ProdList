@@ -73,6 +73,8 @@
     
 }
 
+
+
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
 
     return YES;
@@ -143,8 +145,15 @@ targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath
                                          };
             
             NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:anArray[swipedIndexPath.row] attributes:attributes];
-
-            swipedCell.textLabel.attributedText = attrText;
+            NSAttributedString* attrText2 = [[NSAttributedString alloc] initWithString:anArray[swipedIndexPath.row] attributes:nil];
+            if ([swipedCell.textLabel.attributedText isEqualToAttributedString:(attrText)]) {
+                NSLog(@"Swiped crossed out word");
+                swipedCell.textLabel.attributedText = attrText2;
+            }
+            else{
+                NSLog(@"Siped regular word");
+                swipedCell.textLabel.attributedText = attrText;
+            }
         }
     }
     
