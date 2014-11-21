@@ -26,11 +26,14 @@
     NSLog(@"todayString: %@", todayString);
     self.dateLabel.text = todayString;
     
+    //Init array of items
     anArray = [[NSMutableArray alloc] init];
     
+    //add swipe detection to tableview
     UISwipeGestureRecognizer *gesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipe:)];
     gesture.direction = UISwipeGestureRecognizerDirectionRight;
     [self.tableView addGestureRecognizer:gesture];
+    
 }
 
 
@@ -61,7 +64,51 @@
     
     cell.textLabel.text = [anArray objectAtIndex:indexPath.row];
     cell.backgroundColor = [UIColor clearColor];
+    
+    UIButton *editButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    editButton.frame = CGRectMake(CGRectGetWidth(cell.bounds) - 70, 0,
+                                  40,
+                                  CGRectGetHeight(cell.bounds));
+    editButton.backgroundColor = [UIColor redColor];
+    [editButton setTitle:@"Hello" forState:UIControlStateNormal];
+    
+    //editButton.tag = indexPath.row;
+    [cell addSubview:editButton];
+    [editButton addTarget:self action:@selector(yourButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
     return cell;
+}
+
+//find parent cell
+-(UITableViewCell *)parentCellForView:(id)theView
+{
+    id viewSuperView = [theView superview];
+    while (viewSuperView != nil) {
+        if ([viewSuperView isKindOfClass:[UITableViewCell class]]) {
+            return (UITableViewCell *)viewSuperView;
+        }
+        else {
+            viewSuperView = [viewSuperView superview];
+        }
+    }
+    return nil;
+}
+
+-(void)yourButtonClicked:(UIButton*)sender
+{
+    UIButton *butn = (UIButton *)sender;
+    UITableViewCell *cell = [self parentCellForView:butn];
+    if (cell != nil) {
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+        NSLog(@"show detail for item at row %ld", (long)indexPath.row);
+    }
+    /*
+    if (sender.tag == 0)
+    {
+        //Here your coding.
+        
+    }
+    */
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -89,6 +136,8 @@
     [anArray removeObjectAtIndex:sourceIndexPath.row];
     
     [anArray insertObject:stringToMove atIndex:destinationIndexPath.row];
+    
+    
     
 }
 
@@ -192,5 +241,7 @@ targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath
 
 - (IBAction)editButton:(UIButton *)sender {
     [self.tableView setEditing:!self.tableView.editing animated:true];
+}
+- (IBAction)testButtonPressed:(UIButton *)sender {
 }
 @end
