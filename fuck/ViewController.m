@@ -33,6 +33,7 @@
     UISwipeGestureRecognizer *gesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipe:)];
     gesture.direction = UISwipeGestureRecognizerDirectionRight;
     [self.tableView addGestureRecognizer:gesture];
+    self.tableView.delegate = self;
     
 }
 
@@ -53,6 +54,7 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath  *)indexPath
 {
+    NSLog(@"cellForRowAtIndexPath");
     static NSString *cellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -64,17 +66,6 @@
     
     cell.textLabel.text = [anArray objectAtIndex:indexPath.row];
     cell.backgroundColor = [UIColor clearColor];
-    
-    UIButton *editButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    editButton.frame = CGRectMake(CGRectGetWidth(cell.bounds) - 70, 0,
-                                  40,
-                                  CGRectGetHeight(cell.bounds));
-    editButton.backgroundColor = [UIColor redColor];
-    [editButton setTitle:@"Hello" forState:UIControlStateNormal];
-    
-    //editButton.tag = indexPath.row;
-    [cell addSubview:editButton];
-    [editButton addTarget:self action:@selector(yourButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
 }
@@ -100,8 +91,12 @@
     UITableViewCell *cell = [self parentCellForView:butn];
     if (cell != nil) {
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+        butn.tag = indexPath.row;
         NSLog(@"show detail for item at row %ld", (long)indexPath.row);
+        NSLog(@"button tag is: %lu", butn.tag);
     }
+    
+    
     /*
     if (sender.tag == 0)
     {
@@ -111,19 +106,42 @@
     */
 }
 
+- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewRowAction *moreAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"More" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
+        // maybe show an action sheet with more options
+        NSLog(@"More pressed");
+        [self.tableView setEditing:NO];
+    }];
+    moreAction.backgroundColor = [UIColor lightGrayColor];
+       UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Delete" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
+        [anArray removeObjectAtIndex:indexPath.row];
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }];
+    return @[deleteAction, moreAction];
+}
+
+
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    NSLog(@"delete pressed!");
-    [anArray removeObjectAtIndex:indexPath.row];
-    
-    [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [anArray removeObjectAtIndex:indexPath.row];
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+    }
+}
+
+-(void)tableView:(UITableView *)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"Editing ended for row %lu", indexPath.row);
 }
 
 
 
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-
+    NSLog(@"canMoveRowAtIndexPath at row: %lu", indexPath.row + 1);
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath :indexPath];
+    UIButton *btn = (UIButton *)[cell viewWithTag:indexPath.row + 1];
+    btn.hidden = NO;
     return YES;
     
 }
@@ -239,8 +257,11 @@ targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath
     [super touchesBegan:touches withEvent:event];
 }
 
+
+    
 - (IBAction)editButton:(UIButton *)sender {
     [self.tableView setEditing:!self.tableView.editing animated:true];
+    
 }
 - (IBAction)testButtonPressed:(UIButton *)sender {
 }
