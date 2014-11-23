@@ -15,6 +15,8 @@
 @property (strong, nonatomic) IBOutlet UITextField *textField;
 @property (strong, nonatomic) IBOutlet UILabel *dateLabel;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic, assign) BOOL modifying;
+@property (nonatomic, assign) NSInteger lastModified;
 - (IBAction)editButton:(UIButton *)sender;
 - (IBAction)textReturn:(id)sender;
 @end

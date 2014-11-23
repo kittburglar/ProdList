@@ -107,9 +107,12 @@
 }
 
 - (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewRowAction *moreAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"More" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
+    UITableViewRowAction *moreAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"Modify" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
         // maybe show an action sheet with more options
-        NSLog(@"More pressed");
+        NSLog(@"Modify pressed");
+        [self setModifying:YES];
+        [self setLastModified:indexPath.row];
+        [self.textField becomeFirstResponder];
         [self.tableView setEditing:NO];
     }];
     moreAction.backgroundColor = [UIColor lightGrayColor];
@@ -138,10 +141,7 @@
 
 
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"canMoveRowAtIndexPath at row: %lu", indexPath.row + 1);
-    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath :indexPath];
-    UIButton *btn = (UIButton *)[cell viewWithTag:indexPath.row + 1];
-    btn.hidden = NO;
+    
     return YES;
     
 }
@@ -149,6 +149,7 @@
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
     
+    NSLog(@"moveRowAtIndexPath called");
     NSString *stringToMove = [anArray objectAtIndex:sourceIndexPath.row];
     
     [anArray removeObjectAtIndex:sourceIndexPath.row];
@@ -159,37 +160,7 @@
     
 }
 
-- (NSIndexPath *)tableView:(UITableView *)tableView
 
-targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath
-
-       toProposedIndexPath:(NSIndexPath *)proposedDestinationIndexPath {
-    
-    NSDictionary *section = [anArray objectAtIndex:sourceIndexPath.section];
-    
-    NSUInteger sectionCount = [[section valueForKey:@"content"] count];
-    
-    if (sourceIndexPath.section != proposedDestinationIndexPath.section) {
-        
-        NSUInteger rowInSourceSection =
-        
-        (sourceIndexPath.section > proposedDestinationIndexPath.section) ?
-        
-        0 : sectionCount - 1;
-        
-        return [NSIndexPath indexPathForRow:rowInSourceSection inSection:sourceIndexPath.section];
-        
-    } else if (proposedDestinationIndexPath.row >= sectionCount) {
-        
-        return [NSIndexPath indexPathForRow:sectionCount - 1 inSection:sourceIndexPath.section];
-        
-    }
-    
-    // Allow the proposed destination.
-    
-    return proposedDestinationIndexPath;
-    
-}
 
 
 - (void)didReceiveMemoryWarning {
@@ -231,20 +202,30 @@ targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath
     
     NSLog(@"textReturn!");
     //Add add to core data and list
+    if ([self modifying]) {
+        NSLog(@"textReturn while modifying!");
+        [anArray removeObjectAtIndex:[self lastModified]];
+        [anArray insertObject:self.textField.text atIndex:[self lastModified]];
+        [self.tableView reloadData];
+        [self setModifying:NO];
+        self.textField.text = nil;
+        [sender resignFirstResponder];
+    }
+    else{
     
-    //NSString *item = self.textField.text;
-    [anArray addObject: self.textField.text];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:([anArray count] - 1) inSection:0];
-    //NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        [anArray addObject: self.textField.text];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:([anArray count] - 1) inSection:0];
+        //NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     
-    //UITableView *tv = (UITableView *)self.tableView;
-    [self.tableView beginUpdates];
-    [self.tableView insertRowsAtIndexPaths:@[indexPath]withRowAnimation:UITableViewRowAnimationAutomatic];
-    [self.tableView endUpdates];
+        //UITableView *tv = (UITableView *)self.tableView;
+        [self.tableView beginUpdates];
+        [self.tableView insertRowsAtIndexPaths:@[indexPath]withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.tableView endUpdates];
     
-    self.textField.text = nil;
-    //Get rid of keyboard
-    [sender resignFirstResponder];
+        self.textField.text = nil;
+        //Get rid of keyboard
+        [sender resignFirstResponder];
+    }
 }
 
 //If user touches anywhere else then close keyboard
