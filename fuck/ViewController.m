@@ -204,15 +204,21 @@
 - (IBAction)textReturn:(id)sender {
     
     NSLog(@"textReturn!");
+    //check for whitespace entry or empty textfield
+    NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+    NSString *trimmed = [self.textField.text stringByTrimmingCharactersInSet:whitespace];
+    
+    if ([trimmed length] == 0) {
+        //Do nothing
+    }
     //Add add to core data and list
-    if ([self modifying]) {
+    else if ([self modifying]) {
         NSLog(@"textReturn while modifying!");
         [anArray removeObjectAtIndex:[self lastModified]];
         [anArray insertObject:self.textField.text atIndex:[self lastModified]];
+        
         [self.tableView reloadData];
         [self setModifying:NO];
-        self.textField.text = nil;
-        [sender resignFirstResponder];
     }
     else{
     
@@ -224,11 +230,9 @@
         [self.tableView beginUpdates];
         [self.tableView insertRowsAtIndexPaths:@[indexPath]withRowAnimation:UITableViewRowAnimationAutomatic];
         [self.tableView endUpdates];
-    
-        self.textField.text = nil;
-        //Get rid of keyboard
-        [sender resignFirstResponder];
     }
+    self.textField.text = nil;
+    [sender resignFirstResponder];
 }
 
 //If user touches anywhere else then close keyboard
