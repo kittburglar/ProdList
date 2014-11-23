@@ -108,10 +108,13 @@
 
 - (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewRowAction *moreAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"Modify" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
+        
         // maybe show an action sheet with more options
         NSLog(@"Modify pressed");
         [self setModifying:YES];
         [self setLastModified:indexPath.row];
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        self.textField.text = cell.textLabel.text;
         [self.textField becomeFirstResponder];
         [self.tableView setEditing:NO];
     }];
