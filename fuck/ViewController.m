@@ -114,6 +114,7 @@
         [self setModifying:YES];
         [self setLastModified:indexPath.row];
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        cell.textLabel.textColor = [UIColor redColor];
         self.textField.text = cell.textLabel.text;
         [self.textField becomeFirstResponder];
         [self.tableView setEditing:NO];
@@ -204,6 +205,7 @@
 - (IBAction)textReturn:(id)sender {
     
     NSLog(@"textReturn!");
+    
     //check for whitespace entry or empty textfield
     NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
     NSString *trimmed = [self.textField.text stringByTrimmingCharactersInSet:whitespace];
@@ -214,9 +216,11 @@
     //Add add to core data and list
     else if ([self modifying]) {
         NSLog(@"textReturn while modifying!");
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self lastModified] inSection:0];
+        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+        cell.textLabel.textColor = [UIColor blackColor];
         [anArray removeObjectAtIndex:[self lastModified]];
         [anArray insertObject:self.textField.text atIndex:[self lastModified]];
-        
         [self.tableView reloadData];
         [self setModifying:NO];
     }
