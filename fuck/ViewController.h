@@ -17,6 +17,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, assign) BOOL modifying;
 @property (nonatomic, assign) NSInteger lastModified;
+@property (nonatomic, strong) IBOutlet UIView *accessoryView;
 - (IBAction)editButton:(UIButton *)sender;
 - (IBAction)textReturn:(id)sender;
 @end

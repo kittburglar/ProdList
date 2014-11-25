@@ -14,9 +14,15 @@
 
 @implementation ViewController
 
+@synthesize accessoryView;
+
 - (void)viewDidLoad { 
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    UIView *inputAccView = [[UIView alloc] initWithFrame:CGRectMake(10.0, 0.0, 310.0, 40.0)];
+    [inputAccView setBackgroundColor:[UIColor lightGrayColor]];
+    [inputAccView setAlpha: 0.8];
+    self.textField.inputAccessoryView = inputAccView;
     
     // Add date to top label
     NSString *formatString = [NSDateFormatter dateFormatFromTemplate:@"EdMMM" options:0 locale:[NSLocale currentLocale]];
