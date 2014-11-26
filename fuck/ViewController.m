@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "Item.h"
 
 @interface ViewController ()
 
@@ -19,6 +20,7 @@
 - (void)viewDidLoad { 
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
     UIView *inputAccView = [[UIView alloc] initWithFrame:CGRectMake(10.0, 0.0, 310.0, 40.0)];
     [inputAccView setBackgroundColor:[UIColor lightGrayColor]];
     [inputAccView setAlpha: 0.8];
@@ -70,7 +72,7 @@
         
     }
     
-    cell.textLabel.text = [anArray objectAtIndex:indexPath.row];
+    cell.textLabel.text = [[anArray objectAtIndex:indexPath.row] name];
     cell.backgroundColor = [UIColor clearColor];
     
     return cell;
@@ -160,13 +162,15 @@
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
     
     NSLog(@"moveRowAtIndexPath called");
-    NSString *stringToMove = [anArray objectAtIndex:sourceIndexPath.row];
+    //NSString *stringToMove = [anArray objectAtIndex:sourceIndexPath.row];
+    
+    Item *itemToMove = [anArray objectAtIndex:sourceIndexPath.row];
     
     [anArray removeObjectAtIndex:sourceIndexPath.row];
     
-    [anArray insertObject:stringToMove atIndex:destinationIndexPath.row];
+    //[anArray insertObject:stringToMove atIndex:destinationIndexPath.row];
     
-    
+    [anArray insertObject:itemToMove atIndex:destinationIndexPath.row];
     
 }
 
@@ -192,8 +196,8 @@
                                          NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle]
                                          };
             
-            NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:anArray[swipedIndexPath.row] attributes:attributes];
-            NSAttributedString* attrText2 = [[NSAttributedString alloc] initWithString:anArray[swipedIndexPath.row] attributes:nil];
+            NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:[anArray[swipedIndexPath.row] name] attributes:attributes];
+            NSAttributedString* attrText2 = [[NSAttributedString alloc] initWithString:[anArray[swipedIndexPath.row] name] attributes:nil];
             if ([swipedCell.textLabel.attributedText isEqualToAttributedString:(attrText)]) {
                 NSLog(@"Swiped crossed out word");
                 swipedCell.textLabel.attributedText = attrText2;
@@ -226,13 +230,18 @@
         UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
         cell.textLabel.textColor = [UIColor blackColor];
         [anArray removeObjectAtIndex:[self lastModified]];
-        [anArray insertObject:self.textField.text atIndex:[self lastModified]];
+        
+        Item * i = [[Item alloc] initWithName:self.textField.text];
+        
+        [anArray insertObject:i atIndex:[self lastModified]];
+        
         [self.tableView reloadData];
         [self setModifying:NO];
     }
     else{
-    
-        [anArray addObject: self.textField.text];
+        Item * i = [[Item alloc] initWithName:self.textField.text];
+        
+        [anArray addObject: i];
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:([anArray count] - 1) inSection:0];
         //NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     

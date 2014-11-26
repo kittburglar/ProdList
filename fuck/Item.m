@@ -12,8 +12,16 @@
 
 -(id)initWithName:(NSString *)name {
     self = [super init];
-    
     self.name = name;
+    self.color = nil;
+    
+    return self;
+}
+
+-(id)initWithNameAndColor:(NSString *)name withColor:(UIColor *)color{
+    self = [super init];
+    self.name = name;
+    self.color = color;
     
     return self;
 }

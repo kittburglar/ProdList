@@ -7,12 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface Item : NSObject
 
 @property (nonatomic, strong) NSString * name;
 
+@property (nonatomic, strong) UIColor * color;
+
 -(id)initWithName:(NSString *)name;
 
+-(id)initWithNameAndColor:(NSString *)name withColor:(UIColor *)color;
 
 @end
