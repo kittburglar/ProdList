@@ -15,8 +15,12 @@
 
 @property (nonatomic, strong) UIColor * color;
 
+@property (nonatomic, strong) NSDate * date;
+
 -(id)initWithName:(NSString *)name;
 
 -(id)initWithNameAndColor:(NSString *)name withColor:(UIColor *)color;
+
+-(NSString *)returnDate;
 
 @end

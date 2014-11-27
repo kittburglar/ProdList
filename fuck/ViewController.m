@@ -42,9 +42,13 @@ static NSString *CellIdentifier = @"CellIdentifier";
     anArray = [[NSMutableArray alloc] init];
     
     //add swipe detection to tableview
-    UISwipeGestureRecognizer *gesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipe:)];
-    gesture.direction = UISwipeGestureRecognizerDirectionRight;
-    [self.tableView addGestureRecognizer:gesture];
+    UISwipeGestureRecognizer *swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipe:)];
+    swipeGesture.direction = UISwipeGestureRecognizerDirectionRight;
+    [self.tableView addGestureRecognizer:swipeGesture];
+    
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(didPressLong:)];
+    [self.tableView addGestureRecognizer:longPress];
+    
     self.tableView.delegate = self;
     
 }
@@ -212,13 +216,39 @@ static NSString *CellIdentifier = @"CellIdentifier";
     // Dispose of any resources that can be recreated.
 }
 
+
+
+
+-(void)didPressLong:(UIGestureRecognizer *)gestureRecognizer {
+    /*
+    CGPoint swipeLocation = [gestureRecognizer locationInView:self.tableView];
+    NSIndexPath *swipedIndexPath = [self.tableView indexPathForRowAtPoint:swipeLocation];
+    MyTableViewCell* swipedCell = (MyTableViewCell *)[self.tableView cellForRowAtIndexPath:swipedIndexPath];
+    */
+    
+    if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        
+        NSLog(@"Holding Begins");
+        CGPoint swipeLocation = [gestureRecognizer locationInView:self.tableView];
+        self.longPressIndexPath = [self.tableView indexPathForRowAtPoint:swipeLocation];
+        self.longPressCell = (MyTableViewCell *)[self.tableView cellForRowAtIndexPath:[self longPressIndexPath]];
+        self.longPressCell.titleLabel.text = [anArray[self.longPressIndexPath.row] returnDate];
+        
+    }
+    else if ((gestureRecognizer.state == UIGestureRecognizerStateEnded) || (gestureRecognizer.state == UIGestureRecognizerStateCancelled)){
+        NSLog(@"Tap Ends");
+        self.longPressCell.titleLabel.text = [anArray[self.longPressIndexPath.row] name];
+    }
+}
+
+
 -(void)didSwipe:(UIGestureRecognizer *)gestureRecognizer {
     NSLog(@"Swiped!");
     
     if ((gestureRecognizer.state == UIGestureRecognizerStateEnded) && !self.tableView.editing) {
         CGPoint swipeLocation = [gestureRecognizer locationInView:self.tableView];
         NSIndexPath *swipedIndexPath = [self.tableView indexPathForRowAtPoint:swipeLocation];
-        UITableViewCell* swipedCell = [self.tableView cellForRowAtIndexPath:swipedIndexPath];
+        MyTableViewCell* swipedCell = (MyTableViewCell *)[self.tableView cellForRowAtIndexPath:swipedIndexPath];
         // ...
         //NSString *text = [[swipedCell textLabel] text];
         if (anArray.count != 0) {
@@ -228,13 +258,13 @@ static NSString *CellIdentifier = @"CellIdentifier";
             
             NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:[anArray[swipedIndexPath.row] name] attributes:attributes];
             NSAttributedString* attrText2 = [[NSAttributedString alloc] initWithString:[anArray[swipedIndexPath.row] name] attributes:nil];
-            if ([swipedCell.textLabel.attributedText isEqualToAttributedString:(attrText)]) {
+            if ([swipedCell.titleLabel.attributedText isEqualToAttributedString:(attrText)]) {
                 NSLog(@"Swiped crossed out word");
-                swipedCell.textLabel.attributedText = attrText2;
+                swipedCell.titleLabel.attributedText = attrText2;
             }
             else{
-                NSLog(@"Siped regular word");
-                swipedCell.textLabel.attributedText = attrText;
+                NSLog(@"Swiped regular word");
+                swipedCell.titleLabel.attributedText = attrText;
             }
         }
     }

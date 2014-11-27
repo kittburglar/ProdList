@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MyTableViewCell.h"
 
 
 @interface ViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
@@ -18,6 +19,9 @@
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, assign) BOOL modifying;
 @property (nonatomic, assign) NSInteger lastModified;
+@property (nonatomic, assign) NSIndexPath *longPressIndexPath;
+@property (nonatomic, assign) MyTableViewCell* longPressCell;
+
 @property (nonatomic, strong) IBOutlet UIView *accessoryView;
 - (IBAction)editButton:(UIButton *)sender;
 - (IBAction)textReturn:(id)sender;

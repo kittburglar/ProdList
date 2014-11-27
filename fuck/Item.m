@@ -14,6 +14,7 @@
     self = [super init];
     self.name = name;
     self.color = nil;
+    self.date = [[NSDate alloc] init];
     
     return self;
 }
@@ -22,8 +23,17 @@
     self = [super init];
     self.name = name;
     self.color = color;
+    self.date = [[NSDate alloc] init];;
     
     return self;
+}
+
+-(NSString *)returnDate{
+    NSString *formatString = [NSDateFormatter dateFormatFromTemplate:@"EdMMM" options:0 locale:[NSLocale currentLocale]];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:formatString];
+    NSString *todayString = [dateFormatter stringFromDate:self.date];
+    return todayString;
 }
 
 @end
