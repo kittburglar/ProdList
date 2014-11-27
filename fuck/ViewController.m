@@ -8,6 +8,9 @@
 
 #import "ViewController.h"
 #import "Item.h"
+#import "MyTableViewCell.h"
+
+static NSString *CellIdentifier = @"CellIdentifier";
 
 @interface ViewController ()
 
@@ -20,6 +23,7 @@
 - (void)viewDidLoad { 
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
     
     UIView *inputAccView = [[UIView alloc] initWithFrame:CGRectMake(10.0, 0.0, 310.0, 40.0)];
     [inputAccView setBackgroundColor:[UIColor lightGrayColor]];
@@ -59,22 +63,48 @@
     return 1;
 }
 
+- (CGFloat)widthOfString:(NSString *)string {
+    UIFont *font = [UIFont systemFontOfSize: 12.0];
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, nil];
+    return [[[NSAttributedString alloc] initWithString:string attributes:attributes] size].width;
+}
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath  *)indexPath
+
+
+
+-(MyTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath  *)indexPath
 {
     NSLog(@"cellForRowAtIndexPath");
-    static NSString *cellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"Cell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    MyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    [cell.titleLabel setText:[NSString stringWithFormat:@"Row %li in Section %li", (long)[indexPath row], (long)[indexPath section]]];
+    
     
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault  reuseIdentifier:cellIdentifier];
+        cell = [[MyTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault  reuseIdentifier:CellIdentifier];
         
     }
     
+    cell.titleLabel.text = [[anArray objectAtIndex:indexPath.row] name];
+     /*
+    UILabel *label = (UILabel *)[cell.contentView viewWithTag:10];
+    [label setText:[NSString stringWithFormat:@"Hello"]];
+    
     cell.textLabel.text = [[anArray objectAtIndex:indexPath.row] name];
+    
+    NSLog(@"cell textlabel is %@", cell.textLabel.text);
     cell.backgroundColor = [UIColor clearColor];
     
+    UIButton *editButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    //editButton.frame = CGRectMake(CGRectGetWidth(cell.bounds) - 80, 0, 40, CGRectGetHeight(cell.bounds));
+    //editButton.frame = CGRectMake(CGRectGetMinX(cell.bounds), CGRectGetMinY(cell.bounds), CGRectGetHeight(cell.bounds), CGRectGetHeight(cell.bounds));
+    editButton.backgroundColor = [UIColor redColor];
+    [editButton setTitle:@"Hello" forState:UIControlStateNormal];
+    //editButton.tag = indexPath.row;
+    [cell.contentView addSubview:editButton];
+    */
     return cell;
 }
 
@@ -121,9 +151,9 @@
         NSLog(@"Modify pressed");
         [self setModifying:YES];
         [self setLastModified:indexPath.row];
-        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-        cell.textLabel.textColor = [UIColor redColor];
-        self.textField.text = cell.textLabel.text;
+        MyTableViewCell *cell = (MyTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+        cell.titleLabel.textColor = [UIColor redColor];
+        self.textField.text = cell.titleLabel.text;
         [self.textField becomeFirstResponder];
         [self.tableView setEditing:NO];
     }];
@@ -227,8 +257,8 @@
     else if ([self modifying]) {
         NSLog(@"textReturn while modifying!");
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self lastModified] inSection:0];
-        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-        cell.textLabel.textColor = [UIColor blackColor];
+        MyTableViewCell *cell = (MyTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+        cell.titleLabel.textColor = [UIColor blackColor];
         [anArray removeObjectAtIndex:[self lastModified]];
         
         Item * i = [[Item alloc] initWithName:self.textField.text];

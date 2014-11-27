@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F80314A51A26D78B00E68248 /* MyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F80314A41A26D78B00E68248 /* MyTableViewCell.m */; };
 		F806EA0E1A264E4D00A8CCFB /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = F806EA0D1A264E4D00A8CCFB /* Item.m */; };
 		F8AA3B701A19C50A00C934E0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F8AA3B6F1A19C50A00C934E0 /* main.m */; };
 		F8AA3B731A19C50A00C934E0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F8AA3B721A19C50A00C934E0 /* AppDelegate.m */; };
@@ -29,6 +30,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F80314A31A26D78B00E68248 /* MyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTableViewCell.h; sourceTree = "<group>"; };
+		F80314A41A26D78B00E68248 /* MyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTableViewCell.m; sourceTree = "<group>"; };
 		F806EA0C1A264E4D00A8CCFB /* Item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Item.h; sourceTree = "<group>"; };
 		F806EA0D1A264E4D00A8CCFB /* Item.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Item.m; sourceTree = "<group>"; };
 		F8AA3B6A1A19C50900C934E0 /* fuck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fuck.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -97,6 +100,8 @@
 				F8AA3B6D1A19C50A00C934E0 /* Supporting Files */,
 				F806EA0C1A264E4D00A8CCFB /* Item.h */,
 				F806EA0D1A264E4D00A8CCFB /* Item.m */,
+				F80314A31A26D78B00E68248 /* MyTableViewCell.h */,
+				F80314A41A26D78B00E68248 /* MyTableViewCell.m */,
 			);
 			path = fuck;
 			sourceTree = "<group>";
@@ -230,6 +235,7 @@
 				F806EA0E1A264E4D00A8CCFB /* Item.m in Sources */,
 				F8AA3B731A19C50A00C934E0 /* AppDelegate.m in Sources */,
 				F8AA3B761A19C50A00C934E0 /* fuck.xcdatamodeld in Sources */,
+				F80314A51A26D78B00E68248 /* MyTableViewCell.m in Sources */,
 				F8AA3B791A19C50A00C934E0 /* ViewController.m in Sources */,
 				F8AA3B701A19C50A00C934E0 /* main.m in Sources */,
 			);
