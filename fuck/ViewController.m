@@ -92,6 +92,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
     }
     
     cell.titleLabel.text = [[anArray objectAtIndex:indexPath.row] name];
+    cell.descriptionLabel.text = [[anArray objectAtIndex:indexPath.row] returnDate];
      /*
     UILabel *label = (UILabel *)[cell.contentView viewWithTag:10];
     [label setText:[NSString stringWithFormat:@"Hello"]];
@@ -230,14 +231,26 @@ static NSString *CellIdentifier = @"CellIdentifier";
         
         NSLog(@"Holding Begins");
         CGPoint swipeLocation = [gestureRecognizer locationInView:self.tableView];
+        
         self.longPressIndexPath = [self.tableView indexPathForRowAtPoint:swipeLocation];
+        /*
         self.longPressCell = (MyTableViewCell *)[self.tableView cellForRowAtIndexPath:[self longPressIndexPath]];
         self.longPressCell.titleLabel.text = [anArray[self.longPressIndexPath.row] returnDate];
+         */
+        [self setModifying:YES];
+        [self setLastModified:self.longPressIndexPath.row];
+        MyTableViewCell *cell = (MyTableViewCell *)[self.tableView cellForRowAtIndexPath:self.longPressIndexPath];
+        cell.titleLabel.textColor = [UIColor redColor];
+        self.textField.text = cell.titleLabel.text;
+        [self.textField becomeFirstResponder];
+        [self.tableView setEditing:NO];
         
     }
     else if ((gestureRecognizer.state == UIGestureRecognizerStateEnded) || (gestureRecognizer.state == UIGestureRecognizerStateCancelled)){
         NSLog(@"Tap Ends");
+        /*
         self.longPressCell.titleLabel.text = [anArray[self.longPressIndexPath.row] name];
+         */
     }
 }
 

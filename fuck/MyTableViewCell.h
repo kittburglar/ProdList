@@ -12,6 +12,7 @@
 
 @property (nonatomic, weak) IBOutlet UILabel *titleLabel;
 @property (nonatomic, weak) IBOutlet UILabel *subtitleLabel;
+@property (strong, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (nonatomic, weak) IBOutlet UIButton *colorButton;
 
 @end
