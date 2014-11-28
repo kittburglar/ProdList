@@ -9,6 +9,8 @@
 #import "ViewController.h"
 #import "Item.h"
 #import "MyTableViewCell.h"
+#import "MyInputAccessoryView.h"
+
 
 static NSString *CellIdentifier = @"CellIdentifier";
 
@@ -24,10 +26,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    
-    UIView *inputAccView = [[UIView alloc] initWithFrame:CGRectMake(10.0, 0.0, 310.0, 40.0)];
-    [inputAccView setBackgroundColor:[UIColor lightGrayColor]];
-    [inputAccView setAlpha: 0.8];
+    MyInputAccessoryView *inputAccView = [[MyInputAccessoryView alloc] initWithRect:CGRectMake(0.0, 0.0, [[UIScreen mainScreen] bounds].size.width, 40.0)];
     self.textField.inputAccessoryView = inputAccView;
     
     // Add date to top label
