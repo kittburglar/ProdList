@@ -23,17 +23,41 @@
     self = [super init];
     self.name = name;
     self.color = color;
-    self.date = [[NSDate alloc] init];;
+    self.date = [[NSDate alloc] init];
     
     return self;
 }
 
+-(id)initWithNameAndDate:(NSString *)name withDate:(NSDate *)date{
+    self = [super init];
+    self.name = name;
+    self.color = nil;
+    self.date = date;
+    
+    return self;
+}
+
+
+-(id)initWithNameAndColorAndDate:(NSString *)name withColor:(UIColor *)color withDate:(NSDate *)date{
+    self = [super init];
+    self.name = name;
+    self.color = color;
+    self.date = date;
+    
+    return self;
+}
+
+
 -(NSString *)returnDate{
-    NSString *formatString = [NSDateFormatter dateFormatFromTemplate:@"EdMMM" options:0 locale:[NSLocale currentLocale]];
+    //Days
+    NSString *formatString = [NSDateFormatter dateFormatFromTemplate:@"EdMMMhh-mm" options:0 locale:[NSLocale currentLocale]];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:formatString];
     NSString *todayString = [dateFormatter stringFromDate:self.date];
+    
     return todayString;
 }
+
+
 
 @end

@@ -49,6 +49,15 @@ static NSString *CellIdentifier = @"CellIdentifier";
     [inputAccView addSubview:dateButton];
     self.textField.inputAccessoryView = inputAccView;
     
+    //Create color Button programmically
+    UIButton *colorButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    colorButton.frame = CGRectMake(110, CGRectGetMaxY(inputAccView.bounds)/2 - 40/2, 40, 40);
+    [colorButton setBackgroundColor:[UIColor darkGrayColor]];
+    [colorButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [colorButton addTarget:self action:@selector(pickColor:) forControlEvents:UIControlEventTouchUpInside];
+    [inputAccView addSubview:colorButton];
+    self.textField.inputAccessoryView = inputAccView;
+    
     // Add date to top label
     NSString *formatString = [NSDateFormatter dateFormatFromTemplate:@"EdMMM" options:0 locale:[NSLocale currentLocale]];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -64,12 +73,21 @@ static NSString *CellIdentifier = @"CellIdentifier";
     UISwipeGestureRecognizer *swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipe:)];
     swipeGesture.direction = UISwipeGestureRecognizerDirectionRight;
     [self.tableView addGestureRecognizer:swipeGesture];
-    
     UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(didPressLong:)];
     [self.tableView addGestureRecognizer:longPress];
     
-    //Add datepicker stuff
+    //Initalize datepicker stuff
     self.pickerView = [[UIDatePicker alloc] init];
+    
+    //Initalize collectionview
+    UIView *collView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+    UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc] init];
+    self.collectionView = [[UICollectionView alloc] initWithFrame:collView.frame collectionViewLayout:layout];
+    [self.collectionView setDataSource:self];
+    [self.collectionView setDelegate:self];
+    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cellIdentifier"];
+    [self.collectionView setBackgroundColor:[UIColor redColor]];
+    
     
     self.tableView.delegate = self;
     
@@ -78,22 +96,58 @@ static NSString *CellIdentifier = @"CellIdentifier";
 
 - (void)pickKeyboard:(UIButton*)button
 {
-    
+    NSLog(@"Keyboard button clicked.");
     [self.textField resignFirstResponder];
     self.textField.inputView = nil;
     [self.textField becomeFirstResponder];
-    NSLog(@"Button  clicked.");
+    
 }
 
 
 - (void)pickDate:(UIButton*)button
 {
-    
+    NSLog(@"Date button clicked.");
     [self.textField resignFirstResponder];
     self.textField.inputView = self.pickerView;
     [self.textField becomeFirstResponder];
-    NSLog(@"Button  clicked.");
+    
 }
+
+
+
+- (void)pickColor:(UIButton*)button
+{
+    NSLog(@"Color button clicked.");
+    [self.textField resignFirstResponder];
+    self.textField.inputView = self.collectionView;
+    [self.textField becomeFirstResponder];
+    
+}
+
+
+
+#pragma mark - UICollectionView
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return 15;
+}
+
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionViewCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:@"cellIdentifier" forIndexPath:indexPath];
+    
+    cell.backgroundColor=[UIColor greenColor];
+    return cell;
+}
+
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return CGSizeMake(50, 50);
+}
+
 
 
 
@@ -347,7 +401,9 @@ static NSString *CellIdentifier = @"CellIdentifier";
         cell.titleLabel.textColor = [UIColor blackColor];
         [anArray removeObjectAtIndex:[self lastModified]];
         
-        Item * i = [[Item alloc] initWithName:self.textField.text];
+        //Item * i = [[Item alloc] initWithName:self.textField.text];
+        
+        Item * i = [[Item alloc] initWithNameAndDate:self.textField.text withDate:[self.pickerView date]];
         
         [anArray insertObject:i atIndex:[self lastModified]];
         
@@ -355,7 +411,9 @@ static NSString *CellIdentifier = @"CellIdentifier";
         [self setModifying:NO];
     }
     else{
-        Item * i = [[Item alloc] initWithName:self.textField.text];
+        //Item * i = [[Item alloc] initWithName:self.textField.text];
+        
+        Item * i = [[Item alloc] initWithNameAndDate:self.textField.text withDate:[self.pickerView date]];
         
         [anArray addObject: i];
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:([anArray count] - 1) inSection:0];

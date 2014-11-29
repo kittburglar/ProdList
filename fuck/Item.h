@@ -21,6 +21,10 @@
 
 -(id)initWithNameAndColor:(NSString *)name withColor:(UIColor *)color;
 
+-(id)initWithNameAndDate:(NSString *)name withDate:(NSDate *)date;
+
+-(id)initWithNameAndColorAndDate:(NSString *)name withColor:(UIColor *)color withDate:(NSDate *)date;
+
 -(NSString *)returnDate;
 
 @end

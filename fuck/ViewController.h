@@ -10,7 +10,7 @@
 #import "MyTableViewCell.h"
 
 
-@interface ViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface ViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {
     NSMutableArray *anArray;
 }
@@ -21,8 +21,8 @@
 @property (nonatomic, assign) NSInteger lastModified;
 @property (nonatomic, assign) NSIndexPath *longPressIndexPath;
 @property (nonatomic, assign) MyTableViewCell* longPressCell;
-@property (strong, nonatomic) IBOutlet UIView *miniView;
 @property (strong, nonatomic) IBOutlet UIDatePicker *pickerView;
+@property (strong, nonatomic) IBOutlet UICollectionView *collectionView;
 - (IBAction)editButton:(UIButton *)sender;
 - (IBAction)textReturn:(id)sender;
 @end
