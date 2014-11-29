@@ -9,7 +9,6 @@
 #import "ViewController.h"
 #import "Item.h"
 #import "MyTableViewCell.h"
-#import "MyInputAccessoryView.h"
 
 
 static NSString *CellIdentifier = @"CellIdentifier";
@@ -20,13 +19,34 @@ static NSString *CellIdentifier = @"CellIdentifier";
 
 @implementation ViewController
 
-@synthesize accessoryView;
 
 - (void)viewDidLoad { 
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    MyInputAccessoryView *inputAccView = [[MyInputAccessoryView alloc] initWithRect:CGRectMake(0.0, 0.0, [[UIScreen mainScreen] bounds].size.width, 40.0)];
+    //Add accessory view (bar on top of keyboard)
+    UIView *inputAccView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, [[UIScreen mainScreen] bounds].size.width, 50.0)];
+    [inputAccView setBackgroundColor:[UIColor lightGrayColor]];
+    [inputAccView setAlpha: 0.8];
+    
+    
+    //Create keyboard Button programmically
+    UIButton *keyboardButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    keyboardButton.frame = CGRectMake(10, CGRectGetMaxY(inputAccView.bounds)/2 - 40/2, 40, 40);
+    [keyboardButton setBackgroundColor:[UIColor darkGrayColor]];
+    [keyboardButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [keyboardButton addTarget:self action:@selector(pickKeyboard:) forControlEvents:UIControlEventTouchUpInside];
+    [inputAccView addSubview:keyboardButton];
+    self.textField.inputAccessoryView = inputAccView;
+    
+    
+    //Create date Button programmically
+    UIButton *dateButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    dateButton.frame = CGRectMake(60, CGRectGetMaxY(inputAccView.bounds)/2 - 40/2, 40, 40);
+    [dateButton setBackgroundColor:[UIColor darkGrayColor]];
+    [dateButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [dateButton addTarget:self action:@selector(pickDate:) forControlEvents:UIControlEventTouchUpInside];
+    [inputAccView addSubview:dateButton];
     self.textField.inputAccessoryView = inputAccView;
     
     // Add date to top label
@@ -48,9 +68,33 @@ static NSString *CellIdentifier = @"CellIdentifier";
     UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(didPressLong:)];
     [self.tableView addGestureRecognizer:longPress];
     
+    //Add datepicker stuff
+    self.pickerView = [[UIDatePicker alloc] init];
+    
     self.tableView.delegate = self;
     
 }
+
+
+- (void)pickKeyboard:(UIButton*)button
+{
+    
+    [self.textField resignFirstResponder];
+    self.textField.inputView = nil;
+    [self.textField becomeFirstResponder];
+    NSLog(@"Button  clicked.");
+}
+
+
+- (void)pickDate:(UIButton*)button
+{
+    
+    [self.textField resignFirstResponder];
+    self.textField.inputView = self.pickerView;
+    [self.textField becomeFirstResponder];
+    NSLog(@"Button  clicked.");
+}
+
 
 
 #pragma mark - UITableView Datasource

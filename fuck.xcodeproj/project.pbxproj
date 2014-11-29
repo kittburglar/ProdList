@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		F80314A51A26D78B00E68248 /* MyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F80314A41A26D78B00E68248 /* MyTableViewCell.m */; };
 		F806EA0E1A264E4D00A8CCFB /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = F806EA0D1A264E4D00A8CCFB /* Item.m */; };
-		F839B05D1A28623C007AE443 /* MyInputAccessoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = F839B05C1A28623C007AE443 /* MyInputAccessoryView.m */; };
 		F8AA3B701A19C50A00C934E0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F8AA3B6F1A19C50A00C934E0 /* main.m */; };
 		F8AA3B731A19C50A00C934E0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F8AA3B721A19C50A00C934E0 /* AppDelegate.m */; };
 		F8AA3B761A19C50A00C934E0 /* fuck.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F8AA3B741A19C50A00C934E0 /* fuck.xcdatamodeld */; };
@@ -35,8 +34,6 @@
 		F80314A41A26D78B00E68248 /* MyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTableViewCell.m; sourceTree = "<group>"; };
 		F806EA0C1A264E4D00A8CCFB /* Item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Item.h; sourceTree = "<group>"; };
 		F806EA0D1A264E4D00A8CCFB /* Item.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Item.m; sourceTree = "<group>"; };
-		F839B05B1A28623C007AE443 /* MyInputAccessoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyInputAccessoryView.h; sourceTree = "<group>"; };
-		F839B05C1A28623C007AE443 /* MyInputAccessoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyInputAccessoryView.m; sourceTree = "<group>"; };
 		F8AA3B6A1A19C50900C934E0 /* fuck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fuck.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8AA3B6E1A19C50A00C934E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F8AA3B6F1A19C50A00C934E0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -105,8 +102,6 @@
 				F806EA0D1A264E4D00A8CCFB /* Item.m */,
 				F80314A31A26D78B00E68248 /* MyTableViewCell.h */,
 				F80314A41A26D78B00E68248 /* MyTableViewCell.m */,
-				F839B05B1A28623C007AE443 /* MyInputAccessoryView.h */,
-				F839B05C1A28623C007AE443 /* MyInputAccessoryView.m */,
 			);
 			path = fuck;
 			sourceTree = "<group>";
@@ -239,7 +234,6 @@
 			files = (
 				F806EA0E1A264E4D00A8CCFB /* Item.m in Sources */,
 				F8AA3B731A19C50A00C934E0 /* AppDelegate.m in Sources */,
-				F839B05D1A28623C007AE443 /* MyInputAccessoryView.m in Sources */,
 				F8AA3B761A19C50A00C934E0 /* fuck.xcdatamodeld in Sources */,
 				F80314A51A26D78B00E68248 /* MyTableViewCell.m in Sources */,
 				F8AA3B791A19C50A00C934E0 /* ViewController.m in Sources */,

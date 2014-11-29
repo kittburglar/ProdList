@@ -21,8 +21,8 @@
 @property (nonatomic, assign) NSInteger lastModified;
 @property (nonatomic, assign) NSIndexPath *longPressIndexPath;
 @property (nonatomic, assign) MyTableViewCell* longPressCell;
-
-@property (nonatomic, strong) IBOutlet UIView *accessoryView;
+@property (strong, nonatomic) IBOutlet UIView *miniView;
+@property (strong, nonatomic) IBOutlet UIDatePicker *pickerView;
 - (IBAction)editButton:(UIButton *)sender;
 - (IBAction)textReturn:(id)sender;
 @end
