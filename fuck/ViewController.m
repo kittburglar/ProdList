@@ -25,38 +25,38 @@ static NSString *CellIdentifier = @"CellIdentifier";
     // Do any additional setup after loading the view, typically from a nib.
     
     //Add accessory view (bar on top of keyboard)
-    UIView *inputAccView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, [[UIScreen mainScreen] bounds].size.width, 50.0)];
-    [inputAccView setBackgroundColor:[UIColor lightGrayColor]];
-    [inputAccView setAlpha: 0.8];
+    self.inputAccView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, [[UIScreen mainScreen] bounds].size.width, 50.0)];
+    [self.inputAccView setBackgroundColor:[UIColor lightGrayColor]];
+    [self.inputAccView setAlpha: 0.8];
     
     
     //Create keyboard Button programmically
     UIButton *keyboardButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    keyboardButton.frame = CGRectMake(10, CGRectGetMaxY(inputAccView.bounds)/2 - 40/2, 40, 40);
+    keyboardButton.frame = CGRectMake(10, CGRectGetMaxY(self.inputAccView.bounds)/2 - 40/2, 40, 40);
     [keyboardButton setBackgroundColor:[UIColor darkGrayColor]];
     [keyboardButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [keyboardButton addTarget:self action:@selector(pickKeyboard:) forControlEvents:UIControlEventTouchUpInside];
-    [inputAccView addSubview:keyboardButton];
-    self.textField.inputAccessoryView = inputAccView;
+    [self.inputAccView addSubview:keyboardButton];
+    self.textField.inputAccessoryView = self.inputAccView;
     
     
     //Create date Button programmically
     UIButton *dateButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    dateButton.frame = CGRectMake(60, CGRectGetMaxY(inputAccView.bounds)/2 - 40/2, 40, 40);
+    dateButton.frame = CGRectMake(60, CGRectGetMaxY(self.inputAccView.bounds)/2 - 40/2, 40, 40);
     [dateButton setBackgroundColor:[UIColor darkGrayColor]];
     [dateButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [dateButton addTarget:self action:@selector(pickDate:) forControlEvents:UIControlEventTouchUpInside];
-    [inputAccView addSubview:dateButton];
-    self.textField.inputAccessoryView = inputAccView;
+    [self.inputAccView addSubview:dateButton];
+    self.textField.inputAccessoryView = self.inputAccView;
     
     //Create color Button programmically
     UIButton *colorButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    colorButton.frame = CGRectMake(110, CGRectGetMaxY(inputAccView.bounds)/2 - 40/2, 40, 40);
+    colorButton.frame = CGRectMake(110, CGRectGetMaxY(self.inputAccView.bounds)/2 - 40/2, 40, 40);
     [colorButton setBackgroundColor:[UIColor darkGrayColor]];
     [colorButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [colorButton addTarget:self action:@selector(pickColor:) forControlEvents:UIControlEventTouchUpInside];
-    [inputAccView addSubview:colorButton];
-    self.textField.inputAccessoryView = inputAccView;
+    [self.inputAccView addSubview:colorButton];
+    self.textField.inputAccessoryView = self.inputAccView;
     
     // Add date to top label
     NSString *formatString = [NSDateFormatter dateFormatFromTemplate:@"EdMMM" options:0 locale:[NSLocale currentLocale]];
@@ -80,19 +80,45 @@ static NSString *CellIdentifier = @"CellIdentifier";
     self.pickerView = [[UIDatePicker alloc] init];
     
     //Initalize collectionview
-    UIView *collView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
-    UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc] init];
-    self.collectionView = [[UICollectionView alloc] initWithFrame:collView.frame collectionViewLayout:layout];
-    [self.collectionView setDataSource:self];
-    [self.collectionView setDelegate:self];
-    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cellIdentifier"];
-    [self.collectionView setBackgroundColor:[UIColor redColor]];
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(keyboardOnScreen:) name:UIKeyboardDidShowNotification object:nil];
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     self.tableView.delegate = self;
     
 }
 
+
+-(void)keyboardOnScreen:(NSNotification *)notification
+{
+    NSDictionary *info  = notification.userInfo;
+    NSValue      *value = info[UIKeyboardFrameEndUserInfoKey];
+    
+    CGRect rawFrame      = [value CGRectValue];
+    CGRect keyboardFrame = [self.view convertRect:rawFrame fromView:nil];
+    
+    NSLog(@"keyboardFrame: %@", NSStringFromCGRect(keyboardFrame));
+    if (self.collectionFlowLayout == nil) {
+        self.collectionFlowLayout = [[UICollectionViewFlowLayout alloc] init];
+        self.collectionFlowLayout.minimumInteritemSpacing = self.collectionFlowLayout.minimumLineSpacing = 10;
+        UIView *collView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMinX(keyboardFrame), CGRectGetMinY(keyboardFrame), CGRectGetWidth(keyboardFrame), CGRectGetHeight(keyboardFrame) - 50)];
+        self.collectionView = [[UICollectionView alloc] initWithFrame:collView.frame collectionViewLayout:self.collectionFlowLayout];
+        [self.collectionView setDataSource:self];
+        [self.collectionView setDelegate:self];
+        [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cellIdentifier"];
+        [self.collectionView setBackgroundColor:[UIColor grayColor]];
+    }
+    
+    
+}
 
 - (void)pickKeyboard:(UIButton*)button
 {
@@ -130,25 +156,99 @@ static NSString *CellIdentifier = @"CellIdentifier";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 15;
+    return 8;
 }
 
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UICollectionViewCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:@"cellIdentifier" forIndexPath:indexPath];
-    
-    cell.backgroundColor=[UIColor greenColor];
+    if (indexPath.row == 0) {
+        cell.backgroundColor = [UIColor blueColor];
+    }
+    else if (indexPath.row == 1){
+        cell.backgroundColor = [UIColor redColor];
+    }
+    else if (indexPath.row == 2){
+        cell.backgroundColor = [UIColor redColor];
+    }
+    else if (indexPath.row == 3){
+        cell.backgroundColor = [UIColor greenColor];
+    }
+    else if (indexPath.row == 4){
+        cell.backgroundColor = [UIColor purpleColor];
+    }
+    else if (indexPath.row == 5){
+        cell.backgroundColor = [UIColor brownColor];
+    }
+    else if (indexPath.row == 6){
+        cell.backgroundColor = [UIColor yellowColor];
+    }
+    else if (indexPath.row == 7){
+        cell.backgroundColor = [UIColor orangeColor];
+    }
+    //cell.backgroundColor=[UIColor greenColor];
     return cell;
 }
 
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(50, 50);
+    return CGSizeMake(115, 50);
 }
 
 
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    // If you need to use the touched cell, you can retrieve it like so
+    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+    if (indexPath.row == 0) {
+        NSLog(@"selected 0");
+        self.selectedColor = [UIColor blueColor];
+    }
+    else if (indexPath.row == 1){
+        self.selectedColor = [UIColor redColor];
+    }
+    else if (indexPath.row == 2){
+        self.selectedColor = [UIColor redColor];
+    }
+    else if (indexPath.row == 3){
+        self.selectedColor = [UIColor greenColor];
+    }
+    else if (indexPath.row == 4){
+        self.selectedColor = [UIColor purpleColor];
+    }
+    else if (indexPath.row == 5){
+        self.selectedColor = [UIColor brownColor];
+    }
+    else if (indexPath.row == 6){
+        self.selectedColor = [UIColor yellowColor];
+    }
+    else if (indexPath.row == 7){
+        self.selectedColor = [UIColor orangeColor];
+    }
+    [cell setHighlighted:YES];
+}
+
+
+- (void)collectionView:(UICollectionView *)colView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UICollectionViewCell* cell = [colView cellForItemAtIndexPath:indexPath];
+    
+    cell.backgroundColor = [UIColor blueColor];
+    
+}
+
+
+
+- (void)collectionView:(UICollectionView *)colView didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UICollectionViewCell* cell = [colView cellForItemAtIndexPath:indexPath];
+    
+    cell.backgroundColor = nil;
+    
+}
 
 
 #pragma mark - UITableView Datasource
@@ -190,6 +290,10 @@ static NSString *CellIdentifier = @"CellIdentifier";
     
     cell.titleLabel.text = [[anArray objectAtIndex:indexPath.row] name];
     cell.descriptionLabel.text = [[anArray objectAtIndex:indexPath.row] returnDate];
+    if ([[anArray objectAtIndex:indexPath.row] color] != nil) {
+        cell.colorButton.backgroundColor = [[anArray objectAtIndex:indexPath.row] color];
+    }
+    
      /*
     UILabel *label = (UILabel *)[cell.contentView viewWithTag:10];
     [label setText:[NSString stringWithFormat:@"Hello"]];
@@ -403,7 +507,10 @@ static NSString *CellIdentifier = @"CellIdentifier";
         
         //Item * i = [[Item alloc] initWithName:self.textField.text];
         
-        Item * i = [[Item alloc] initWithNameAndDate:self.textField.text withDate:[self.pickerView date]];
+        //Item * i = [[Item alloc] initWithNameAndDate:self.textField.text withDate:[self.pickerView date]];
+        
+        Item * i = [[Item alloc] initWithNameAndColorAndDate:self.textField.text withColor:self.selectedColor withDate:[self.pickerView date]];
+        
         
         [anArray insertObject:i atIndex:[self lastModified]];
         
@@ -413,7 +520,9 @@ static NSString *CellIdentifier = @"CellIdentifier";
     else{
         //Item * i = [[Item alloc] initWithName:self.textField.text];
         
-        Item * i = [[Item alloc] initWithNameAndDate:self.textField.text withDate:[self.pickerView date]];
+        //Item * i = [[Item alloc] initWithNameAndDate:self.textField.text withDate:[self.pickerView date]];
+        
+        Item * i = [[Item alloc] initWithNameAndColorAndDate:self.textField.text withColor:self.selectedColor withDate:[self.pickerView date]];
         
         [anArray addObject: i];
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:([anArray count] - 1) inSection:0];
