@@ -11,7 +11,7 @@
 #import "MyTableViewCell.h"
 
 
-static NSString *CellIdentifier = @"CellIdentifier";
+static NSString *CellIdentifier = @"Cell";
 
 @interface ViewController ()
 
@@ -20,15 +20,32 @@ static NSString *CellIdentifier = @"CellIdentifier";
 @implementation ViewController
 
 
-- (void)viewDidLoad { 
+
+- (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
+    colorArray = [NSMutableArray arrayWithObjects:
+                  UIColorFromRGB(0xc82829),
+                  UIColorFromRGB(0xf5871f),
+                  UIColorFromRGB(0xeab700),
+                  UIColorFromRGB(0x718c00),
+                  UIColorFromRGB(0x3e999f),
+                  UIColorFromRGB(0x4271ae),
+                  UIColorFromRGB(0x8959a8),
+                  UIColorFromRGB(0x4d4d4c),
+                  UIColorFromRGB(0x8e908c),
+                  UIColorFromRGB(0xd6d6d6),
+                  UIColorFromRGB(0xefefef),
+                  UIColorFromRGB(0xffffff),nil];
+    
+    self.selectedColor = [colorArray objectAtIndex:7];
+    
     
     //Add accessory view (bar on top of keyboard)
     self.inputAccView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, [[UIScreen mainScreen] bounds].size.width, 50.0)];
     [self.inputAccView setBackgroundColor:[UIColor lightGrayColor]];
     [self.inputAccView setAlpha: 0.8];
-    
     
     //Create keyboard Button programmically
     UIButton *keyboardButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -56,6 +73,15 @@ static NSString *CellIdentifier = @"CellIdentifier";
     [colorButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [colorButton addTarget:self action:@selector(pickColor:) forControlEvents:UIControlEventTouchUpInside];
     [self.inputAccView addSubview:colorButton];
+    self.textField.inputAccessoryView = self.inputAccView;
+    
+    //Create colormode Button programmically
+    UIButton *colorModeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    colorModeButton.frame = CGRectMake(160, CGRectGetMaxY(self.inputAccView.bounds)/2 - 40/2, 40, 40);
+    [colorModeButton setBackgroundColor:[UIColor darkGrayColor]];
+    [colorModeButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [colorModeButton addTarget:self action:@selector(pickColorMode:) forControlEvents:UIControlEventTouchUpInside];
+    [self.inputAccView addSubview:colorModeButton];
     self.textField.inputAccessoryView = self.inputAccView;
     
     // Add date to top label
@@ -113,7 +139,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
         self.collectionView = [[UICollectionView alloc] initWithFrame:collView.frame collectionViewLayout:self.collectionFlowLayout];
         [self.collectionView setDataSource:self];
         [self.collectionView setDelegate:self];
-        [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cellIdentifier"];
+        [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
         [self.collectionView setBackgroundColor:[UIColor grayColor]];
     }
     
@@ -150,44 +176,51 @@ static NSString *CellIdentifier = @"CellIdentifier";
     
 }
 
+- (void)pickColorMode:(UIButton*)button
+{
+    NSLog(@"ColorMode button clicked.");
+    [self.textField resignFirstResponder];
+    [self changeColorMode];
+    
+}
+
+- (void)changeColorMode {
+    colorArray = [NSMutableArray arrayWithObjects:
+                  UIColorFromRGB(0xcc6666),
+                  UIColorFromRGB(0xde935f),
+                  UIColorFromRGB(0xf0c674),
+                  UIColorFromRGB(0xb5bd68),
+                  UIColorFromRGB(0x8abeb7),
+                  UIColorFromRGB(0x81a2be),
+                  UIColorFromRGB(0xb294bb),
+                  UIColorFromRGB(0xc5c8c6),
+                  UIColorFromRGB(0x969896),
+                  UIColorFromRGB(0x373b41),
+                  UIColorFromRGB(0x282a2e),
+                  UIColorFromRGB(0x1d1f21),nil];
+    
+    self.selectedColor = [colorArray objectAtIndex:7];
+    self.longPressCell.contentView.backgroundColor = [colorArray objectAtIndex:11];
+    self.view.backgroundColor = [colorArray objectAtIndex:11];
+    [self.view setNeedsDisplay];
+    [self.tableView reloadRowsAtIndexPaths:[self.tableView indexPathsForVisibleRows]
+                     withRowAnimation:UITableViewRowAnimationNone];
+}
+
 
 
 #pragma mark - UICollectionView
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 8;
+    return 7;
 }
 
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:@"cellIdentifier" forIndexPath:indexPath];
-    if (indexPath.row == 0) {
-        cell.backgroundColor = [UIColor blueColor];
-    }
-    else if (indexPath.row == 1){
-        cell.backgroundColor = [UIColor redColor];
-    }
-    else if (indexPath.row == 2){
-        cell.backgroundColor = [UIColor redColor];
-    }
-    else if (indexPath.row == 3){
-        cell.backgroundColor = [UIColor greenColor];
-    }
-    else if (indexPath.row == 4){
-        cell.backgroundColor = [UIColor purpleColor];
-    }
-    else if (indexPath.row == 5){
-        cell.backgroundColor = [UIColor brownColor];
-    }
-    else if (indexPath.row == 6){
-        cell.backgroundColor = [UIColor yellowColor];
-    }
-    else if (indexPath.row == 7){
-        cell.backgroundColor = [UIColor orangeColor];
-    }
-    //cell.backgroundColor=[UIColor greenColor];
+    UICollectionViewCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
+        cell.backgroundColor = [colorArray objectAtIndex:indexPath.row];
     return cell;
 }
 
@@ -203,31 +236,11 @@ static NSString *CellIdentifier = @"CellIdentifier";
 {
     // If you need to use the touched cell, you can retrieve it like so
     UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
-    if (indexPath.row == 0) {
-        NSLog(@"selected 0");
-        self.selectedColor = [UIColor blueColor];
+    if (cell.backgroundColor == nil) {
+        //self.selectedColor = UIColorFromRGB(0x4d4d4c);
+        self.selectedColor = [colorArray objectAtIndex:7];
     }
-    else if (indexPath.row == 1){
-        self.selectedColor = [UIColor redColor];
-    }
-    else if (indexPath.row == 2){
-        self.selectedColor = [UIColor redColor];
-    }
-    else if (indexPath.row == 3){
-        self.selectedColor = [UIColor greenColor];
-    }
-    else if (indexPath.row == 4){
-        self.selectedColor = [UIColor purpleColor];
-    }
-    else if (indexPath.row == 5){
-        self.selectedColor = [UIColor brownColor];
-    }
-    else if (indexPath.row == 6){
-        self.selectedColor = [UIColor yellowColor];
-    }
-    else if (indexPath.row == 7){
-        self.selectedColor = [UIColor orangeColor];
-    }
+    self.selectedColor = cell.backgroundColor;
     [cell setHighlighted:YES];
 }
 
@@ -236,7 +249,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
     
     UICollectionViewCell* cell = [colView cellForItemAtIndexPath:indexPath];
     
-    cell.backgroundColor = [UIColor blueColor];
+    //cell.backgroundColor = [UIColor blueColor];
     
 }
 
@@ -246,7 +259,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
     
     UICollectionViewCell* cell = [colView cellForItemAtIndexPath:indexPath];
     
-    cell.backgroundColor = nil;
+    //cell.backgroundColor = nil;
     
 }
 
@@ -279,13 +292,12 @@ static NSString *CellIdentifier = @"CellIdentifier";
     static NSString *CellIdentifier = @"Cell";
     
     MyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
+    cell.backgroundColor = [colorArray objectAtIndex:11];
     [cell.titleLabel setText:[NSString stringWithFormat:@"Row %li in Section %li", (long)[indexPath row], (long)[indexPath section]]];
     
     
     if (cell == nil) {
         cell = [[MyTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault  reuseIdentifier:CellIdentifier];
-        
     }
     
     cell.titleLabel.text = [[anArray objectAtIndex:indexPath.row] name];
@@ -293,24 +305,8 @@ static NSString *CellIdentifier = @"CellIdentifier";
     if ([[anArray objectAtIndex:indexPath.row] color] != nil) {
         cell.colorButton.backgroundColor = [[anArray objectAtIndex:indexPath.row] color];
     }
-    
-     /*
-    UILabel *label = (UILabel *)[cell.contentView viewWithTag:10];
-    [label setText:[NSString stringWithFormat:@"Hello"]];
-    
-    cell.textLabel.text = [[anArray objectAtIndex:indexPath.row] name];
-    
-    NSLog(@"cell textlabel is %@", cell.textLabel.text);
-    cell.backgroundColor = [UIColor clearColor];
-    
-    UIButton *editButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    //editButton.frame = CGRectMake(CGRectGetWidth(cell.bounds) - 80, 0, 40, CGRectGetHeight(cell.bounds));
-    //editButton.frame = CGRectMake(CGRectGetMinX(cell.bounds), CGRectGetMinY(cell.bounds), CGRectGetHeight(cell.bounds), CGRectGetHeight(cell.bounds));
-    editButton.backgroundColor = [UIColor redColor];
-    [editButton setTitle:@"Hello" forState:UIControlStateNormal];
-    //editButton.tag = indexPath.row;
-    [cell.contentView addSubview:editButton];
-    */
+    cell.contentView.backgroundColor = [colorArray objectAtIndex:11];
+    cell.titleLabel.textColor = [colorArray objectAtIndex:7];
     return cell;
 }
 
@@ -358,8 +354,8 @@ static NSString *CellIdentifier = @"CellIdentifier";
         [self setModifying:YES];
         [self setLastModified:indexPath.row];
         MyTableViewCell *cell = (MyTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-        cell.titleLabel.textColor = [UIColor redColor];
         self.textField.text = cell.titleLabel.text;
+        cell.contentView.backgroundColor = [colorArray objectAtIndex:10];
         [self.textField becomeFirstResponder];
         [self.tableView setEditing:NO];
     }];
@@ -431,17 +427,19 @@ static NSString *CellIdentifier = @"CellIdentifier";
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
         
         NSLog(@"Holding Begins");
+        self.longPressCell.contentView.backgroundColor = [colorArray objectAtIndex:11];
         CGPoint swipeLocation = [gestureRecognizer locationInView:self.tableView];
         
         self.longPressIndexPath = [self.tableView indexPathForRowAtPoint:swipeLocation];
-        /*
+        
         self.longPressCell = (MyTableViewCell *)[self.tableView cellForRowAtIndexPath:[self longPressIndexPath]];
+        /*
         self.longPressCell.titleLabel.text = [anArray[self.longPressIndexPath.row] returnDate];
          */
         [self setModifying:YES];
         [self setLastModified:self.longPressIndexPath.row];
         MyTableViewCell *cell = (MyTableViewCell *)[self.tableView cellForRowAtIndexPath:self.longPressIndexPath];
-        cell.titleLabel.textColor = [UIColor redColor];
+        cell.contentView.backgroundColor = [colorArray objectAtIndex:10];
         self.textField.text = cell.titleLabel.text;
         [self.textField becomeFirstResponder];
         [self.tableView setEditing:NO];
@@ -502,7 +500,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
         NSLog(@"textReturn while modifying!");
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self lastModified] inSection:0];
         MyTableViewCell *cell = (MyTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-        cell.titleLabel.textColor = [UIColor blackColor];
+        cell.titleLabel.textColor = [colorArray objectAtIndex:7];
         [anArray removeObjectAtIndex:[self lastModified]];
         
         //Item * i = [[Item alloc] initWithName:self.textField.text];
@@ -513,6 +511,8 @@ static NSString *CellIdentifier = @"CellIdentifier";
         
         
         [anArray insertObject:i atIndex:[self lastModified]];
+        self.longPressCell.contentView.backgroundColor = [colorArray objectAtIndex:11];
+        
         
         [self.tableView reloadData];
         [self setModifying:NO];
