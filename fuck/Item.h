@@ -13,18 +13,19 @@
 
 @property (nonatomic, strong) NSString * name;
 
-@property (nonatomic, strong) UIColor * color;
+@property (nonatomic, assign) NSInteger buttonColor;
 
 @property (nonatomic, strong) NSDate * date;
 
 -(id)initWithName:(NSString *)name;
 
--(id)initWithNameAndColor:(NSString *)name withColor:(UIColor *)color;
+-(id)initWithNameAndColor:(NSString *)name withColor:(NSInteger)buttonColor;
 
 -(id)initWithNameAndDate:(NSString *)name withDate:(NSDate *)date;
 
--(id)initWithNameAndColorAndDate:(NSString *)name withColor:(UIColor *)color withDate:(NSDate *)date;
+-(id)initWithNameAndColorAndDate:(NSString *)name withColor:(NSInteger)buttonColor withDate:(NSDate *)date;
 
 -(NSString *)returnDate;
+
 
 @end

@@ -24,7 +24,7 @@
 @property (nonatomic, assign) NSInteger lastModified;
 @property (nonatomic, assign) NSIndexPath *longPressIndexPath;
 @property (nonatomic, assign) MyTableViewCell* longPressCell;
-@property (strong, nonatomic) IBOutlet UIColor* selectedColor;
+@property (assign, nonatomic) NSInteger selectedColor;
 @property (strong, nonatomic) IBOutlet UIDatePicker *pickerView;
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong, nonatomic) IBOutlet UICollectionViewFlowLayout *collectionFlowLayout;

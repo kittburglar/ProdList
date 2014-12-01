@@ -39,7 +39,7 @@ static NSString *CellIdentifier = @"Cell";
                   UIColorFromRGB(0xefefef),
                   UIColorFromRGB(0xffffff),nil];
     
-    self.selectedColor = [colorArray objectAtIndex:7];
+    self.selectedColor = 7;
     
     
     //Add accessory view (bar on top of keyboard)
@@ -179,8 +179,9 @@ static NSString *CellIdentifier = @"Cell";
 - (void)pickColorMode:(UIButton*)button
 {
     NSLog(@"ColorMode button clicked.");
-    [self.textField resignFirstResponder];
+    
     [self changeColorMode];
+    [self.textField resignFirstResponder];
     
 }
 
@@ -199,12 +200,16 @@ static NSString *CellIdentifier = @"Cell";
                   UIColorFromRGB(0x282a2e),
                   UIColorFromRGB(0x1d1f21),nil];
     
-    self.selectedColor = [colorArray objectAtIndex:7];
+    self.selectedColor = 7;
     self.longPressCell.contentView.backgroundColor = [colorArray objectAtIndex:11];
     self.view.backgroundColor = [colorArray objectAtIndex:11];
     [self.view setNeedsDisplay];
     [self.tableView reloadRowsAtIndexPaths:[self.tableView indexPathsForVisibleRows]
                      withRowAnimation:UITableViewRowAnimationNone];
+    self.textField.backgroundColor = [colorArray objectAtIndex:8];
+    self.dateLabel.textColor = [colorArray objectAtIndex:7];
+    [self.collectionView reloadData];
+    [self.tableView reloadData];
 }
 
 
@@ -238,9 +243,9 @@ static NSString *CellIdentifier = @"Cell";
     UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
     if (cell.backgroundColor == nil) {
         //self.selectedColor = UIColorFromRGB(0x4d4d4c);
-        self.selectedColor = [colorArray objectAtIndex:7];
+        self.selectedColor = 7;
     }
-    self.selectedColor = cell.backgroundColor;
+    self.selectedColor = indexPath.row;
     [cell setHighlighted:YES];
 }
 
@@ -302,8 +307,8 @@ static NSString *CellIdentifier = @"Cell";
     
     cell.titleLabel.text = [[anArray objectAtIndex:indexPath.row] name];
     cell.descriptionLabel.text = [[anArray objectAtIndex:indexPath.row] returnDate];
-    if ([[anArray objectAtIndex:indexPath.row] color] != nil) {
-        cell.colorButton.backgroundColor = [[anArray objectAtIndex:indexPath.row] color];
+    if ([colorArray objectAtIndex:[[anArray objectAtIndex:indexPath.row] buttonColor]] != nil) {
+        cell.colorButton.backgroundColor = [colorArray objectAtIndex:[[anArray objectAtIndex:indexPath.row] buttonColor]];
     }
     cell.contentView.backgroundColor = [colorArray objectAtIndex:11];
     cell.titleLabel.textColor = [colorArray objectAtIndex:7];

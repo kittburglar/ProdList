@@ -13,16 +13,16 @@
 -(id)initWithName:(NSString *)name {
     self = [super init];
     self.name = name;
-    self.color = nil;
+    self.buttonColor = 7;
     self.date = [[NSDate alloc] init];
     
     return self;
 }
 
--(id)initWithNameAndColor:(NSString *)name withColor:(UIColor *)color{
+-(id)initWithNameAndColor:(NSString *)name withColor:(NSInteger)color{
     self = [super init];
     self.name = name;
-    self.color = color;
+    self.buttonColor = 7;
     self.date = [[NSDate alloc] init];
     
     return self;
@@ -31,17 +31,17 @@
 -(id)initWithNameAndDate:(NSString *)name withDate:(NSDate *)date{
     self = [super init];
     self.name = name;
-    self.color = nil;
+    self.buttonColor = 7;
     self.date = date;
     
     return self;
 }
 
 
--(id)initWithNameAndColorAndDate:(NSString *)name withColor:(UIColor *)color withDate:(NSDate *)date{
+-(id)initWithNameAndColorAndDate:(NSString *)name withColor:(NSInteger)color withDate:(NSDate *)date{
     self = [super init];
     self.name = name;
-    self.color = color;
+    self.buttonColor = color;
     self.date = date;
     
     return self;
