@@ -41,6 +41,7 @@ static NSString *CellIdentifier = @"Cell";
     
     self.selectedColor = 7;
     
+    self.lightMode = YES;
     
     //Add accessory view (bar on top of keyboard)
     self.inputAccView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, [[UIScreen mainScreen] bounds].size.width, 50.0)];
@@ -67,21 +68,12 @@ static NSString *CellIdentifier = @"Cell";
     self.textField.inputAccessoryView = self.inputAccView;
     
     //Create color Button programmically
-    UIButton *colorButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    colorButton.frame = CGRectMake(110, CGRectGetMaxY(self.inputAccView.bounds)/2 - 40/2, 40, 40);
-    [colorButton setBackgroundColor:[UIColor darkGrayColor]];
-    [colorButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [colorButton addTarget:self action:@selector(pickColor:) forControlEvents:UIControlEventTouchUpInside];
-    [self.inputAccView addSubview:colorButton];
-    self.textField.inputAccessoryView = self.inputAccView;
-    
-    //Create colormode Button programmically
-    UIButton *colorModeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    colorModeButton.frame = CGRectMake(160, CGRectGetMaxY(self.inputAccView.bounds)/2 - 40/2, 40, 40);
-    [colorModeButton setBackgroundColor:[UIColor darkGrayColor]];
-    [colorModeButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [colorModeButton addTarget:self action:@selector(pickColorMode:) forControlEvents:UIControlEventTouchUpInside];
-    [self.inputAccView addSubview:colorModeButton];
+    self.colorButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    self.colorButton.frame = CGRectMake(110, CGRectGetMaxY(self.inputAccView.bounds)/2 - 40/2, 40, 40);
+    [self.colorButton setBackgroundColor:[UIColor darkGrayColor]];
+    [self.colorButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [self.colorButton addTarget:self action:@selector(pickColor:) forControlEvents:UIControlEventTouchUpInside];
+    [self.inputAccView addSubview:self.colorButton];
     self.textField.inputAccessoryView = self.inputAccView;
     
     // Add date to top label
@@ -176,42 +168,6 @@ static NSString *CellIdentifier = @"Cell";
     
 }
 
-- (void)pickColorMode:(UIButton*)button
-{
-    NSLog(@"ColorMode button clicked.");
-    
-    [self changeColorMode];
-    [self.textField resignFirstResponder];
-    
-}
-
-- (void)changeColorMode {
-    colorArray = [NSMutableArray arrayWithObjects:
-                  UIColorFromRGB(0xcc6666),
-                  UIColorFromRGB(0xde935f),
-                  UIColorFromRGB(0xf0c674),
-                  UIColorFromRGB(0xb5bd68),
-                  UIColorFromRGB(0x8abeb7),
-                  UIColorFromRGB(0x81a2be),
-                  UIColorFromRGB(0xb294bb),
-                  UIColorFromRGB(0xc5c8c6),
-                  UIColorFromRGB(0x969896),
-                  UIColorFromRGB(0x373b41),
-                  UIColorFromRGB(0x282a2e),
-                  UIColorFromRGB(0x1d1f21),nil];
-    
-    self.selectedColor = 7;
-    self.longPressCell.contentView.backgroundColor = [colorArray objectAtIndex:11];
-    self.view.backgroundColor = [colorArray objectAtIndex:11];
-    [self.view setNeedsDisplay];
-    [self.tableView reloadRowsAtIndexPaths:[self.tableView indexPathsForVisibleRows]
-                     withRowAnimation:UITableViewRowAnimationNone];
-    self.textField.backgroundColor = [colorArray objectAtIndex:8];
-    self.dateLabel.textColor = [colorArray objectAtIndex:7];
-    [self.collectionView reloadData];
-    [self.tableView reloadData];
-}
-
 
 
 #pragma mark - UICollectionView
@@ -246,6 +202,7 @@ static NSString *CellIdentifier = @"Cell";
         self.selectedColor = 7;
     }
     self.selectedColor = indexPath.row;
+    self.colorButton.backgroundColor = [colorArray objectAtIndex:self.selectedColor];
     [cell setHighlighted:YES];
 }
 
@@ -435,12 +392,16 @@ static NSString *CellIdentifier = @"Cell";
         self.longPressCell.contentView.backgroundColor = [colorArray objectAtIndex:11];
         CGPoint swipeLocation = [gestureRecognizer locationInView:self.tableView];
         
+        
         self.longPressIndexPath = [self.tableView indexPathForRowAtPoint:swipeLocation];
         
         self.longPressCell = (MyTableViewCell *)[self.tableView cellForRowAtIndexPath:[self longPressIndexPath]];
         /*
         self.longPressCell.titleLabel.text = [anArray[self.longPressIndexPath.row] returnDate];
          */
+        
+        self.colorButton.backgroundColor = self.longPressCell.colorButton.backgroundColor;
+        
         [self setModifying:YES];
         [self setLastModified:self.longPressIndexPath.row];
         MyTableViewCell *cell = (MyTableViewCell *)[self.tableView cellForRowAtIndexPath:self.longPressIndexPath];
@@ -539,6 +500,9 @@ static NSString *CellIdentifier = @"Cell";
         [self.tableView endUpdates];
     }
     self.textField.text = nil;
+    
+    self.selectedColor = 7;
+    self.colorButton.backgroundColor = [UIColor darkGrayColor];
     [sender resignFirstResponder];
 }
 
@@ -559,5 +523,51 @@ static NSString *CellIdentifier = @"Cell";
     
 }
 - (IBAction)testButtonPressed:(UIButton *)sender {
+}
+- (IBAction)modeButton:(id)sender {
+    if (self.lightMode) {
+        colorArray = [NSMutableArray arrayWithObjects:
+                      UIColorFromRGB(0xcc6666),
+                      UIColorFromRGB(0xde935f),
+                      UIColorFromRGB(0xf0c674),
+                      UIColorFromRGB(0xb5bd68),
+                      UIColorFromRGB(0x8abeb7),
+                      UIColorFromRGB(0x81a2be),
+                      UIColorFromRGB(0xb294bb),
+                      UIColorFromRGB(0xc5c8c6),
+                      UIColorFromRGB(0x969896),
+                      UIColorFromRGB(0x373b41),
+                      UIColorFromRGB(0x282a2e),
+                      UIColorFromRGB(0x1d1f21),nil];
+        [self.modeLabel setTitle:@"Dark" forState:UIControlStateNormal];
+        self.lightMode = NO;
+    }
+    else{
+        colorArray = [NSMutableArray arrayWithObjects:
+                      UIColorFromRGB(0xc82829),
+                      UIColorFromRGB(0xf5871f),
+                      UIColorFromRGB(0xeab700),
+                      UIColorFromRGB(0x718c00),
+                      UIColorFromRGB(0x3e999f),
+                      UIColorFromRGB(0x4271ae),
+                      UIColorFromRGB(0x8959a8),
+                      UIColorFromRGB(0x4d4d4c),
+                      UIColorFromRGB(0x8e908c),
+                      UIColorFromRGB(0xd6d6d6),
+                      UIColorFromRGB(0xefefef),
+                      UIColorFromRGB(0xffffff),nil];
+        [self.modeLabel setTitle:@"Light" forState:UIControlStateNormal];
+        self.lightMode = YES;
+    }
+    self.selectedColor = 7;
+    self.longPressCell.contentView.backgroundColor = [colorArray objectAtIndex:11];
+    self.view.backgroundColor = [colorArray objectAtIndex:11];
+    [self.view setNeedsDisplay];
+    [self.tableView reloadRowsAtIndexPaths:[self.tableView indexPathsForVisibleRows]
+                          withRowAnimation:UITableViewRowAnimationNone];
+    self.textField.backgroundColor = [colorArray objectAtIndex:8];
+    self.dateLabel.textColor = [colorArray objectAtIndex:7];
+    [self.collectionView reloadData];
+    [self.tableView reloadData];
 }
 @end

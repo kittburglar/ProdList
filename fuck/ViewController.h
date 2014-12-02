@@ -20,6 +20,8 @@
 @property (strong, nonatomic) IBOutlet UITextField *textField;
 @property (strong, nonatomic) IBOutlet UILabel *dateLabel;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet UIButton *colorButton;
+
 @property (nonatomic, assign) BOOL modifying;
 @property (nonatomic, assign) NSInteger lastModified;
 @property (nonatomic, assign) NSIndexPath *longPressIndexPath;
@@ -29,6 +31,10 @@
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong, nonatomic) IBOutlet UICollectionViewFlowLayout *collectionFlowLayout;
 @property (strong, nonatomic) UIView *inputAccView;
+@property (nonatomic, assign) BOOL lightMode;
+@property (strong, nonatomic) IBOutlet UIButton *modeLabel;
+
 - (IBAction)editButton:(UIButton *)sender;
 - (IBAction)textReturn:(id)sender;
+- (IBAction)modeButton:(id)sender;
 @end

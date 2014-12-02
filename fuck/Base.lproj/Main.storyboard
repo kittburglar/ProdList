@@ -115,6 +115,15 @@
                                     <outlet property="dataSource" destination="vXZ-lx-hvc" id="o9p-1v-7mO"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qi2-dV-Ff9">
+                                <rect key="frame" x="278" y="20" width="46" height="30"/>
+                                <state key="normal" title="Dark">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="modeButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="GMv-vf-V5Q"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -123,7 +132,9 @@
                             <constraint firstItem="yYI-Z8-eUB" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="8E6-c0-aAM"/>
                             <constraint firstItem="ySK-h2-KAR" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="SPs-fi-72d"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="2eg-tG-lax" secondAttribute="bottom" id="WRm-Ni-Y5c"/>
+                            <constraint firstAttribute="centerX" secondItem="qi2-dV-Ff9" secondAttribute="centerX" constant="-1" id="cr3-Iu-Ug2"/>
                             <constraint firstItem="2eg-tG-lax" firstAttribute="top" secondItem="ySK-h2-KAR" secondAttribute="bottom" constant="9" id="er3-cp-ZVK"/>
+                            <constraint firstItem="qi2-dV-Ff9" firstAttribute="top" secondItem="yYI-Z8-eUB" secondAttribute="top" constant="-4" id="mM2-Cj-0Y5"/>
                             <constraint firstItem="2eg-tG-lax" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="rEP-8K-SSg"/>
                             <constraint firstItem="ySK-h2-KAR" firstAttribute="top" secondItem="yYI-Z8-eUB" secondAttribute="bottom" constant="8" id="ruN-nZ-EFt"/>
                             <constraint firstItem="7Sc-3v-lMG" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="wq4-JM-su4"/>
@@ -131,6 +142,7 @@
                     </view>
                     <connections>
                         <outlet property="dateLabel" destination="yYI-Z8-eUB" id="Tg8-qz-N32"/>
+                        <outlet property="modeLabel" destination="qi2-dV-Ff9" id="U2L-6K-3mU"/>
                         <outlet property="tableView" destination="2eg-tG-lax" id="UkA-4k-Blc"/>
                         <outlet property="textField" destination="ySK-h2-KAR" id="yDu-fj-umi"/>
                     </connections>
