@@ -24,10 +24,9 @@ static NSString *CellIdentifier = @"Cell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    
+    self.lightMode = YES;
+    [self setNeedsStatusBarAppearanceUpdate];
     self.didSelect = NO;
-    
-    
     colorArray = [NSMutableArray arrayWithObjects:
                   UIColorFromRGB(0xc82829),
                   UIColorFromRGB(0xf5871f),
@@ -44,7 +43,6 @@ static NSString *CellIdentifier = @"Cell";
     
     self.selectedColor = 7;
     
-    self.lightMode = YES;
     
     //Add accessory view (bar on top of keyboard)
     self.inputAccView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, [[UIScreen mainScreen] bounds].size.width, 50.0)];
@@ -117,7 +115,7 @@ static NSString *CellIdentifier = @"Cell";
     
 }
 
-
+//Set up the collection view to be the same size as keyboard view
 -(void)keyboardOnScreen:(NSNotification *)notification
 {
     NSDictionary *info  = notification.userInfo;
@@ -382,7 +380,7 @@ static NSString *CellIdentifier = @"Cell";
 }
 
 
-
+#pragma mark - Touch Functions
 
 -(void)didPressLong:(UIGestureRecognizer *)gestureRecognizer {
     /*
@@ -453,6 +451,7 @@ static NSString *CellIdentifier = @"Cell";
     }
     
 }
+
 
 
 - (IBAction)textReturn:(id)sender {
@@ -530,6 +529,22 @@ static NSString *CellIdentifier = @"Cell";
 }
 - (IBAction)testButtonPressed:(UIButton *)sender {
 }
+
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    if ([self lightMode]) {
+        return UIStatusBarStyleDefault;
+    }
+    
+    else if(![self lightMode]){
+        return UIStatusBarStyleLightContent;
+    }
+    else{
+        return UIStatusBarStyleDefault;
+    }
+}
+
+
 - (IBAction)modeButton:(id)sender {
     if (self.lightMode) {
         colorArray = [NSMutableArray arrayWithObjects:
@@ -547,6 +562,8 @@ static NSString *CellIdentifier = @"Cell";
                       UIColorFromRGB(0x1d1f21),nil];
         [self.modeLabel setTitle:@"Dark" forState:UIControlStateNormal];
         self.lightMode = NO;
+        
+        
     }
     else{
         colorArray = [NSMutableArray arrayWithObjects:
@@ -575,5 +592,7 @@ static NSString *CellIdentifier = @"Cell";
     self.dateLabel.textColor = [colorArray objectAtIndex:7];
     [self.collectionView reloadData];
     [self.tableView reloadData];
+    [self setNeedsStatusBarAppearanceUpdate];
+
 }
 @end
