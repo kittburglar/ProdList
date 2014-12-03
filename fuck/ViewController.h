@@ -21,6 +21,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *dateLabel;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UIButton *colorButton;
+@property (strong, nonatomic) IBOutlet UIButton *editButton;
+@property (strong, nonatomic) IBOutlet UIButton *modeButton;
 
 @property (nonatomic, assign) BOOL modifying;
 @property (nonatomic, assign) NSInteger lastModified;

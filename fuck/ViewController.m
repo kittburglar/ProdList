@@ -47,7 +47,7 @@ static NSString *CellIdentifier = @"Cell";
     //Add accessory view (bar on top of keyboard)
     self.inputAccView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, [[UIScreen mainScreen] bounds].size.width, 50.0)];
     [self.inputAccView setBackgroundColor:[UIColor lightGrayColor]];
-    [self.inputAccView setAlpha: 0.8];
+    //[self.inputAccView setAlpha: 0.8];
     
     //Create keyboard Button programmically
     UIButton *keyboardButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -590,6 +590,10 @@ static NSString *CellIdentifier = @"Cell";
                           withRowAnimation:UITableViewRowAnimationNone];
     self.textField.backgroundColor = [colorArray objectAtIndex:8];
     self.dateLabel.textColor = [colorArray objectAtIndex:7];
+    [self.editButton setTitleColor:[colorArray objectAtIndex:5] forState:UIControlStateNormal];
+    [self.editButton setTitleColor:[colorArray objectAtIndex:7] forState:UIControlStateSelected];
+    [self.modeButton setTitleColor:[colorArray objectAtIndex:5] forState:UIControlStateNormal];
+    [self.modeButton setTitleColor:[colorArray objectAtIndex:7] forState:UIControlStateSelected];
     [self.collectionView reloadData];
     [self.tableView reloadData];
     [self setNeedsStatusBarAppearanceUpdate];

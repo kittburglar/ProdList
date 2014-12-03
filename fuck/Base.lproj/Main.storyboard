@@ -142,6 +142,8 @@
                     </view>
                     <connections>
                         <outlet property="dateLabel" destination="yYI-Z8-eUB" id="Tg8-qz-N32"/>
+                        <outlet property="editButton" destination="7Sc-3v-lMG" id="DzC-N2-53R"/>
+                        <outlet property="modeButton" destination="qi2-dV-Ff9" id="hkH-86-E5L"/>
                         <outlet property="modeLabel" destination="qi2-dV-Ff9" id="U2L-6K-3mU"/>
                         <outlet property="tableView" destination="2eg-tG-lax" id="UkA-4k-Blc"/>
                         <outlet property="textField" destination="ySK-h2-KAR" id="yDu-fj-umi"/>
