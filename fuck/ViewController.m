@@ -25,6 +25,9 @@ static NSString *CellIdentifier = @"Cell";
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
+    self.didSelect = NO;
+    
+    
     colorArray = [NSMutableArray arrayWithObjects:
                   UIColorFromRGB(0xc82829),
                   UIColorFromRGB(0xf5871f),
@@ -198,9 +201,10 @@ static NSString *CellIdentifier = @"Cell";
     // If you need to use the touched cell, you can retrieve it like so
     UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
     if (cell.backgroundColor == nil) {
-        //self.selectedColor = UIColorFromRGB(0x4d4d4c);
+        NSLog(@"cell background is nil!");
         self.selectedColor = 7;
     }
+    self.didSelect = YES;
     self.selectedColor = indexPath.row;
     self.colorButton.backgroundColor = [colorArray objectAtIndex:self.selectedColor];
     [cell setHighlighted:YES];
@@ -266,6 +270,7 @@ static NSString *CellIdentifier = @"Cell";
     cell.descriptionLabel.text = [[anArray objectAtIndex:indexPath.row] returnDate];
     if ([colorArray objectAtIndex:[[anArray objectAtIndex:indexPath.row] buttonColor]] != nil) {
         cell.colorButton.backgroundColor = [colorArray objectAtIndex:[[anArray objectAtIndex:indexPath.row] buttonColor]];
+        cell.colorNumber = [[anArray objectAtIndex:indexPath.row] buttonColor];
     }
     cell.contentView.backgroundColor = [colorArray objectAtIndex:11];
     cell.titleLabel.textColor = [colorArray objectAtIndex:7];
@@ -453,6 +458,7 @@ static NSString *CellIdentifier = @"Cell";
 - (IBAction)textReturn:(id)sender {
     
     NSLog(@"textReturn!");
+    //self.didSelect = NO;
     
     //check for whitespace entry or empty textfield
     NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
@@ -463,46 +469,46 @@ static NSString *CellIdentifier = @"Cell";
     }
     //Add add to core data and list
     else if ([self modifying]) {
+        
+        //need to copy color of cell
+        
+        //
+        
         NSLog(@"textReturn while modifying!");
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self lastModified] inSection:0];
         MyTableViewCell *cell = (MyTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
         cell.titleLabel.textColor = [colorArray objectAtIndex:7];
+        //
+        if (![self didSelect]) {
+            self.selectedColor = cell.colorNumber;
+        }
+        
+        
         [anArray removeObjectAtIndex:[self lastModified]];
-        
-        //Item * i = [[Item alloc] initWithName:self.textField.text];
-        
-        //Item * i = [[Item alloc] initWithNameAndDate:self.textField.text withDate:[self.pickerView date]];
         
         Item * i = [[Item alloc] initWithNameAndColorAndDate:self.textField.text withColor:self.selectedColor withDate:[self.pickerView date]];
         
         
         [anArray insertObject:i atIndex:[self lastModified]];
-        self.longPressCell.contentView.backgroundColor = [colorArray objectAtIndex:11];
-        
         
         [self.tableView reloadData];
         [self setModifying:NO];
     }
     else{
-        //Item * i = [[Item alloc] initWithName:self.textField.text];
-        
-        //Item * i = [[Item alloc] initWithNameAndDate:self.textField.text withDate:[self.pickerView date]];
-        
         Item * i = [[Item alloc] initWithNameAndColorAndDate:self.textField.text withColor:self.selectedColor withDate:[self.pickerView date]];
         
         [anArray addObject: i];
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:([anArray count] - 1) inSection:0];
-        //NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    
-        //UITableView *tv = (UITableView *)self.tableView;
         [self.tableView beginUpdates];
         [self.tableView insertRowsAtIndexPaths:@[indexPath]withRowAnimation:UITableViewRowAnimationAutomatic];
         [self.tableView endUpdates];
     }
     self.textField.text = nil;
     
+    //Change this!
     self.selectedColor = 7;
     self.colorButton.backgroundColor = [UIColor darkGrayColor];
+    self.didSelect = NO;
     [sender resignFirstResponder];
 }
 
@@ -559,7 +565,7 @@ static NSString *CellIdentifier = @"Cell";
         [self.modeLabel setTitle:@"Light" forState:UIControlStateNormal];
         self.lightMode = YES;
     }
-    self.selectedColor = 7;
+    //self.selectedColor = 7;
     self.longPressCell.contentView.backgroundColor = [colorArray objectAtIndex:11];
     self.view.backgroundColor = [colorArray objectAtIndex:11];
     [self.view setNeedsDisplay];

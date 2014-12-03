@@ -14,5 +14,6 @@
 @property (nonatomic, weak) IBOutlet UILabel *subtitleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (nonatomic, weak) IBOutlet UIButton *colorButton;
+@property (nonatomic, assign) NSInteger colorNumber;
 
 @end

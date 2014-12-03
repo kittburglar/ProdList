@@ -32,6 +32,7 @@
 @property (strong, nonatomic) IBOutlet UICollectionViewFlowLayout *collectionFlowLayout;
 @property (strong, nonatomic) UIView *inputAccView;
 @property (nonatomic, assign) BOOL lightMode;
+@property (nonatomic, assign) BOOL didSelect;
 @property (strong, nonatomic) IBOutlet UIButton *modeLabel;
 
 - (IBAction)editButton:(UIButton *)sender;
