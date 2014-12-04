@@ -36,6 +36,7 @@
 @property (nonatomic, assign) BOOL lightMode;
 @property (nonatomic, assign) BOOL didSelect;
 @property (strong, nonatomic) IBOutlet UIButton *modeLabel;
+@property (strong, nonatomic) IBOutlet UIView *optionView;
 
 - (IBAction)editButton:(UIButton *)sender;
 - (IBAction)textReturn:(id)sender;

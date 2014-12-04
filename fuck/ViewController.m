@@ -23,7 +23,9 @@ static NSString *CellIdentifier = @"Cell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    self.optionView.hidden = NO;
+    
     self.lightMode = YES;
     [self setNeedsStatusBarAppearanceUpdate];
     self.didSelect = NO;
@@ -101,15 +103,6 @@ static NSString *CellIdentifier = @"Cell";
     //Initalize collectionview
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(keyboardOnScreen:) name:UIKeyboardDidShowNotification object:nil];
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     self.tableView.delegate = self;
     

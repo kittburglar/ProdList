@@ -17,13 +17,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yYI-Z8-eUB">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yYI-Z8-eUB">
                                 <rect key="frame" x="16" y="24" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.30196078430000001" green="0.30196078430000001" blue="0.29803921570000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Sc-3v-lMG">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qi2-dV-Ff9">
+                                <rect key="frame" x="278" y="20" width="46" height="30"/>
+                                <state key="normal" title="Dark">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="modeButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="GMv-vf-V5Q"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Sc-3v-lMG">
                                 <rect key="frame" x="538" y="20" width="46" height="30"/>
                                 <state key="normal" title="Edit">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -32,7 +41,7 @@
                                     <action selector="editButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="6zF-gS-XQT"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ySK-h2-KAR">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ySK-h2-KAR">
                                 <rect key="frame" x="16" y="53" width="169" height="30"/>
                                 <color key="backgroundColor" red="0.83921568627450982" green="0.83921568627450982" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <string key="placeholder">Add a new item                                                                                                                                       </string>
@@ -48,7 +57,7 @@
                                     <action selector="textReturn:" destination="vXZ-lx-hvc" eventType="editingDidEndOnExit" id="xA1-gj-u1A"/>
                                 </connections>
                             </textField>
-                            <tableView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="60" sectionHeaderHeight="30" sectionFooterHeight="30" translatesAutoresizingMaskIntoConstraints="NO" id="2eg-tG-lax">
+                            <tableView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="60" sectionHeaderHeight="30" sectionFooterHeight="30" translatesAutoresizingMaskIntoConstraints="NO" id="2eg-tG-lax">
                                 <rect key="frame" x="17" y="92" width="568" height="508"/>
                                 <color key="sectionIndexBackgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
@@ -115,29 +124,65 @@
                                     <outlet property="dataSource" destination="vXZ-lx-hvc" id="o9p-1v-7mO"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qi2-dV-Ff9">
-                                <rect key="frame" x="278" y="20" width="46" height="30"/>
-                                <state key="normal" title="Dark">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="modeButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="GMv-vf-V5Q"/>
-                                </connections>
-                            </button>
+                            <visualEffectView opaque="NO" alpha="0.94999999999999996" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DQC-TV-e4i" userLabel="Blur">
+                                <rect key="frame" x="180" y="236" width="240" height="128"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="pWh-Vx-0aS">
+                                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <visualEffectView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TtX-W2-a3U" userLabel="Vibrancy">
+                                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="e41-fD-8jW">
+                                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3xp-Ul-Qli">
+                                                        <rect key="frame" x="99" y="54" width="42" height="21"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="centerY" secondItem="3xp-Ul-Qli" secondAttribute="centerY" constant="-0.5" id="0Gi-PZ-snD"/>
+                                                    <constraint firstAttribute="centerX" secondItem="3xp-Ul-Qli" secondAttribute="centerX" id="4Cj-GC-zBl"/>
+                                                </constraints>
+                                            </view>
+                                            <vibrancyEffect>
+                                                <blurEffect style="dark"/>
+                                            </vibrancyEffect>
+                                        </visualEffectView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="TtX-W2-a3U" firstAttribute="top" secondItem="pWh-Vx-0aS" secondAttribute="top" id="8Y9-0z-qZP"/>
+                                        <constraint firstAttribute="trailing" secondItem="TtX-W2-a3U" secondAttribute="trailing" id="fNi-gs-O0d"/>
+                                    </constraints>
+                                </view>
+                                <constraints>
+                                    <constraint firstItem="TtX-W2-a3U" firstAttribute="height" secondItem="DQC-TV-e4i" secondAttribute="height" id="CsP-5j-ped"/>
+                                    <constraint firstItem="TtX-W2-a3U" firstAttribute="width" secondItem="DQC-TV-e4i" secondAttribute="width" id="k7c-Pl-wbG"/>
+                                </constraints>
+                                <blurEffect style="dark"/>
+                            </visualEffectView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="2eg-tG-lax" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="1qI-sk-Jre"/>
                             <constraint firstAttribute="centerX" secondItem="ySK-h2-KAR" secondAttribute="centerX" id="6aq-dL-yGN"/>
                             <constraint firstItem="yYI-Z8-eUB" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="8E6-c0-aAM"/>
+                            <constraint firstAttribute="centerX" secondItem="DQC-TV-e4i" secondAttribute="centerX" id="N9K-Dq-jem"/>
+                            <constraint firstItem="7Sc-3v-lMG" firstAttribute="top" secondItem="qi2-dV-Ff9" secondAttribute="top" id="Nal-8S-rOw"/>
                             <constraint firstItem="ySK-h2-KAR" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="SPs-fi-72d"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="2eg-tG-lax" secondAttribute="bottom" id="WRm-Ni-Y5c"/>
                             <constraint firstAttribute="centerX" secondItem="qi2-dV-Ff9" secondAttribute="centerX" constant="-1" id="cr3-Iu-Ug2"/>
-                            <constraint firstItem="2eg-tG-lax" firstAttribute="top" secondItem="ySK-h2-KAR" secondAttribute="bottom" constant="9" id="er3-cp-ZVK"/>
+                            <constraint firstItem="2eg-tG-lax" firstAttribute="top" secondItem="ySK-h2-KAR" secondAttribute="bottom" id="er3-cp-ZVK"/>
+                            <constraint firstAttribute="height" secondItem="DQC-TV-e4i" secondAttribute="height" id="jIJ-Z1-KfS"/>
                             <constraint firstItem="qi2-dV-Ff9" firstAttribute="top" secondItem="yYI-Z8-eUB" secondAttribute="top" constant="-4" id="mM2-Cj-0Y5"/>
                             <constraint firstItem="2eg-tG-lax" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="rEP-8K-SSg"/>
                             <constraint firstItem="ySK-h2-KAR" firstAttribute="top" secondItem="yYI-Z8-eUB" secondAttribute="bottom" constant="8" id="ruN-nZ-EFt"/>
+                            <constraint firstAttribute="centerY" secondItem="DQC-TV-e4i" secondAttribute="centerY" id="u7E-sD-KkO"/>
                             <constraint firstItem="7Sc-3v-lMG" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="wq4-JM-su4"/>
+                            <constraint firstAttribute="width" secondItem="DQC-TV-e4i" secondAttribute="width" id="ytR-4v-Brz"/>
+                            <constraint firstItem="qi2-dV-Ff9" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="zAh-fh-DF7"/>
                         </constraints>
                     </view>
                     <connections>
@@ -151,7 +196,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="136" y="91"/>
+            <point key="canvasLocation" x="136" y="65"/>
         </scene>
     </scenes>
 </document>
