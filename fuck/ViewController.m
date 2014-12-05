@@ -24,7 +24,6 @@ static NSString *CellIdentifier = @"Cell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.optionView.hidden = NO;
     
     self.lightMode = YES;
     [self setNeedsStatusBarAppearanceUpdate];
@@ -516,6 +515,12 @@ static NSString *CellIdentifier = @"Cell";
 
 
     
+- (IBAction)doneOptionsButton:(UIButton *)sender {
+    [UIView animateWithDuration:0.2 animations:^() {
+        self.optionView.alpha = 0.0;
+    }];
+}
+
 - (IBAction)editButton:(UIButton *)sender {
     [self.tableView setEditing:!self.tableView.editing animated:true];
     
@@ -539,6 +544,10 @@ static NSString *CellIdentifier = @"Cell";
 
 
 - (IBAction)modeButton:(id)sender {
+    [UIView animateWithDuration:0.2 animations:^() {
+        self.optionView.alpha = 1.0;
+    }];
+    /*
     if (self.lightMode) {
         colorArray = [NSMutableArray arrayWithObjects:
                       UIColorFromRGB(0xcc6666),
@@ -590,6 +599,6 @@ static NSString *CellIdentifier = @"Cell";
     [self.collectionView reloadData];
     [self.tableView reloadData];
     [self setNeedsStatusBarAppearanceUpdate];
-
+     */
 }
 @end

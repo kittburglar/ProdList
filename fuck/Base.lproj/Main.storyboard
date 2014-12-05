@@ -141,10 +141,21 @@
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cYc-Kh-lfc">
+                                                        <rect key="frame" x="186" y="8" width="46" height="30"/>
+                                                        <state key="normal" title="Button">
+                                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="doneOptionsButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="gPU-mh-Xnd"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                                 <constraints>
                                                     <constraint firstAttribute="centerY" secondItem="3xp-Ul-Qli" secondAttribute="centerY" constant="-0.5" id="0Gi-PZ-snD"/>
                                                     <constraint firstAttribute="centerX" secondItem="3xp-Ul-Qli" secondAttribute="centerX" id="4Cj-GC-zBl"/>
+                                                    <constraint firstItem="cYc-Kh-lfc" firstAttribute="top" secondItem="e41-fD-8jW" secondAttribute="top" constant="8" id="94z-MB-GvV"/>
+                                                    <constraint firstAttribute="trailing" secondItem="cYc-Kh-lfc" secondAttribute="trailing" constant="8" id="pcT-Ea-cC6"/>
                                                 </constraints>
                                             </view>
                                             <vibrancyEffect>
@@ -190,6 +201,7 @@
                         <outlet property="editButton" destination="7Sc-3v-lMG" id="DzC-N2-53R"/>
                         <outlet property="modeButton" destination="qi2-dV-Ff9" id="hkH-86-E5L"/>
                         <outlet property="modeLabel" destination="qi2-dV-Ff9" id="U2L-6K-3mU"/>
+                        <outlet property="optionView" destination="DQC-TV-e4i" id="aEa-x9-pYx"/>
                         <outlet property="tableView" destination="2eg-tG-lax" id="UkA-4k-Blc"/>
                         <outlet property="textField" destination="ySK-h2-KAR" id="yDu-fj-umi"/>
                     </connections>

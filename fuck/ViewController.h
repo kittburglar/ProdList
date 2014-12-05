@@ -38,6 +38,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *modeLabel;
 @property (strong, nonatomic) IBOutlet UIView *optionView;
 
+- (IBAction)doneOptionsButton:(UIButton *)sender;
 - (IBAction)editButton:(UIButton *)sender;
 - (IBAction)textReturn:(id)sender;
 - (IBAction)modeButton:(id)sender;
