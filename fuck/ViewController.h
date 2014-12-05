@@ -15,6 +15,7 @@
     NSMutableArray *anArray;
     #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     NSMutableArray *colorArray;
+    NSMutableArray *optionsArray;
 }
 
 @property (strong, nonatomic) IBOutlet UITextField *textField;
@@ -37,7 +38,10 @@
 @property (nonatomic, assign) BOOL didSelect;
 @property (strong, nonatomic) IBOutlet UIButton *modeLabel;
 @property (strong, nonatomic) IBOutlet UIView *optionView;
+@property (strong, nonatomic) IBOutlet UITableView *firstTableView;
+@property (strong, nonatomic) IBOutlet UITableView *secondTableView;
 
+- (IBAction)enterButton:(UIButton *)sender;
 - (IBAction)doneOptionsButton:(UIButton *)sender;
 - (IBAction)editButton:(UIButton *)sender;
 - (IBAction)textReturn:(id)sender;

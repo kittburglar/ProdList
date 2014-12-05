@@ -17,6 +17,7 @@
 		F8AA3B7E1A19C50A00C934E0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8AA3B7D1A19C50A00C934E0 /* Images.xcassets */; };
 		F8AA3B811A19C50A00C934E0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8AA3B7F1A19C50A00C934E0 /* LaunchScreen.xib */; };
 		F8AA3B8D1A19C50B00C934E0 /* fuckTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F8AA3B8C1A19C50B00C934E0 /* fuckTests.m */; };
+		F8C168C51A31D51400E80986 /* OptionsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C168C41A31D51400E80986 /* OptionsTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,8 @@
 		F8AA3B861A19C50B00C934E0 /* fuckTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = fuckTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8AA3B8B1A19C50B00C934E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F8AA3B8C1A19C50B00C934E0 /* fuckTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = fuckTests.m; sourceTree = "<group>"; };
+		F8C168C31A31D51400E80986 /* OptionsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionsTableViewCell.h; sourceTree = "<group>"; };
+		F8C168C41A31D51400E80986 /* OptionsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionsTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +105,8 @@
 				F806EA0D1A264E4D00A8CCFB /* Item.m */,
 				F80314A31A26D78B00E68248 /* MyTableViewCell.h */,
 				F80314A41A26D78B00E68248 /* MyTableViewCell.m */,
+				F8C168C31A31D51400E80986 /* OptionsTableViewCell.h */,
+				F8C168C41A31D51400E80986 /* OptionsTableViewCell.m */,
 			);
 			path = fuck;
 			sourceTree = "<group>";
@@ -237,6 +242,7 @@
 				F8AA3B761A19C50A00C934E0 /* fuck.xcdatamodeld in Sources */,
 				F80314A51A26D78B00E68248 /* MyTableViewCell.m in Sources */,
 				F8AA3B791A19C50A00C934E0 /* ViewController.m in Sources */,
+				F8C168C51A31D51400E80986 /* OptionsTableViewCell.m in Sources */,
 				F8AA3B701A19C50A00C934E0 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

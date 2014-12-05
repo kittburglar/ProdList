@@ -125,19 +125,19 @@
                                 </connections>
                             </tableView>
                             <visualEffectView opaque="NO" alpha="0.0" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DQC-TV-e4i" userLabel="Blur">
-                                <rect key="frame" x="180" y="236" width="240" height="128"/>
+                                <rect key="frame" x="0.0" y="198" width="600" height="166"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="pWh-Vx-0aS">
-                                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="166"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <visualEffectView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TtX-W2-a3U" userLabel="Vibrancy">
-                                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="166"/>
                                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="e41-fD-8jW">
-                                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="600" height="166"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cYc-Kh-lfc">
-                                                        <rect key="frame" x="186" y="8" width="46" height="30"/>
+                                                        <rect key="frame" x="513" y="8" width="46" height="30"/>
                                                         <state key="normal" title="Button">
                                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
@@ -146,13 +146,62 @@
                                                         </connections>
                                                     </button>
                                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="uMU-KP-BJD">
-                                                        <rect key="frame" x="112" y="46" width="120" height="74"/>
+                                                        <rect key="frame" x="0.0" y="46" width="600" height="250"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                        <prototypes>
+                                                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="fHu-1N-tyP" customClass="OptionsTableViewCell">
+                                                                <rect key="frame" x="0.0" y="0.0" width="120" height="44"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fHu-1N-tyP" id="lhh-2x-dRp">
+                                                                    <autoresizingMask key="autoresizingMask"/>
+                                                                    <subviews>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vRx-9j-Qzb">
+                                                                            <rect key="frame" x="8" y="11" width="42" height="21"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                        <segmentedControl opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dnv-o2-DmE">
+                                                                            <rect key="frame" x="469" y="8" width="123" height="29"/>
+                                                                            <segments>
+                                                                                <segment title="First"/>
+                                                                                <segment title="Second"/>
+                                                                            </segments>
+                                                                            <connections>
+                                                                                <action selector="optionsChanged:" destination="fHu-1N-tyP" eventType="valueChanged" id="pFq-BH-Sr0"/>
+                                                                            </connections>
+                                                                        </segmentedControl>
+                                                                    </subviews>
+                                                                    <constraints>
+                                                                        <constraint firstItem="dnv-o2-DmE" firstAttribute="trailing" secondItem="lhh-2x-dRp" secondAttribute="trailingMargin" id="R0b-nR-e2p"/>
+                                                                        <constraint firstItem="vRx-9j-Qzb" firstAttribute="leading" secondItem="lhh-2x-dRp" secondAttribute="leadingMargin" id="mdR-Dz-jZA"/>
+                                                                    </constraints>
+                                                                </tableViewCellContentView>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                                <connections>
+                                                                    <outlet property="optionsControl" destination="dnv-o2-DmE" id="RHj-Lg-u2B"/>
+                                                                    <outlet property="optionsLabel" destination="vRx-9j-Qzb" id="5Z1-qy-tc2"/>
+                                                                </connections>
+                                                            </tableViewCell>
+                                                        </prototypes>
+                                                        <sections/>
                                                     </tableView>
+                                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CEd-tq-Z4m">
+                                                        <rect key="frame" x="277" y="8" width="46" height="30"/>
+                                                        <state key="normal" title="Button">
+                                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="enterButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="tRK-qi-qLD"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstItem="cYc-Kh-lfc" firstAttribute="top" secondItem="e41-fD-8jW" secondAttribute="top" constant="8" id="94z-MB-GvV"/>
-                                                    <constraint firstItem="uMU-KP-BJD" firstAttribute="top" secondItem="cYc-Kh-lfc" secondAttribute="bottom" constant="8" id="Yg5-FU-7W0"/>
+                                                    <constraint firstItem="cYc-Kh-lfc" firstAttribute="top" secondItem="e41-fD-8jW" secondAttribute="top" constant="16" id="94z-MB-GvV"/>
+                                                    <constraint firstAttribute="centerX" secondItem="CEd-tq-Z4m" secondAttribute="centerX" id="Bhw-a7-GVV"/>
+                                                    <constraint firstItem="cYc-Kh-lfc" firstAttribute="top" secondItem="CEd-tq-Z4m" secondAttribute="top" id="N6n-Sk-2MP"/>
+                                                    <constraint firstItem="uMU-KP-BJD" firstAttribute="top" secondItem="cYc-Kh-lfc" secondAttribute="bottom" id="Yg5-FU-7W0"/>
                                                     <constraint firstAttribute="trailing" secondItem="cYc-Kh-lfc" secondAttribute="trailing" constant="8" id="pcT-Ea-cC6"/>
                                                 </constraints>
                                             </view>
@@ -202,9 +251,11 @@
                     <connections>
                         <outlet property="dateLabel" destination="yYI-Z8-eUB" id="Tg8-qz-N32"/>
                         <outlet property="editButton" destination="7Sc-3v-lMG" id="DzC-N2-53R"/>
+                        <outlet property="firstTableView" destination="2eg-tG-lax" id="BVS-PZ-PO9"/>
                         <outlet property="modeButton" destination="qi2-dV-Ff9" id="hkH-86-E5L"/>
                         <outlet property="modeLabel" destination="qi2-dV-Ff9" id="U2L-6K-3mU"/>
                         <outlet property="optionView" destination="DQC-TV-e4i" id="aEa-x9-pYx"/>
+                        <outlet property="secondTableView" destination="uMU-KP-BJD" id="BuP-sC-lME"/>
                         <outlet property="tableView" destination="2eg-tG-lax" id="UkA-4k-Blc"/>
                         <outlet property="textField" destination="ySK-h2-KAR" id="yDu-fj-umi"/>
                     </connections>

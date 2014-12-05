@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "Item.h"
 #import "MyTableViewCell.h"
+#import "OptionsTableViewCell.h"
 
 
 static NSString *CellIdentifier = @"Cell";
@@ -88,6 +89,8 @@ static NSString *CellIdentifier = @"Cell";
     
     //Init array of items
     anArray = [[NSMutableArray alloc] init];
+    optionsArray = [[NSMutableArray alloc] init];
+
     
     //add swipe detection to tableview
     UISwipeGestureRecognizer *swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipe:)];
@@ -104,7 +107,8 @@ static NSString *CellIdentifier = @"Cell";
     [center addObserver:self selector:@selector(keyboardOnScreen:) name:UIKeyboardDidShowNotification object:nil];
     
     self.tableView.delegate = self;
-    
+    self.secondTableView.delegate = self;
+    self.secondTableView.dataSource = self;
 }
 
 //Set up the collection view to be the same size as keyboard view
@@ -225,7 +229,13 @@ static NSString *CellIdentifier = @"Cell";
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSLog(@"%lu",(unsigned long)[anArray count]);
-    return [anArray count];
+    if (tableView == self.firstTableView) {
+        return [anArray count];
+    }
+    else{
+        return [optionsArray count];
+    }
+    
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -242,29 +252,46 @@ static NSString *CellIdentifier = @"Cell";
 
 
 
--(MyTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath  *)indexPath
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath  *)indexPath
 {
     NSLog(@"cellForRowAtIndexPath");
     static NSString *CellIdentifier = @"Cell";
     
-    MyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    cell.backgroundColor = [colorArray objectAtIndex:11];
-    [cell.titleLabel setText:[NSString stringWithFormat:@"Row %li in Section %li", (long)[indexPath row], (long)[indexPath section]]];
-    
-    
-    if (cell == nil) {
-        cell = [[MyTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault  reuseIdentifier:CellIdentifier];
+    if (tableView == self.firstTableView) {
+        MyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        cell.backgroundColor = [colorArray objectAtIndex:11];
+        [cell.titleLabel setText:[NSString stringWithFormat:@"Row %li in Section %li", (long)[indexPath row], (long)[indexPath section]]];
+        
+        
+        if (cell == nil) {
+            cell = [[MyTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault  reuseIdentifier:CellIdentifier];
+        }
+        
+        cell.titleLabel.text = [[anArray objectAtIndex:indexPath.row] name];
+        cell.descriptionLabel.text = [[anArray objectAtIndex:indexPath.row] returnDate];
+        if ([colorArray objectAtIndex:[[anArray objectAtIndex:indexPath.row] buttonColor]] != nil) {
+            cell.colorButton.backgroundColor = [colorArray objectAtIndex:[[anArray objectAtIndex:indexPath.row] buttonColor]];
+            cell.colorNumber = [[anArray objectAtIndex:indexPath.row] buttonColor];
+        }
+        cell.contentView.backgroundColor = [colorArray objectAtIndex:11];
+        cell.titleLabel.textColor = [colorArray objectAtIndex:7];
+        return cell;
     }
+    else {
+        
+        //second tableview
+        OptionsTableViewCell *optionsCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        
+        if (optionsCell == nil) {
+                optionsCell = [[OptionsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault  reuseIdentifier:CellIdentifier];
     
-    cell.titleLabel.text = [[anArray objectAtIndex:indexPath.row] name];
-    cell.descriptionLabel.text = [[anArray objectAtIndex:indexPath.row] returnDate];
-    if ([colorArray objectAtIndex:[[anArray objectAtIndex:indexPath.row] buttonColor]] != nil) {
-        cell.colorButton.backgroundColor = [colorArray objectAtIndex:[[anArray objectAtIndex:indexPath.row] buttonColor]];
-        cell.colorNumber = [[anArray objectAtIndex:indexPath.row] buttonColor];
+        }
+        //optionsCell.optionsLabel.text = @"Label1";
+        
+        optionsCell.optionsLabel.text = [optionsArray objectAtIndex:indexPath.row];
+        return optionsCell;
     }
-    cell.contentView.backgroundColor = [colorArray objectAtIndex:11];
-    cell.titleLabel.textColor = [colorArray objectAtIndex:7];
-    return cell;
+
 }
 
 //find parent cell
@@ -515,6 +542,14 @@ static NSString *CellIdentifier = @"Cell";
 
 
     
+- (IBAction)enterButton:(UIButton *)sender {
+    [optionsArray addObject: @"Label1"];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:([optionsArray count] - 1) inSection:0];
+    [self.secondTableView beginUpdates];
+    [self.secondTableView insertRowsAtIndexPaths:@[indexPath]withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.secondTableView endUpdates];
+}
+
 - (IBAction)doneOptionsButton:(UIButton *)sender {
     [UIView animateWithDuration:0.2 animations:^() {
         self.optionView.alpha = 0.0;
