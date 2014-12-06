@@ -44,7 +44,7 @@
                           UIColorFromRGB(0x373b41),
                           UIColorFromRGB(0x282a2e),
                           UIColorFromRGB(0x1d1f21),nil];
-        [self.firstViewController.modeLabel setTitle:@"Dark" forState:UIControlStateNormal];
+        //[self.firstViewController.modeLabel setTitle:@"Dark" forState:UIControlStateNormal];
         self.firstViewController.lightMode = NO;
             
             
@@ -63,7 +63,7 @@
                           UIColorFromRGB(0xd6d6d6),
                           UIColorFromRGB(0xefefef),
                           UIColorFromRGB(0xffffff),nil];
-        [self.firstViewController.modeLabel setTitle:@"Light" forState:UIControlStateNormal];
+        //[self.firstViewController.modeLabel setTitle:@"Light" forState:UIControlStateNormal];
         self.firstViewController.lightMode = YES;
     }
     //self.selectedColor = 7;
