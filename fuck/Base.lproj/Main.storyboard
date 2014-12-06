@@ -242,7 +242,6 @@
                         <outlet property="dateLabel" destination="yYI-Z8-eUB" id="Tg8-qz-N32"/>
                         <outlet property="editButton" destination="7Sc-3v-lMG" id="DzC-N2-53R"/>
                         <outlet property="firstTableView" destination="2eg-tG-lax" id="BVS-PZ-PO9"/>
-                        <outlet property="mainView" destination="kh9-bI-dsS" id="zfX-2C-DO0"/>
                         <outlet property="modeButton" destination="qi2-dV-Ff9" id="hkH-86-E5L"/>
                         <outlet property="modeLabel" destination="qi2-dV-Ff9" id="U2L-6K-3mU"/>
                         <outlet property="optionView" destination="DQC-TV-e4i" id="aEa-x9-pYx"/>

@@ -41,6 +41,7 @@
 @property (strong, nonatomic) NSMutableArray *colorArray;
 @property (nonatomic, assign) NSIndexPath *longPressIndexPath;
 @property (nonatomic, assign) MyTableViewCell* longPressCell;
+
 - (IBAction)textReturn:(id)sender;
 
 #pragma mark - Accessory View
