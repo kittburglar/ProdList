@@ -18,34 +18,43 @@
     NSMutableArray *optionsArray;
 }
 
+#pragma mark - Boolean Values
+@property (nonatomic, assign) BOOL modifying;
+@property (nonatomic, assign) BOOL lightMode;
+@property (nonatomic, assign) BOOL didSelect;
 
-@property (strong, nonatomic) NSMutableArray *colorArray;
+#pragma mark - Buttons
+
+#pragma mark - Top Main
 @property (strong, nonatomic) IBOutlet UITextField *textField;
 @property (strong, nonatomic) IBOutlet UILabel *dateLabel;
-@property (strong, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) IBOutlet UIButton *colorButton;
 @property (strong, nonatomic) IBOutlet UIButton *editButton;
 @property (strong, nonatomic) IBOutlet UIButton *modeButton;
+@property (strong, nonatomic) IBOutlet UIButton *modeLabel;
+- (IBAction)editButton:(UIButton *)sender;
+- (IBAction)modeButton:(id)sender;
 
-@property (nonatomic, assign) BOOL modifying;
+#pragma mark - Main Table View
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet UITableView *firstTableView;
 @property (nonatomic, assign) NSInteger lastModified;
+@property (strong, nonatomic) NSMutableArray *colorArray;
 @property (nonatomic, assign) NSIndexPath *longPressIndexPath;
 @property (nonatomic, assign) MyTableViewCell* longPressCell;
+- (IBAction)textReturn:(id)sender;
+
+#pragma mark - Accessory View
+@property (strong, nonatomic) IBOutlet UIButton *colorButton;
 @property (assign, nonatomic) NSInteger selectedColor;
 @property (strong, nonatomic) IBOutlet UIDatePicker *pickerView;
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong, nonatomic) IBOutlet UICollectionViewFlowLayout *collectionFlowLayout;
 @property (strong, nonatomic) UIView *inputAccView;
-@property (nonatomic, assign) BOOL lightMode;
-@property (nonatomic, assign) BOOL didSelect;
-@property (strong, nonatomic) IBOutlet UIButton *modeLabel;
-@property (strong, nonatomic) IBOutlet UIView *optionView;
-@property (strong, nonatomic) IBOutlet UITableView *firstTableView;
-@property (strong, nonatomic) IBOutlet UITableView *secondTableView;
-@property (strong, nonatomic) IBOutlet UIView *mainView;
 
+#pragma mark - Option View
+@property (strong, nonatomic) IBOutlet UIView *optionView;
+@property (strong, nonatomic) IBOutlet UITableView *secondTableView;
 - (IBAction)doneOptionsButton:(UIButton *)sender;
-- (IBAction)editButton:(UIButton *)sender;
-- (IBAction)textReturn:(id)sender;
-- (IBAction)modeButton:(id)sender;
+
+
 @end

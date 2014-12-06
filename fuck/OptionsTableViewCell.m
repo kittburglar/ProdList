@@ -65,6 +65,7 @@
                           UIColorFromRGB(0xffffff),nil];
         //[self.firstViewController.modeLabel setTitle:@"Light" forState:UIControlStateNormal];
         self.firstViewController.lightMode = YES;
+        
     }
     //self.selectedColor = 7;
     self.firstViewController.longPressCell.contentView.backgroundColor = [self.firstViewController.colorArray objectAtIndex:11];
