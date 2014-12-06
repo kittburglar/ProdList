@@ -55,6 +55,7 @@
 #pragma mark - Option View
 @property (strong, nonatomic) IBOutlet UIView *optionView;
 @property (strong, nonatomic) IBOutlet UITableView *secondTableView;
+@property (strong, nonatomic) IBOutlet UIVisualEffectView *blurView;
 - (IBAction)doneOptionsButton:(UIButton *)sender;
 
 

@@ -30,6 +30,7 @@
     
     
     NSLog(@"%@",[self.optionsControl titleForSegmentAtIndex:self.optionsControl.selectedSegmentIndex]);
+    //Dark Mode
     if ([[self.optionsControl titleForSegmentAtIndex:self.optionsControl.selectedSegmentIndex]  isEqual: @"Second"]) {
         self.firstViewController.colorArray = [NSMutableArray arrayWithObjects:
                           UIColorFromRGB(0xcc6666),
@@ -46,9 +47,12 @@
                           UIColorFromRGB(0x1d1f21),nil];
         //[self.firstViewController.modeLabel setTitle:@"Dark" forState:UIControlStateNormal];
         self.firstViewController.lightMode = NO;
+        UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+        self.firstViewController.blurView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
             
             
     }
+    //Light Mode
     else{
         self.firstViewController.colorArray = [NSMutableArray arrayWithObjects:
                           UIColorFromRGB(0xc82829),
@@ -65,7 +69,8 @@
                           UIColorFromRGB(0xffffff),nil];
         //[self.firstViewController.modeLabel setTitle:@"Light" forState:UIControlStateNormal];
         self.firstViewController.lightMode = YES;
-        
+        UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+        self.firstViewController.blurView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
     }
     //self.selectedColor = 7;
     self.firstViewController.longPressCell.contentView.backgroundColor = [self.firstViewController.colorArray objectAtIndex:11];
@@ -82,6 +87,7 @@
     [self.firstViewController.collectionView reloadData];
     [self.firstViewController.tableView reloadData];
     [self.firstViewController setNeedsStatusBarAppearanceUpdate];
+    [self.firstViewController.blurView setNeedsDisplay];
     
 }
 @end
