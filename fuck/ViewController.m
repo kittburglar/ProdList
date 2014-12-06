@@ -29,7 +29,7 @@ static NSString *CellIdentifier = @"Cell";
     self.lightMode = YES;
     [self setNeedsStatusBarAppearanceUpdate];
     self.didSelect = NO;
-    colorArray = [NSMutableArray arrayWithObjects:
+    self.colorArray = [NSMutableArray arrayWithObjects:
                   UIColorFromRGB(0xc82829),
                   UIColorFromRGB(0xf5871f),
                   UIColorFromRGB(0xeab700),
@@ -106,6 +106,12 @@ static NSString *CellIdentifier = @"Cell";
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(keyboardOnScreen:) name:UIKeyboardDidShowNotification object:nil];
     
+    [optionsArray addObject: @"Label1"];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:([optionsArray count] - 1) inSection:0];
+    [self.secondTableView beginUpdates];
+    [self.secondTableView insertRowsAtIndexPaths:@[indexPath]withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.secondTableView endUpdates];
+    
     self.tableView.delegate = self;
     self.secondTableView.delegate = self;
     self.secondTableView.dataSource = self;
@@ -178,7 +184,7 @@ static NSString *CellIdentifier = @"Cell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UICollectionViewCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
-        cell.backgroundColor = [colorArray objectAtIndex:indexPath.row];
+        cell.backgroundColor = [self.colorArray objectAtIndex:indexPath.row];
     return cell;
 }
 
@@ -200,7 +206,7 @@ static NSString *CellIdentifier = @"Cell";
     }
     self.didSelect = YES;
     self.selectedColor = indexPath.row;
-    self.colorButton.backgroundColor = [colorArray objectAtIndex:self.selectedColor];
+    self.colorButton.backgroundColor = [self.colorArray objectAtIndex:self.selectedColor];
     [cell setHighlighted:YES];
 }
 
@@ -259,7 +265,7 @@ static NSString *CellIdentifier = @"Cell";
     
     if (tableView == self.firstTableView) {
         MyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        cell.backgroundColor = [colorArray objectAtIndex:11];
+        cell.backgroundColor = [self.colorArray objectAtIndex:11];
         [cell.titleLabel setText:[NSString stringWithFormat:@"Row %li in Section %li", (long)[indexPath row], (long)[indexPath section]]];
         
         
@@ -269,12 +275,13 @@ static NSString *CellIdentifier = @"Cell";
         
         cell.titleLabel.text = [[anArray objectAtIndex:indexPath.row] name];
         cell.descriptionLabel.text = [[anArray objectAtIndex:indexPath.row] returnDate];
-        if ([colorArray objectAtIndex:[[anArray objectAtIndex:indexPath.row] buttonColor]] != nil) {
-            cell.colorButton.backgroundColor = [colorArray objectAtIndex:[[anArray objectAtIndex:indexPath.row] buttonColor]];
-            cell.colorNumber = [[anArray objectAtIndex:indexPath.row] buttonColor];
+        if ([self.colorArray objectAtIndex:[[anArray objectAtIndex:indexPath.row] buttonColor]] != nil) {
+            cell.colorButton.backgroundColor = [self.colorArray objectAtIndex:[[anArray objectAtIndex:indexPath.row] buttonColor]];
+            cell.colorNumber = [[anArray
+                                 objectAtIndex:indexPath.row] buttonColor];
         }
-        cell.contentView.backgroundColor = [colorArray objectAtIndex:11];
-        cell.titleLabel.textColor = [colorArray objectAtIndex:7];
+        cell.contentView.backgroundColor = [self.colorArray objectAtIndex:11];
+        cell.titleLabel.textColor = [self.colorArray objectAtIndex:7];
         return cell;
     }
     else {
@@ -289,9 +296,16 @@ static NSString *CellIdentifier = @"Cell";
         //optionsCell.optionsLabel.text = @"Label1";
         
         optionsCell.optionsLabel.text = [optionsArray objectAtIndex:indexPath.row];
+        [optionsCell.optionsControl addTarget:self action:@selector(yourSegmentPicked:) forControlEvents:UIControlEventTouchUpInside];
         return optionsCell;
     }
 
+}
+
+
+
+-(void)yourSegmentPicked:(UISegmentedControl*)sender{
+    NSLog(@"yourSegmentPicked");
 }
 
 //find parent cell
@@ -339,7 +353,7 @@ static NSString *CellIdentifier = @"Cell";
         [self setLastModified:indexPath.row];
         MyTableViewCell *cell = (MyTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
         self.textField.text = cell.titleLabel.text;
-        cell.contentView.backgroundColor = [colorArray objectAtIndex:10];
+        cell.contentView.backgroundColor = [self.colorArray objectAtIndex:10];
         [self.textField becomeFirstResponder];
         [self.tableView setEditing:NO];
     }];
@@ -411,7 +425,7 @@ static NSString *CellIdentifier = @"Cell";
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
         
         NSLog(@"Holding Begins");
-        self.longPressCell.contentView.backgroundColor = [colorArray objectAtIndex:11];
+        self.longPressCell.contentView.backgroundColor = [self.colorArray objectAtIndex:11];
         CGPoint swipeLocation = [gestureRecognizer locationInView:self.tableView];
         
         
@@ -427,7 +441,7 @@ static NSString *CellIdentifier = @"Cell";
         [self setModifying:YES];
         [self setLastModified:self.longPressIndexPath.row];
         MyTableViewCell *cell = (MyTableViewCell *)[self.tableView cellForRowAtIndexPath:self.longPressIndexPath];
-        cell.contentView.backgroundColor = [colorArray objectAtIndex:10];
+        cell.contentView.backgroundColor = [self.colorArray objectAtIndex:10];
         self.textField.text = cell.titleLabel.text;
         [self.textField becomeFirstResponder];
         [self.tableView setEditing:NO];
@@ -495,7 +509,7 @@ static NSString *CellIdentifier = @"Cell";
         NSLog(@"textReturn while modifying!");
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self lastModified] inSection:0];
         MyTableViewCell *cell = (MyTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-        cell.titleLabel.textColor = [colorArray objectAtIndex:7];
+        cell.titleLabel.textColor = [self.colorArray objectAtIndex:7];
         //
         if (![self didSelect]) {
             self.selectedColor = cell.colorNumber;
@@ -541,13 +555,15 @@ static NSString *CellIdentifier = @"Cell";
 }
 
 
-    
+
 - (IBAction)enterButton:(UIButton *)sender {
+    /*
     [optionsArray addObject: @"Label1"];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:([optionsArray count] - 1) inSection:0];
     [self.secondTableView beginUpdates];
     [self.secondTableView insertRowsAtIndexPaths:@[indexPath]withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.secondTableView endUpdates];
+     */
 }
 
 - (IBAction)doneOptionsButton:(UIButton *)sender {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -150,7 +150,7 @@
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                         <prototypes>
-                                                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="fHu-1N-tyP" customClass="OptionsTableViewCell">
+                                                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Cell" id="fHu-1N-tyP" customClass="OptionsTableViewCell">
                                                                 <rect key="frame" x="0.0" y="0.0" width="120" height="44"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fHu-1N-tyP" id="lhh-2x-dRp">
@@ -169,10 +169,11 @@
                                                                                 <segment title="Second"/>
                                                                             </segments>
                                                                             <connections>
-                                                                                <action selector="optionsChanged:" destination="fHu-1N-tyP" eventType="valueChanged" id="pFq-BH-Sr0"/>
+                                                                                <action selector="optionsChanged:" destination="fHu-1N-tyP" eventType="valueChanged" id="TMq-Hi-3cC"/>
                                                                             </connections>
                                                                         </segmentedControl>
                                                                     </subviews>
+                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                     <constraints>
                                                                         <constraint firstItem="dnv-o2-DmE" firstAttribute="trailing" secondItem="lhh-2x-dRp" secondAttribute="trailingMargin" id="R0b-nR-e2p"/>
                                                                         <constraint firstItem="vRx-9j-Qzb" firstAttribute="leading" secondItem="lhh-2x-dRp" secondAttribute="leadingMargin" id="mdR-Dz-jZA"/>
@@ -252,6 +253,7 @@
                         <outlet property="dateLabel" destination="yYI-Z8-eUB" id="Tg8-qz-N32"/>
                         <outlet property="editButton" destination="7Sc-3v-lMG" id="DzC-N2-53R"/>
                         <outlet property="firstTableView" destination="2eg-tG-lax" id="BVS-PZ-PO9"/>
+                        <outlet property="mainView" destination="kh9-bI-dsS" id="zfX-2C-DO0"/>
                         <outlet property="modeButton" destination="qi2-dV-Ff9" id="hkH-86-E5L"/>
                         <outlet property="modeLabel" destination="qi2-dV-Ff9" id="U2L-6K-3mU"/>
                         <outlet property="optionView" destination="DQC-TV-e4i" id="aEa-x9-pYx"/>

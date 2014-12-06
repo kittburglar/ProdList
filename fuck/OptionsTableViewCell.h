@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ViewController.h"
 
 @interface OptionsTableViewCell : UITableViewCell
+@property (strong, nonatomic) IBOutlet ViewController *firstViewController;
 @property (strong, nonatomic) IBOutlet UILabel *optionsLabel;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *optionsControl;
 - (IBAction)optionsChanged:(UISegmentedControl *)sender;
