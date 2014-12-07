@@ -138,7 +138,7 @@
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cYc-Kh-lfc">
                                                         <rect key="frame" x="513" y="8" width="46" height="30"/>
-                                                        <state key="normal" title="Button">
+                                                        <state key="normal" title="Done">
                                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
                                                         <connections>
@@ -163,10 +163,10 @@
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <segmentedControl opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dnv-o2-DmE">
-                                                                            <rect key="frame" x="469" y="8" width="123" height="29"/>
+                                                                            <rect key="frame" x="503" y="8" width="89" height="29"/>
                                                                             <segments>
-                                                                                <segment title="First"/>
-                                                                                <segment title="Second"/>
+                                                                                <segment title="Light"/>
+                                                                                <segment title="Dark"/>
                                                                             </segments>
                                                                             <connections>
                                                                                 <action selector="optionsChanged:" destination="fHu-1N-tyP" eventType="valueChanged" id="TMq-Hi-3cC"/>
@@ -189,6 +189,7 @@
                                                         <sections/>
                                                     </tableView>
                                                 </subviews>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstItem="cYc-Kh-lfc" firstAttribute="top" secondItem="e41-fD-8jW" secondAttribute="top" constant="16" id="94z-MB-GvV"/>
                                                     <constraint firstItem="uMU-KP-BJD" firstAttribute="top" secondItem="cYc-Kh-lfc" secondAttribute="bottom" id="Yg5-FU-7W0"/>

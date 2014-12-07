@@ -31,7 +31,7 @@
     
     NSLog(@"%@",[self.optionsControl titleForSegmentAtIndex:self.optionsControl.selectedSegmentIndex]);
     //Dark Mode
-    if ([[self.optionsControl titleForSegmentAtIndex:self.optionsControl.selectedSegmentIndex]  isEqual: @"Second"]) {
+    if ([[self.optionsControl titleForSegmentAtIndex:self.optionsControl.selectedSegmentIndex]  isEqual: @"Dark"]) {
         self.firstViewController.colorArray = [NSMutableArray arrayWithObjects:
                           UIColorFromRGB(0xcc6666),
                           UIColorFromRGB(0xde935f),
