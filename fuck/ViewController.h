@@ -8,14 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "MyTableViewCell.h"
+#import <CoreData/CoreData.h>
 
 
-@interface ViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
+@interface ViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate>
 {
     NSMutableArray *anArray;
     #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     //NSMutableArray *colorArray;
     NSMutableArray *optionsArray;
+    NSFetchedResultsController *fetchedResultsController;
+    NSManagedObjectContext *managedObjectContext;
 }
 
 #pragma mark - Boolean Values
@@ -58,5 +61,8 @@
 @property (strong, nonatomic) IBOutlet UIVisualEffectView *blurView;
 - (IBAction)doneOptionsButton:(UIButton *)sender;
 
+#pragma mark - Core Data
+@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 
 @end

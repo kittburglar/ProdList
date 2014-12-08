@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		F80314A51A26D78B00E68248 /* MyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F80314A41A26D78B00E68248 /* MyTableViewCell.m */; };
 		F806EA0E1A264E4D00A8CCFB /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = F806EA0D1A264E4D00A8CCFB /* Item.m */; };
+		F8A30FDC1A35C3A600F7BA46 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A30FDB1A35C3A600F7BA46 /* CoreData.framework */; };
 		F8AA3B701A19C50A00C934E0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F8AA3B6F1A19C50A00C934E0 /* main.m */; };
 		F8AA3B731A19C50A00C934E0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F8AA3B721A19C50A00C934E0 /* AppDelegate.m */; };
 		F8AA3B761A19C50A00C934E0 /* fuck.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F8AA3B741A19C50A00C934E0 /* fuck.xcdatamodeld */; };
@@ -35,6 +36,7 @@
 		F80314A41A26D78B00E68248 /* MyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTableViewCell.m; sourceTree = "<group>"; };
 		F806EA0C1A264E4D00A8CCFB /* Item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Item.h; sourceTree = "<group>"; };
 		F806EA0D1A264E4D00A8CCFB /* Item.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Item.m; sourceTree = "<group>"; };
+		F8A30FDB1A35C3A600F7BA46 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		F8AA3B6A1A19C50900C934E0 /* fuck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fuck.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8AA3B6E1A19C50A00C934E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F8AA3B6F1A19C50A00C934E0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -58,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F8A30FDC1A35C3A600F7BA46 /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,6 +77,7 @@
 		F8AA3B611A19C50900C934E0 = {
 			isa = PBXGroup;
 			children = (
+				F8A30FDB1A35C3A600F7BA46 /* CoreData.framework */,
 				F8AA3B6C1A19C50900C934E0 /* fuck */,
 				F8AA3B891A19C50B00C934E0 /* fuckTests */,
 				F8AA3B6B1A19C50900C934E0 /* Products */,

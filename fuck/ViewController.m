@@ -10,6 +10,8 @@
 #import "Item.h"
 #import "MyTableViewCell.h"
 #import "OptionsTableViewCell.h"
+#import "AppDelegate.h"
+#import <CoreData/CoreData.h>
 
 
 static NSString *CellIdentifier = @"Cell";
@@ -20,10 +22,13 @@ static NSString *CellIdentifier = @"Cell";
 
 @implementation ViewController
 
-
+@synthesize managedObjectContext = _managedObjectContext;
+@synthesize fetchedResultsController;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    AppDelegate* appDelegate = [[UIApplication sharedApplication] delegate];
+    self.managedObjectContext = [appDelegate managedObjectContext];
     
     
     self.lightMode = YES;
