@@ -117,6 +117,34 @@ static NSString *CellIdentifier = @"Cell";
     [self.secondTableView insertRowsAtIndexPaths:@[indexPath]withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.secondTableView endUpdates];
     
+#pragma mark -Core data loads data
+    //fill array with core data records
+    NSEntityDescription *entitydesc = [NSEntityDescription entityForName:@"Item" inManagedObjectContext:self.managedObjectContext];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entitydesc];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"TRUEPREDICATE"];
+    [request setPredicate:predicate];
+    NSError *error;
+    NSArray *matchingData = [self.managedObjectContext executeFetchRequest:request error:&error];
+    
+    if (matchingData.count == 0) {
+        NSLog(@"Nothing in core database");
+    }
+    else{
+        for (NSManagedObject *obj in matchingData) {
+            NSLog(@"%@", [obj valueForKey:@"itemText"]);
+            NSLog(@"%@", [obj valueForKey:@"itemDate"]);
+            NSLog(@"%@", [obj valueForKey:@"itemColor"]);
+            NSString *itemText = [obj valueForKey:@"itemText"];
+            NSDate *itemDate = [obj valueForKey:@"itemColor"];
+            NSInteger itemColor = [[obj valueForKey:@"itemColor"] integerValue];
+            Item * i = [[Item alloc] initWithNameAndColorAndDate:itemText withColor:itemColor withDate:itemDate];
+            [anArray insertObject:i atIndex:anArray.count];
+
+            [self.tableView reloadData];
+        }
+    }
+    
     self.tableView.delegate = self;
     self.secondTableView.delegate = self;
     self.secondTableView.dataSource = self;
@@ -142,6 +170,8 @@ static NSString *CellIdentifier = @"Cell";
         [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
         [self.collectionView setBackgroundColor:[UIColor grayColor]];
     }
+    
+    
     
     
 }
