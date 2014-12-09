@@ -520,13 +520,8 @@ static NSString *CellIdentifier = @"Cell";
         Item * i = [[Item alloc] initWithNameAndColorAndDate:self.textField.text withColor:self.selectedColor withDate:[self.pickerView date]];
         [anArray insertObject:i atIndex:[self lastModified]];
         
-        //Add to core data
-        NSEntityDescription *entitydesc = [NSEntityDescription entityForName:@"Item" inManagedObjectContext:self.managedObjectContext];
-        NSManagedObject *newItem = [[NSManagedObject alloc]initWithEntity:entitydesc insertIntoManagedObjectContext:self.managedObjectContext];
         
-        [newItem setValue:[i name] forKey:@"itemText"];
-        [newItem setValue:[NSNumber numberWithInteger:[i buttonColor]] forKey:@"itemColor"];
-        [newItem setValue:[i date] forKey:@"itemDate"];
+        
         
         [self.tableView reloadData];
         [self setModifying:NO];
@@ -539,6 +534,16 @@ static NSString *CellIdentifier = @"Cell";
         [self.tableView beginUpdates];
         [self.tableView insertRowsAtIndexPaths:@[indexPath]withRowAnimation:UITableViewRowAnimationAutomatic];
         [self.tableView endUpdates];
+        
+        //Add to core data
+        NSEntityDescription *entitydesc = [NSEntityDescription entityForName:@"Item" inManagedObjectContext:self.managedObjectContext];
+        NSManagedObject *newItem = [[NSManagedObject alloc]initWithEntity:entitydesc insertIntoManagedObjectContext:self.managedObjectContext];
+        [newItem setValue:[i name] forKey:@"itemText"];
+        [newItem setValue:[NSNumber numberWithInteger:[i buttonColor]] forKey:@"itemColor"];
+        [newItem setValue:[i date] forKey:@"itemDate"];
+        NSError *error;
+        [self.managedObjectContext save:&error];
+        
     }
     self.textField.text = nil;
     
