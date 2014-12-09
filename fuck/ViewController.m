@@ -506,27 +506,27 @@ static NSString *CellIdentifier = @"Cell";
     }
     //Add add to core data and list
     else if ([self modifying]) {
-        
-        //need to copy color of cell
-        
-        //
-        
         NSLog(@"textReturn while modifying!");
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self lastModified] inSection:0];
         MyTableViewCell *cell = (MyTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
         cell.titleLabel.textColor = [self.colorArray objectAtIndex:7];
-        //
+        
         if (![self didSelect]) {
             self.selectedColor = cell.colorNumber;
         }
         
         
         [anArray removeObjectAtIndex:[self lastModified]];
-        
         Item * i = [[Item alloc] initWithNameAndColorAndDate:self.textField.text withColor:self.selectedColor withDate:[self.pickerView date]];
-        
-        
         [anArray insertObject:i atIndex:[self lastModified]];
+        
+        //Add to core data
+        NSEntityDescription *entitydesc = [NSEntityDescription entityForName:@"Item" inManagedObjectContext:self.managedObjectContext];
+        NSManagedObject *newItem = [[NSManagedObject alloc]initWithEntity:entitydesc insertIntoManagedObjectContext:self.managedObjectContext];
+        
+        [newItem setValue:[i name] forKey:@"itemText"];
+        [newItem setValue:[NSNumber numberWithInteger:[i buttonColor]] forKey:@"itemColor"];
+        [newItem setValue:[i date] forKey:@"itemDate"];
         
         [self.tableView reloadData];
         [self setModifying:NO];
