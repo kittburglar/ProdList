@@ -4,8 +4,13 @@
         <attribute name="itemColor" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="itemDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="itemText" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="Items" syncable="YES">
+        <attribute name="count" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Item" positionX="-63" positionY="-18" width="128" height="90"/>
+        <element name="Item" positionX="-63" positionY="-18" width="128" height="103"/>
+        <element name="Items" positionX="-54" positionY="18" width="128" height="58"/>
     </elements>
 </model>

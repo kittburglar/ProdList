@@ -117,7 +117,7 @@ static NSString *CellIdentifier = @"Cell";
     [self.secondTableView insertRowsAtIndexPaths:@[indexPath]withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.secondTableView endUpdates];
     
-#pragma mark -Core data loads data
+    #pragma mark -Core data loads data
     //fill array with core data records
     NSEntityDescription *entitydesc = [NSEntityDescription entityForName:@"Item" inManagedObjectContext:self.managedObjectContext];
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -144,6 +144,7 @@ static NSString *CellIdentifier = @"Cell";
             [self.tableView reloadData];
         }
     }
+    
     
     self.tableView.delegate = self;
     self.secondTableView.delegate = self;
@@ -520,7 +521,36 @@ static NSString *CellIdentifier = @"Cell";
     
 }
 
+#pragma mark - Core Data Stuffs
+-(void)incrementItemsCount{
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Items" inManagedObjectContext:self.managedObjectContext];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entity];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"TRUEPREDICATE"];
+    [request setPredicate:predicate];
+    NSError *error;
+    NSArray *matchingData = [self.managedObjectContext executeFetchRequest:request error:&error];
+    
+    if (matchingData.count <=0) {
+        //Add to core data
+        NSLog(@"NO Items entity. Must create one.");
+        //NSEntityDescription *entitydesc = [NSEntityDescription entityForName:@"" inManagedObjectContext:self.managedObjectContext];
+        NSManagedObject *newItem = [[NSManagedObject alloc]initWithEntity:entity insertIntoManagedObjectContext:self.managedObjectContext];
+        [newItem setValue:0 forKey:@"count"];
+        NSError *error;
+        [self.managedObjectContext save:&error];
+    }
+    
+    NSManagedObject *obj = [[self.managedObjectContext executeFetchRequest:request error:&error] objectAtIndex:0];
+    NSNumber *itemCount = [obj valueForKey:@"count"];
+    int value = [itemCount intValue];
+    itemCount = [NSNumber numberWithInt:value + 1];
+    [obj setValue:itemCount forKey:@"count"];
+    NSLog(@"item Count is: %@", [obj valueForKey:@"count"]);
+    [self.managedObjectContext save:&error];
 
+}
 
 - (IBAction)textReturn:(id)sender {
     
@@ -573,6 +603,8 @@ static NSString *CellIdentifier = @"Cell";
         [newItem setValue:[i date] forKey:@"itemDate"];
         NSError *error;
         [self.managedObjectContext save:&error];
+        
+        [self incrementItemsCount];
         
     }
     self.textField.text = nil;

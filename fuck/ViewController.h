@@ -26,8 +26,6 @@
 @property (nonatomic, assign) BOOL lightMode;
 @property (nonatomic, assign) BOOL didSelect;
 
-#pragma mark - Buttons
-
 #pragma mark - Top Main
 @property (strong, nonatomic) IBOutlet UITextField *textField;
 @property (strong, nonatomic) IBOutlet UILabel *dateLabel;
@@ -64,5 +62,6 @@
 #pragma mark - Core Data
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, assign) NSInteger itemCount;
 
 @end
