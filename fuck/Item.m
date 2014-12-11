@@ -43,7 +43,15 @@
     self.name = name;
     self.buttonColor = color;
     self.date = date;
-    
+    return self;
+}
+
+-(id)initWithNameAndColorAndDateAndPid:(NSString *)name withColor:(NSInteger)color withDate:(NSDate *)date withPid:(NSInteger)pid{
+    self = [super init];
+    self.name = name;
+    self.buttonColor = color;
+    self.date = date;
+    self.pid = pid;
     return self;
 }
 

@@ -136,7 +136,7 @@ static NSString *CellIdentifier = @"Cell";
             NSLog(@"%@", [obj valueForKey:@"itemDate"]);
             NSLog(@"%@", [obj valueForKey:@"itemColor"]);
             NSString *itemText = [obj valueForKey:@"itemText"];
-            NSDate *itemDate = [obj valueForKey:@"itemColor"];
+            NSDate *itemDate = [obj valueForKey:@"itemDate"];
             NSInteger itemColor = [[obj valueForKey:@"itemColor"] integerValue];
             Item * i = [[Item alloc] initWithNameAndColorAndDate:itemText withColor:itemColor withDate:itemDate];
             [anArray insertObject:i atIndex:anArray.count];
@@ -395,6 +395,46 @@ static NSString *CellIdentifier = @"Cell";
     }];
     moreAction.backgroundColor = [UIColor lightGrayColor];
        UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Delete" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
+           //Remove Core data entry
+           Item *item = [anArray objectAtIndex:indexPath.row];
+           NSEntityDescription *entityDesc = [NSEntityDescription entityForName:@"Item" inManagedObjectContext:self.managedObjectContext];
+           
+           NSLog(@"itemPid of item you want to delete is: %ld with itemName: %@", (long)[item pid], [item name]);
+           
+           NSFetchRequest *request = [[NSFetchRequest alloc] init];
+           [request setEntity:entityDesc];
+           
+           NSPredicate *predicate = [NSPredicate predicateWithFormat:@"itemPid == %ld", (long)[item pid]];
+           [request setPredicate:predicate];
+           
+           NSError *error;
+           
+           /*
+           NSArray *matchingData = [self.managedObjectContext executeFetchRequest:request error:&error];
+           
+           if (matchingData.count == 0) {
+               NSLog(@"No matches to pid uhoh problem");
+           }
+           else{
+               for (NSManagedObject *obj in matchingData) {
+                   [self.managedObjectContext deleteObject:obj];
+                   NSLog(@"obj itemPid is: %@",[obj valueForKey:@"itemPid"]);
+               }
+           }
+            */
+           
+           NSManagedObject *obj = [[self.managedObjectContext executeFetchRequest:request error:&error] objectAtIndex:0];
+           NSLog(@"obj itemPid is: %@",[obj valueForKey:@"itemPid"]);
+           if (obj == nil) {
+               NSLog(@"No match for pid");
+           }
+           else{
+               NSLog(@"Match for pid");
+           }
+           [self.managedObjectContext deleteObject:obj];
+           
+           [self.managedObjectContext save:&error];
+        //Remove array entry
         [anArray removeObjectAtIndex:indexPath.row];
         [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     }];
@@ -587,7 +627,25 @@ static NSString *CellIdentifier = @"Cell";
         [self setModifying:NO];
     }
     else{
-        Item * i = [[Item alloc] initWithNameAndColorAndDate:self.textField.text withColor:self.selectedColor withDate:[self.pickerView date]];
+        
+        [self incrementItemsCount];
+        //fetch core data stuff
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Items" inManagedObjectContext:self.managedObjectContext];
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        [request setEntity:entity];
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"TRUEPREDICATE"];
+        [request setPredicate:predicate];
+        NSError *error;
+        
+        NSManagedObject *obj = [[self.managedObjectContext executeFetchRequest:request error:&error] objectAtIndex:0];
+        //NSNumber *itemCount = [obj valueForKey:@"count"];
+        //
+        
+        
+        //Item * i = [[Item alloc] initWithNameAndColorAndDate:self.textField.text withColor:self.selectedColor withDate:[self.pickerView date]];
+        
+        Item * i = [[Item alloc] initWithNameAndColorAndDateAndPid:self.textField.text withColor:self.selectedColor withDate:[self.pickerView date] withPid:[[obj valueForKey:@"count"] integerValue]];
         
         [anArray addObject: i];
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:([anArray count] - 1) inSection:0];
@@ -601,10 +659,11 @@ static NSString *CellIdentifier = @"Cell";
         [newItem setValue:[i name] forKey:@"itemText"];
         [newItem setValue:[NSNumber numberWithInteger:[i buttonColor]] forKey:@"itemColor"];
         [newItem setValue:[i date] forKey:@"itemDate"];
-        NSError *error;
-        [self.managedObjectContext save:&error];
+        [newItem setValue:[NSNumber numberWithInteger:[i pid]] forKey:@"itemPid"];
+        NSError *error2;
+        [self.managedObjectContext save:&error2];
         
-        [self incrementItemsCount];
+        
         
     }
     self.textField.text = nil;

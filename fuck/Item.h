@@ -17,7 +17,7 @@
 
 @property (nonatomic, strong) NSDate * date;
 
-//@property (nonatomic, assign) NSInteger pid;
+@property (nonatomic, assign) NSInteger pid;
 
 -(id)initWithName:(NSString *)name;
 
@@ -26,6 +26,8 @@
 -(id)initWithNameAndDate:(NSString *)name withDate:(NSDate *)date;
 
 -(id)initWithNameAndColorAndDate:(NSString *)name withColor:(NSInteger)buttonColor withDate:(NSDate *)date;
+
+-(id)initWithNameAndColorAndDateAndPid:(NSString *)name withColor:(NSInteger)color withDate:(NSDate *)date withPid:(NSInteger)pid;
 
 -(NSString *)returnDate;
 
