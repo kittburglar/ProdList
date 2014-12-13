@@ -138,7 +138,8 @@ static NSString *CellIdentifier = @"Cell";
             NSString *itemText = [obj valueForKey:@"itemText"];
             NSDate *itemDate = [obj valueForKey:@"itemDate"];
             NSInteger itemColor = [[obj valueForKey:@"itemColor"] integerValue];
-            Item * i = [[Item alloc] initWithNameAndColorAndDate:itemText withColor:itemColor withDate:itemDate];
+            NSInteger itemPid = [[obj valueForKey:@"itemPid"] integerValue];
+            Item * i = [[Item alloc] initWithNameAndColorAndDateAndPid:itemText withColor:itemColor withDate:itemDate withPid:itemPid];
             [anArray insertObject:i atIndex:anArray.count];
 
             [self.tableView reloadData];
