@@ -616,16 +616,42 @@ static NSString *CellIdentifier = @"Cell";
             self.selectedColor = cell.colorNumber;
         }
         
+        NSLog(@"creating item with pid %ld", (long)[[anArray objectAtIndex:[self lastModified]] pid]);
+        
+        Item * i = [[Item alloc] initWithNameAndColorAndDateAndPid:self.textField.text withColor:self.selectedColor withDate:[self.pickerView date] withPid:[[anArray objectAtIndex:[self lastModified]] pid]];
         
         [anArray removeObjectAtIndex:[self lastModified]];
-        Item * i = [[Item alloc] initWithNameAndColorAndDate:self.textField.text withColor:self.selectedColor withDate:[self.pickerView date]];
+        //Item * i = [[Item alloc] initWithNameAndColorAndDate:self.textField.text withColor:self.selectedColor withDate:[self.pickerView date]];
+        //Item * i = [[Item alloc] initWithNameAndColorAndDateAndPid:self.textField.text withColor:self.selectedColor withDate:[self.pickerView date] withPid:[[anArray objectAtIndex:[self lastModified]] pid]];
+        
         [anArray insertObject:i atIndex:[self lastModified]];
         
+        //Edit core data record
+        //Item *item = [anArray objectAtIndex:[self lastModified]];
+        
+        NSEntityDescription *entityDesc = [NSEntityDescription entityForName:@"Item" inManagedObjectContext:self.managedObjectContext];
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        [request setEntity:entityDesc];
         
         
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"itemPid == %ld", (long)[i pid]];
+        [request setPredicate:predicate];
+        NSError *error;
+        
+        NSLog(@"looking for pid: %ld",(long)[i pid]);
+        
+        NSManagedObject *obj = [[self.managedObjectContext executeFetchRequest:request error:&error] objectAtIndex:0];
+        
+        [obj setValue:[i name] forKey:@"itemText"];
+        [obj setValue:[NSNumber numberWithInteger:[i buttonColor]] forKey:@"itemColor"];
+        [obj setValue:[i date] forKey:@"itemDate"];
+        [obj setValue:[NSNumber numberWithInteger:[i pid]]  forKey:@"itemPid"];
         
         [self.tableView reloadData];
+        [self.managedObjectContext save:&error];
         [self setModifying:NO];
+        
     }
     else{
         
