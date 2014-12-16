@@ -63,5 +63,6 @@
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, assign) NSInteger itemCount;
+@property (nonatomic, assign) BOOL userDrivenDataModelChange;
 
 @end

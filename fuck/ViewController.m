@@ -468,17 +468,26 @@ static NSString *CellIdentifier = @"Cell";
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
     
-    NSLog(@"moveRowAtIndexPath called");
-    //NSString *stringToMove = [anArray objectAtIndex:sourceIndexPath.row];
+    self.userDrivenDataModelChange = YES;
     
-    Item *itemToMove = [anArray objectAtIndex:sourceIndexPath.row];
+    NSLog(@"moveRowAtIndexPath called");
+    
+    Item *itemSource = [anArray objectAtIndex:sourceIndexPath.row];
+    
+    Item *itemDest = [anArray objectAtIndex:destinationIndexPath.row];
+    
+    
+    
+    
+    
+    
     
     [anArray removeObjectAtIndex:sourceIndexPath.row];
+    [anArray insertObject:itemSource atIndex:destinationIndexPath.row];
     
-    //[anArray insertObject:stringToMove atIndex:destinationIndexPath.row];
+    [self saveAllData];
     
-    [anArray insertObject:itemToMove atIndex:destinationIndexPath.row];
-    
+    self.userDrivenDataModelChange = NO;
 }
 
 
@@ -562,7 +571,35 @@ static NSString *CellIdentifier = @"Cell";
     
 }
 
+
+
 #pragma mark - Core Data Stuffs
+
+-(void)saveAllData{
+    for (int i = 0; i < anArray.count; i++) {
+        NSEntityDescription *entityDesc = [NSEntityDescription entityForName:@"Item" inManagedObjectContext:self.managedObjectContext];
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        [request setEntity:entityDesc];
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"itemPid == %d", i];
+        [request setPredicate:predicate];
+        NSError *error;
+        
+        NSLog(@"looking for pid: %d",i);
+        
+        NSManagedObject *obj = [[self.managedObjectContext executeFetchRequest:request error:&error] objectAtIndex:0];
+        
+        [obj setValue:[[anArray objectAtIndex:i] name] forKey:@"itemText"];
+        [obj setValue:[NSNumber numberWithInteger:[[anArray objectAtIndex:i] buttonColor]] forKey:@"itemColor"];
+        [obj setValue:[[anArray objectAtIndex:i] date] forKey:@"itemDate"];
+        //[obj setValue:[NSNumber numberWithInteger:[[anArray objectAtIndex:i] pid]]  forKey:@"itemPid"];
+        
+        [self.managedObjectContext save:&error];
+        
+    }
+}
+
+
 -(void)incrementItemsCount{
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Items" inManagedObjectContext:self.managedObjectContext];
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -582,6 +619,7 @@ static NSString *CellIdentifier = @"Cell";
         NSError *error;
         [self.managedObjectContext save:&error];
     }
+    else{
     
     NSManagedObject *obj = [[self.managedObjectContext executeFetchRequest:request error:&error] objectAtIndex:0];
     NSNumber *itemCount = [obj valueForKey:@"count"];
@@ -590,7 +628,7 @@ static NSString *CellIdentifier = @"Cell";
     [obj setValue:itemCount forKey:@"count"];
     NSLog(@"item Count is: %@", [obj valueForKey:@"count"]);
     [self.managedObjectContext save:&error];
-
+    }
 }
 
 - (IBAction)textReturn:(id)sender {
@@ -712,7 +750,21 @@ static NSString *CellIdentifier = @"Cell";
     [super touchesBegan:touches withEvent:event];
 }
 
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+    NSLog(@"controllerWillChangeContent");
+    if (self.userDrivenDataModelChange) return;
+}
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
+    NSLog(@"controllerdidChangeObject");
+    if (self.userDrivenDataModelChange) return;
+}
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    NSLog(@"controllerDidChangeContent");
+    if (self.userDrivenDataModelChange) return;
+}
 
+
+#pragma mark -IBActions
 
 - (IBAction)enterButton:(UIButton *)sender {
     /*
