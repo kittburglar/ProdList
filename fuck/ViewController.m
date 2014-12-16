@@ -485,7 +485,7 @@ static NSString *CellIdentifier = @"Cell";
     [anArray removeObjectAtIndex:sourceIndexPath.row];
     [anArray insertObject:itemSource atIndex:destinationIndexPath.row];
     
-    [self saveAllData];
+    
     
     self.userDrivenDataModelChange = NO;
 }
@@ -783,6 +783,7 @@ static NSString *CellIdentifier = @"Cell";
 }
 
 - (IBAction)editButton:(UIButton *)sender {
+    [self saveAllData];
     [self.tableView setEditing:!self.tableView.editing animated:true];
     
 }
