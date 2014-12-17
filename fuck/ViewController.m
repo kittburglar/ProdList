@@ -114,10 +114,7 @@ static NSString *CellIdentifier = @"Cell";
     //add options (temporary)
     [optionsArray addObject: @"Reading Mode"];
     [optionsArray addObject: @"Sort"];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:([optionsArray count] - 1) inSection:0];
-    [self.secondTableView beginUpdates];
-    [self.secondTableView insertRowsAtIndexPaths:@[indexPath]withRowAnimation:UITableViewRowAnimationAutomatic];
-    [self.secondTableView endUpdates];
+    [optionsArray addObject: @"Remove Completed"];
     
     #pragma mark -Core data loads data
     //fill array with core data records
@@ -330,6 +327,7 @@ static NSString *CellIdentifier = @"Cell";
         
         if (optionsCell == nil) {
                 optionsCell = [[OptionsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault  reuseIdentifier:CellIdentifier];
+            //[optionsArray addObject: @"Reading Mode"];
     
         }
         //optionsCell.optionsLabel.text = @"Label1";
@@ -349,6 +347,18 @@ static NSString *CellIdentifier = @"Cell";
             [readingModeSegmentControl addTarget:self action:@selector(ReadingModeSegmentControlAction:) forControlEvents:UIControlEventValueChanged];
             readingModeSegmentControl.selectedSegmentIndex = 0;
             
+        }
+        //Sort
+        else if (indexPath.row == 1){
+            UILabel *readingModeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 200, optionsCell.frame.size.height)];
+            readingModeLabel.text = @"Sort";
+            [optionsCell addSubview:readingModeLabel];
+        }
+        //Remove Completed
+        else if (indexPath.row == 2){
+            UILabel *readingModeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 200, optionsCell.frame.size.height)];
+            readingModeLabel.text = @"Remove Completed";
+            [optionsCell addSubview:readingModeLabel];
         }
         optionsCell.optionsLabel.text = [optionsArray objectAtIndex:indexPath.row];
         //[optionsCell.optionsControl addTarget:self action:@selector(yourSegmentPicked:) forControlEvents:UIControlEventTouchUpInside];
