@@ -63,7 +63,7 @@ static NSString *CellIdentifier = @"Cell";
     [keyboardButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [keyboardButton addTarget:self action:@selector(pickKeyboard:) forControlEvents:UIControlEventTouchUpInside];
     [self.inputAccView addSubview:keyboardButton];
-    self.textField.inputAccessoryView = self.inputAccView;
+    //self.textField.inputAccessoryView = self.inputAccView;
     
     
     //Create date Button programmically
@@ -73,7 +73,7 @@ static NSString *CellIdentifier = @"Cell";
     [dateButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [dateButton addTarget:self action:@selector(pickDate:) forControlEvents:UIControlEventTouchUpInside];
     [self.inputAccView addSubview:dateButton];
-    self.textField.inputAccessoryView = self.inputAccView;
+    //self.textField.inputAccessoryView = self.inputAccView;
     
     //Create color Button programmically
     self.colorButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -81,8 +81,20 @@ static NSString *CellIdentifier = @"Cell";
     [self.colorButton setBackgroundColor:[UIColor darkGrayColor]];
     [self.colorButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.colorButton addTarget:self action:@selector(pickColor:) forControlEvents:UIControlEventTouchUpInside];
+
     [self.inputAccView addSubview:self.colorButton];
+    //self.textField.inputAccessoryView = self.inputAccView;
+    
+    //Create finish Button programmically
+    UIButton *finishButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    finishButton.frame = CGRectMake(self.inputAccView.bounds.size.width - 50, CGRectGetMaxY(self.inputAccView.bounds)/2 - 40/2, 40, 40);
+    [finishButton setBackgroundColor:[UIColor darkGrayColor]];
+    [finishButton setTitle:@"Done" forState:UIControlStateNormal];
+    [finishButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [finishButton addTarget:self action:@selector(textReturn:) forControlEvents:UIControlEventTouchUpInside];
+    [self.inputAccView addSubview:finishButton];
     self.textField.inputAccessoryView = self.inputAccView;
+    
     
     // Add date to top label
     NSString *formatString = [NSDateFormatter dateFormatFromTemplate:@"EdMMM" options:0 locale:[NSLocale currentLocale]];
