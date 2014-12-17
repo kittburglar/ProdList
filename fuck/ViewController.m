@@ -111,7 +111,9 @@ static NSString *CellIdentifier = @"Cell";
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(keyboardOnScreen:) name:UIKeyboardDidShowNotification object:nil];
     
-    [optionsArray addObject: @"Label1"];
+    //add options (temporary)
+    [optionsArray addObject: @"Reading Mode"];
+    [optionsArray addObject: @"Sort"];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:([optionsArray count] - 1) inSection:0];
     [self.secondTableView beginUpdates];
     [self.secondTableView insertRowsAtIndexPaths:@[indexPath]withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -332,14 +334,89 @@ static NSString *CellIdentifier = @"Cell";
         }
         //optionsCell.optionsLabel.text = @"Label1";
         
+        //Reading Mode Cell
+        if (indexPath.row == 0) {
+            UILabel *readingModeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 200, optionsCell.frame.size.height)];
+            readingModeLabel.text = @"Reading Mode";
+            [optionsCell addSubview:readingModeLabel];
+            
+            
+            NSArray *itemArray = [NSArray arrayWithObjects: @"Light", @"Dark", nil];
+            UISegmentedControl *readingModeSegmentControl = [[UISegmentedControl alloc] initWithItems:itemArray];
+            
+            [optionsCell addSubview:readingModeSegmentControl];
+            readingModeSegmentControl.frame = CGRectMake(self.view.frame.size.width - 110, 5, 100, 30);
+            [readingModeSegmentControl addTarget:self action:@selector(ReadingModeSegmentControlAction:) forControlEvents:UIControlEventValueChanged];
+            readingModeSegmentControl.selectedSegmentIndex = 0;
+            
+        }
         optionsCell.optionsLabel.text = [optionsArray objectAtIndex:indexPath.row];
-        [optionsCell.optionsControl addTarget:self action:@selector(yourSegmentPicked:) forControlEvents:UIControlEventTouchUpInside];
+        //[optionsCell.optionsControl addTarget:self action:@selector(yourSegmentPicked:) forControlEvents:UIControlEventTouchUpInside];
         return optionsCell;
     }
 
 }
 
 
+- (void)ReadingModeSegmentControlAction:(UISegmentedControl *)segment{
+    if (segment.selectedSegmentIndex == 1) {
+        self.colorArray = [NSMutableArray arrayWithObjects:
+                                               UIColorFromRGB(0xcc6666),
+                                               UIColorFromRGB(0xde935f),
+                                               UIColorFromRGB(0xf0c674),
+                                               UIColorFromRGB(0xb5bd68),
+                                               UIColorFromRGB(0x8abeb7),
+                                               UIColorFromRGB(0x81a2be),
+                                               UIColorFromRGB(0xb294bb),
+                                               UIColorFromRGB(0xc5c8c6),
+                                               UIColorFromRGB(0x969896),
+                                               UIColorFromRGB(0x373b41),
+                                               UIColorFromRGB(0x282a2e),
+                                               UIColorFromRGB(0x1d1f21),nil];
+        //[self.firstViewController.modeLabel setTitle:@"Dark" forState:UIControlStateNormal];
+        self.lightMode = NO;
+        //UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+        //self.blurView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+        
+        
+    }
+    //Light Mode
+    else{
+        self.colorArray = [NSMutableArray arrayWithObjects:
+                                               UIColorFromRGB(0xc82829),
+                                               UIColorFromRGB(0xf5871f),
+                                               UIColorFromRGB(0xeab700),
+                                               UIColorFromRGB(0x718c00),
+                                               UIColorFromRGB(0x3e999f),
+                                               UIColorFromRGB(0x4271ae),
+                                               UIColorFromRGB(0x8959a8),
+                                               UIColorFromRGB(0x4d4d4c),
+                                               UIColorFromRGB(0x8e908c),
+                                               UIColorFromRGB(0xd6d6d6),
+                                               UIColorFromRGB(0xefefef),
+                                               UIColorFromRGB(0xffffff),nil];
+        //[self.firstViewController.modeLabel setTitle:@"Light" forState:UIControlStateNormal];
+        self.lightMode = YES;
+        //UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+        //self.blurView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    }
+    //self.selectedColor = 7;
+    self.longPressCell.contentView.backgroundColor = [self.colorArray objectAtIndex:11];
+    self.view.backgroundColor = [self.colorArray objectAtIndex:11];
+    [self.view setNeedsDisplay];
+    [self.tableView reloadRowsAtIndexPaths:[self.tableView indexPathsForVisibleRows]
+                                              withRowAnimation:UITableViewRowAnimationNone];
+    self.textField.backgroundColor = [self.colorArray objectAtIndex:8];
+    self.dateLabel.textColor = [self.colorArray objectAtIndex:7];
+    [self.editButton setTitleColor:[self.colorArray objectAtIndex:5] forState:UIControlStateNormal];
+    [self.editButton setTitleColor:[self.colorArray objectAtIndex:7] forState:UIControlStateSelected];
+    [self.modeButton setTitleColor:[self.colorArray objectAtIndex:5] forState:UIControlStateNormal];
+    [self.modeButton setTitleColor:[self.colorArray objectAtIndex:7] forState:UIControlStateSelected];
+    [self.collectionView reloadData];
+    [self.tableView reloadData];
+    [self setNeedsStatusBarAppearanceUpdate];
+    [self.blurView setNeedsDisplay];
+}
 
 -(void)yourSegmentPicked:(UISegmentedControl*)sender{
     NSLog(@"yourSegmentPicked");

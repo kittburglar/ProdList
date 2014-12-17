@@ -155,34 +155,36 @@
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fHu-1N-tyP" id="lhh-2x-dRp">
                                                                     <autoresizingMask key="autoresizingMask"/>
+                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                                </tableViewCellContentView>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                            </tableViewCell>
+                                                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="B6F-wU-4ea" userLabel="Sort Cell" customClass="OptionsTableViewCell">
+                                                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="B6F-wU-4ea" id="T7U-e8-HML">
+                                                                    <autoresizingMask key="autoresizingMask"/>
                                                                     <subviews>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vRx-9j-Qzb">
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cnW-9l-bkC">
                                                                             <rect key="frame" x="8" y="11" width="42" height="21"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <segmentedControl opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dnv-o2-DmE">
-                                                                            <rect key="frame" x="503" y="8" width="89" height="29"/>
-                                                                            <segments>
-                                                                                <segment title="Light"/>
-                                                                                <segment title="Dark"/>
-                                                                            </segments>
-                                                                            <connections>
-                                                                                <action selector="optionsChanged:" destination="fHu-1N-tyP" eventType="valueChanged" id="TMq-Hi-3cC"/>
-                                                                            </connections>
-                                                                        </segmentedControl>
+                                                                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rhs-Hn-icE">
+                                                                            <rect key="frame" x="546" y="7" width="46" height="30"/>
+                                                                            <state key="normal" title="Button">
+                                                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                                            </state>
+                                                                        </button>
                                                                     </subviews>
-                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                     <constraints>
-                                                                        <constraint firstItem="dnv-o2-DmE" firstAttribute="trailing" secondItem="lhh-2x-dRp" secondAttribute="trailingMargin" id="R0b-nR-e2p"/>
-                                                                        <constraint firstItem="vRx-9j-Qzb" firstAttribute="leading" secondItem="lhh-2x-dRp" secondAttribute="leadingMargin" id="mdR-Dz-jZA"/>
+                                                                        <constraint firstItem="rhs-Hn-icE" firstAttribute="trailing" secondItem="T7U-e8-HML" secondAttribute="trailingMargin" id="5Av-4Q-Saq"/>
+                                                                        <constraint firstItem="cnW-9l-bkC" firstAttribute="leading" secondItem="T7U-e8-HML" secondAttribute="leadingMargin" id="a6L-bW-xK5"/>
                                                                     </constraints>
                                                                 </tableViewCellContentView>
-                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                 <connections>
-                                                                    <outlet property="optionsControl" destination="dnv-o2-DmE" id="RHj-Lg-u2B"/>
-                                                                    <outlet property="optionsLabel" destination="vRx-9j-Qzb" id="5Z1-qy-tc2"/>
+                                                                    <outlet property="SortButton" destination="rhs-Hn-icE" id="i3U-3x-mfN"/>
                                                                 </connections>
                                                             </tableViewCell>
                                                         </prototypes>
