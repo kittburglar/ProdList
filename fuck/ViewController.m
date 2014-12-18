@@ -675,15 +675,29 @@ static NSString *CellIdentifier = @"Cell";
 #pragma mark - Core Data Stuffs
 
 -(void)saveAllData{
-    for (int i = 0; i < anArray.count; i++) {
+    //for (int i = 0; i < anArray.count; i++) {
         NSEntityDescription *entityDesc = [NSEntityDescription entityForName:@"Item" inManagedObjectContext:self.managedObjectContext];
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
         [request setEntity:entityDesc];
         
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"itemPid == %d", i];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"TRUEPREDICATE"];
         [request setPredicate:predicate];
         NSError *error;
+        NSArray *matchingData = [self.managedObjectContext executeFetchRequest:request error:&error];
         
+        if (matchingData.count <=0) {
+            NSLog(@"No data to save");
+        }
+        else{
+            for (int i = 0; i < matchingData.count; i++) {
+                NSManagedObject *obj = [matchingData objectAtIndex:i];
+                [obj setValue:[[anArray objectAtIndex:i] name] forKey:@"itemText"];
+                [obj setValue:[NSNumber numberWithInteger:[[anArray objectAtIndex:i] buttonColor]] forKey:@"itemColor"];
+                [obj setValue:[[anArray objectAtIndex:i] date] forKey:@"itemDate"];
+            }
+            //[self.managedObjectContext save:&error];
+        }
+        /*
         NSLog(@"looking for pid: %d",i);
         
         NSManagedObject *obj = [[self.managedObjectContext executeFetchRequest:request error:&error] objectAtIndex:0];
@@ -692,10 +706,10 @@ static NSString *CellIdentifier = @"Cell";
         [obj setValue:[NSNumber numberWithInteger:[[anArray objectAtIndex:i] buttonColor]] forKey:@"itemColor"];
         [obj setValue:[[anArray objectAtIndex:i] date] forKey:@"itemDate"];
         //[obj setValue:[NSNumber numberWithInteger:[[anArray objectAtIndex:i] pid]]  forKey:@"itemPid"];
-        
+        */
         [self.managedObjectContext save:&error];
         
-    }
+    //}
 }
 
 
@@ -734,13 +748,12 @@ static NSString *CellIdentifier = @"Cell";
     
     NSLog(@"textReturn!");
     //self.didSelect = NO;
-    
     //check for whitespace entry or empty textfield
     NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
     NSString *trimmed = [self.textField.text stringByTrimmingCharactersInSet:whitespace];
     
     if ([trimmed length] == 0) {
-        //Do nothing
+        
     }
     //Add add to core data and list
     else if ([self modifying]) {
@@ -836,7 +849,8 @@ static NSString *CellIdentifier = @"Cell";
     self.selectedColor = 7;
     self.colorButton.backgroundColor = [UIColor darkGrayColor];
     self.didSelect = NO;
-    [sender resignFirstResponder];
+    //[sender resignFirstResponder];
+    [self.textField resignFirstResponder];
 }
 
 //If user touches anywhere else then close keyboard
