@@ -399,12 +399,31 @@ static NSString *CellIdentifier = @"Cell";
         if ([object finishedBool] == YES) {
             NSLog(@"Going to remove item with name: %@", [object name]);
             
-            //remove array entry
+            //remove from core data
+            Item *item = [anArray objectAtIndex:i];
+            NSEntityDescription *entityDesc = [NSEntityDescription entityForName:@"Item" inManagedObjectContext:self.managedObjectContext];
+            
+            NSFetchRequest *request = [[NSFetchRequest alloc] init];
+            [request setEntity:entityDesc];
+            
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"itemPid == %ld", (long)[item pid]];
+            [request setPredicate:predicate];
+            
+            NSError *error;
+            
+            NSManagedObject *obj = [[self.managedObjectContext executeFetchRequest:request error:&error] objectAtIndex:0];
+            
+            [self.managedObjectContext deleteObject:obj];
+            [self.managedObjectContext save:&error];
+            
+            
+            //record index of object to delete
             [indexesToDelete addIndex:i];
         }
     }
     [anArray removeObjectsAtIndexes:indexesToDelete];
     [self.tableView reloadData];
+    
 }
 
 
@@ -536,21 +555,7 @@ static NSString *CellIdentifier = @"Cell";
            [request setPredicate:predicate];
            
            NSError *error;
-           
-           /*
-           NSArray *matchingData = [self.managedObjectContext executeFetchRequest:request error:&error];
-           
-           if (matchingData.count == 0) {
-               NSLog(@"No matches to pid uhoh problem");
-           }
-           else{
-               for (NSManagedObject *obj in matchingData) {
-                   [self.managedObjectContext deleteObject:obj];
-                   NSLog(@"obj itemPid is: %@",[obj valueForKey:@"itemPid"]);
-               }
-           }
-            */
-           
+          
            NSManagedObject *obj = [[self.managedObjectContext executeFetchRequest:request error:&error] objectAtIndex:0];
            NSLog(@"obj itemPid is: %@",[obj valueForKey:@"itemPid"]);
            if (obj == nil) {
