@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fuck/ViewController.m"
-            timestampString = "440550166.223372"
+            timestampString = "440585042.927338"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "653"
-            endingLineNumber = "653"
+            startingLineNumber = "681"
+            endingLineNumber = "681"
             landmarkName = "-didSwipe:"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fuck/ViewController.m"
-            timestampString = "440550166.223372"
+            timestampString = "440585042.927338"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "673"
-            endingLineNumber = "673"
+            startingLineNumber = "703"
+            endingLineNumber = "703"
             landmarkName = "@implementation ViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fuck/ViewController.m"
-            timestampString = "440550166.223372"
+            timestampString = "440585042.927338"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "490"
-            endingLineNumber = "490"
+            startingLineNumber = "518"
+            endingLineNumber = "518"
             landmarkName = "-tableView:editActionsForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fuck/ViewController.m"
-            timestampString = "440550166.223372"
+            timestampString = "440585042.927338"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "638"
-            endingLineNumber = "638"
+            startingLineNumber = "666"
+            endingLineNumber = "666"
             landmarkName = "-didPressLong:"
             landmarkType = "5">
          </BreakpointContent>
@@ -153,7 +153,7 @@
                   symbolName = "-[OptionsTableViewCell firstViewController]"
                   moduleName = "fuck"
                   urlString = "file:///Users/kittiphongxayasane/Desktop/fuck/fuck/OptionsTableViewCell.h"
-                  timestampString = "440406520.679098"
+                  timestampString = "440583494.71502"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "13"
@@ -167,7 +167,7 @@
                   symbolName = "-[OptionsTableViewCell setFirstViewController:]"
                   moduleName = "fuck"
                   urlString = "file:///Users/kittiphongxayasane/Desktop/fuck/fuck/OptionsTableViewCell.h"
-                  timestampString = "440406520.679306"
+                  timestampString = "440583494.715264"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "13"
@@ -231,7 +231,7 @@
                   symbolName = "-[ViewController editButton]"
                   moduleName = "fuck"
                   urlString = "file:///Users/kittiphongxayasane/Desktop/fuck/fuck/ViewController.h"
-                  timestampString = "440406520.681901"
+                  timestampString = "440583494.719234"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "32"
@@ -245,7 +245,7 @@
                   symbolName = "-[ViewController setEditButton:]"
                   moduleName = "fuck"
                   urlString = "file:///Users/kittiphongxayasane/Desktop/fuck/fuck/ViewController.h"
-                  timestampString = "440406520.682104"
+                  timestampString = "440583494.719464"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "32"
@@ -267,6 +267,22 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2"
             endingLineNumber = "2">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "fuck/ViewController.m"
+            timestampString = "440585042.927338"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "696"
+            endingLineNumber = "696"
+            landmarkName = "-didSwipe:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

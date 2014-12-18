@@ -19,6 +19,8 @@
 
 @property (nonatomic, assign) NSInteger pid;
 
+@property (nonatomic, assign) BOOL finishedBool;
+
 -(id)initWithName:(NSString *)name;
 
 -(id)initWithNameAndColor:(NSString *)name withColor:(NSInteger)buttonColor;

@@ -371,12 +371,40 @@ static NSString *CellIdentifier = @"Cell";
             UILabel *readingModeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 200, optionsCell.frame.size.height)];
             readingModeLabel.text = @"Remove Completed";
             [optionsCell addSubview:readingModeLabel];
+            
+            UIButton *removeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+            removeButton.frame = CGRectMake(self.view.frame.size.width - 110, 5, 100, 30);
+            [removeButton setTitle:@"Remove" forState:UIControlStateNormal];
+            [removeButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [removeButton addTarget:self action:@selector(removeAllCompletedAction:) forControlEvents:UIControlEventTouchUpInside];
+            [optionsCell addSubview:removeButton];
+            
         }
         optionsCell.optionsLabel.text = [optionsArray objectAtIndex:indexPath.row];
         //[optionsCell.optionsControl addTarget:self action:@selector(yourSegmentPicked:) forControlEvents:UIControlEventTouchUpInside];
         return optionsCell;
     }
 
+}
+
+- (void)removeAllCompletedAction:(UIButton *)button{
+    NSLog(@"removeAllCompletedAction pressed");
+    /*
+    for (Item *object in anArray) {
+            }
+    */
+    NSMutableIndexSet *indexesToDelete = [NSMutableIndexSet indexSet];
+    for (int i = 0; i < anArray.count; i++) {
+        Item *object = [anArray objectAtIndex:i];
+        if ([object finishedBool] == YES) {
+            NSLog(@"Going to remove item with name: %@", [object name]);
+            
+            //remove array entry
+            [indexesToDelete addIndex:i];
+        }
+    }
+    [anArray removeObjectsAtIndexes:indexesToDelete];
+    [self.tableView reloadData];
 }
 
 
@@ -660,10 +688,12 @@ static NSString *CellIdentifier = @"Cell";
             if ([swipedCell.titleLabel.attributedText isEqualToAttributedString:(attrText)]) {
                 NSLog(@"Swiped crossed out word");
                 swipedCell.titleLabel.attributedText = attrText2;
+                [[anArray objectAtIndex:swipedIndexPath.row] setFinishedBool:NO];
             }
             else{
                 NSLog(@"Swiped regular word");
                 swipedCell.titleLabel.attributedText = attrText;
+                [[anArray objectAtIndex:swipedIndexPath.row] setFinishedBool:YES];
             }
         }
     }

@@ -52,6 +52,7 @@
     self.buttonColor = color;
     self.date = date;
     self.pid = pid;
+    self.finishedBool = NO;
     return self;
 }
 
