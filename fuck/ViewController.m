@@ -128,6 +128,30 @@ static NSString *CellIdentifier = @"Cell";
     [optionsArray addObject: @"Sort"];
     [optionsArray addObject: @"Remove Completed"];
     
+    //Set up picker view for options
+    self.pickerViewTextField = [[UITextField alloc] initWithFrame:CGRectZero];
+    [self.view addSubview:self.pickerViewTextField];
+
+    UIPickerView *pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+    pickerView.showsSelectionIndicator = YES;
+    pickerView.dataSource = self;
+    pickerView.delegate = self;
+
+    self.pickerViewTextField.inputView = pickerView;
+    
+    // add a toolbar with Cancel & Done button
+    UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    toolBar.barStyle = UIBarStyleDefault;
+    
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneTouched:)];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelTouched:)];
+    
+    // the middle button is to make the Done button align to right
+    [toolBar setItems:[NSArray arrayWithObjects:cancelButton, [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil], doneButton, nil]];
+    self.pickerViewTextField.inputAccessoryView = toolBar;
+
+    
+    
     #pragma mark -Core data loads data
     //fill array with core data records
     NSEntityDescription *entitydesc = [NSEntityDescription entityForName:@"Item" inManagedObjectContext:self.managedObjectContext];
@@ -278,6 +302,46 @@ static NSString *CellIdentifier = @"Cell";
 }
 
 
+#pragma mark - UIPickerViewDataSource
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return [anArray count];
+}
+
+#pragma mark - UIPickerViewDelegate
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    NSString *item = [[anArray objectAtIndex:row] name];
+    
+    return item;
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    // perform some action
+}
+
+
+- (void)cancelTouched:(UIBarButtonItem *)sender
+{
+    // hide the picker view
+    [self.pickerViewTextField resignFirstResponder];
+}
+
+- (void)doneTouched:(UIBarButtonItem *)sender
+{
+    // hide the picker view
+    [self.pickerViewTextField resignFirstResponder];
+    
+    // perform some action
+}
+
+
 #pragma mark - UITableView Datasource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -365,6 +429,13 @@ static NSString *CellIdentifier = @"Cell";
             UILabel *readingModeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 200, optionsCell.frame.size.height)];
             readingModeLabel.text = @"Sort";
             [optionsCell addSubview:readingModeLabel];
+            
+            UIButton *sortButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+            sortButton.frame = CGRectMake(self.view.frame.size.width - 110, 5, 100, 30);
+            [sortButton setTitle:@"Sort" forState:UIControlStateNormal];
+            [sortButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [sortButton addTarget:self action:@selector(sortAction:) forControlEvents:UIControlEventTouchUpInside];
+            [optionsCell addSubview:sortButton];
         }
         //Remove Completed
         else if (indexPath.row == 2){
@@ -386,6 +457,15 @@ static NSString *CellIdentifier = @"Cell";
     }
 
 }
+
+- (void)sortAction:(UIButton *)button{
+    NSLog(@"sortAction pressed");
+    [self.pickerViewTextField becomeFirstResponder];
+}
+
+
+
+
 
 - (void)removeAllCompletedAction:(UIButton *)button{
     NSLog(@"removeAllCompletedAction pressed");
