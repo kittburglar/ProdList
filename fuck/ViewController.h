@@ -58,7 +58,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *secondTableView;
 @property (strong, nonatomic) IBOutlet UIVisualEffectView *blurView;
 @property (nonatomic, strong) UITextField *pickerViewTextField;
-
+@property (strong, nonatomic) UIPickerView *sortPickerView;
 - (IBAction)doneOptionsButton:(UIButton *)sender;
 
 #pragma mark - Core Data

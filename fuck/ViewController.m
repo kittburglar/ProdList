@@ -132,12 +132,12 @@ static NSString *CellIdentifier = @"Cell";
     self.pickerViewTextField = [[UITextField alloc] initWithFrame:CGRectZero];
     [self.view addSubview:self.pickerViewTextField];
 
-    UIPickerView *pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
-    pickerView.showsSelectionIndicator = YES;
-    pickerView.dataSource = self;
-    pickerView.delegate = self;
+    self.sortPickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+    self.sortPickerView.showsSelectionIndicator = YES;
+    self.sortPickerView.dataSource = self;
+    self.sortPickerView.delegate = self;
 
-    self.pickerViewTextField.inputView = pickerView;
+    self.pickerViewTextField.inputView = self.sortPickerView;
     
     // add a toolbar with Cancel & Done button
     UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
@@ -338,6 +338,9 @@ static NSString *CellIdentifier = @"Cell";
     // hide the picker view
     [self.pickerViewTextField resignFirstResponder];
     
+    NSString *testString = [[anArray objectAtIndex:[self.sortPickerView selectedRowInComponent:0]] name];
+    
+    NSLog(@"%@", testString);
     // perform some action
 }
 
