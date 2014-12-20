@@ -127,7 +127,9 @@ static NSString *CellIdentifier = @"Cell";
     [optionsArray addObject: @"Reading Mode"];
     [optionsArray addObject: @"Sort"];
     [optionsArray addObject: @"Remove Completed"];
-    
+    [optionsArray addObject: @"Auto Reading Mode"];
+    [optionsArray addObject: @"Remove All"];
+    [optionsArray addObject: @"Auto Sort"];
     //Set up picker view for options
     self.pickerViewTextField = [[UITextField alloc] initWithFrame:CGRectZero];
     [self.view addSubview:self.pickerViewTextField];
@@ -453,6 +455,21 @@ static NSString *CellIdentifier = @"Cell";
             [removeButton addTarget:self action:@selector(removeAllCompletedAction:) forControlEvents:UIControlEventTouchUpInside];
             [optionsCell addSubview:removeButton];
             
+        }
+        else if (indexPath.row == 3){
+            UILabel *autoReadingModeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 200, optionsCell.frame.size.height)];
+            autoReadingModeLabel.text = @"Auto Reading Mode";
+            [optionsCell addSubview:autoReadingModeLabel];
+        }
+        else if (indexPath.row == 4){
+            UILabel *removeAllLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 200, optionsCell.frame.size.height)];
+            removeAllLabel.text = @"Remove All";
+            [optionsCell addSubview:removeAllLabel];
+        }
+        else if (indexPath.row == 4){
+            UILabel *autoSortLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 200, optionsCell.frame.size.height)];
+            autoSortLabel.text = @"Auto Sort";
+            [optionsCell addSubview:autoSortLabel];
         }
         optionsCell.optionsLabel.text = [optionsArray objectAtIndex:indexPath.row];
         //[optionsCell.optionsControl addTarget:self action:@selector(yourSegmentPicked:) forControlEvents:UIControlEventTouchUpInside];
