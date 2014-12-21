@@ -363,17 +363,32 @@ static NSString *CellIdentifier = @"Cell";
             sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name"
                                                          ascending:YES];
             NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-            NSArray *sortedArray;
             anArray = (NSMutableArray *)[anArray sortedArrayUsingDescriptors:sortDescriptors];
             [self.tableView reloadData];
             break;
         }
         case 1:
+        {
             NSLog(@"1");
+            NSSortDescriptor *sortDescriptor;
+            sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"buttonColor"
+                                                         ascending:YES];
+            NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+            anArray = (NSMutableArray *)[anArray sortedArrayUsingDescriptors:sortDescriptors];
+            [self.tableView reloadData];
             break;
+        }
         case 2:
+        {
             NSLog(@"2");
+            NSSortDescriptor *sortDescriptor;
+            sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"date"
+                                                         ascending:YES];
+            NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+            anArray = (NSMutableArray *)[anArray sortedArrayUsingDescriptors:sortDescriptors];
+            [self.tableView reloadData];
             break;
+        }
         default:
             break;
     }
