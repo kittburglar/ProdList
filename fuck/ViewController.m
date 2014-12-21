@@ -107,6 +107,7 @@ static NSString *CellIdentifier = @"Cell";
     //Init array of items
     anArray = [[NSMutableArray alloc] init];
     optionsArray = [[NSMutableArray alloc] init];
+    sortOptionsArray = [[NSMutableArray alloc] init];
 
     
     //add swipe detection to tableview
@@ -130,6 +131,12 @@ static NSString *CellIdentifier = @"Cell";
     [optionsArray addObject: @"Auto Reading Mode"];
     [optionsArray addObject: @"Remove All"];
     [optionsArray addObject: @"Auto Sort"];
+    
+    //add sortOptions array
+    [sortOptionsArray addObject: @"Name"];
+    [sortOptionsArray addObject: @"Color"];
+    [sortOptionsArray addObject: @"Due Date"];
+    
     //Set up picker view for options
     self.pickerViewTextField = [[UITextField alloc] initWithFrame:CGRectZero];
     [self.view addSubview:self.pickerViewTextField];
@@ -312,13 +319,13 @@ static NSString *CellIdentifier = @"Cell";
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return [anArray count];
+    return [sortOptionsArray count];
 }
 
 #pragma mark - UIPickerViewDelegate
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    NSString *item = [[anArray objectAtIndex:row] name];
+    NSString *item = [sortOptionsArray objectAtIndex:row];
     
     return item;
 }
@@ -340,10 +347,36 @@ static NSString *CellIdentifier = @"Cell";
     // hide the picker view
     [self.pickerViewTextField resignFirstResponder];
     
-    NSString *testString = [[anArray objectAtIndex:[self.sortPickerView selectedRowInComponent:0]] name];
+    NSString *testString = [sortOptionsArray objectAtIndex:[self.sortPickerView selectedRowInComponent:0]];
+    
+    
     
     NSLog(@"%@", testString);
     // perform some action
+    
+    switch ([self.sortPickerView selectedRowInComponent:0]) {
+        //Name
+        case 0:
+        {
+            NSLog(@"0");
+            NSSortDescriptor *sortDescriptor;
+            sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name"
+                                                         ascending:YES];
+            NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+            NSArray *sortedArray;
+            anArray = (NSMutableArray *)[anArray sortedArrayUsingDescriptors:sortDescriptors];
+            [self.tableView reloadData];
+            break;
+        }
+        case 1:
+            NSLog(@"1");
+            break;
+        case 2:
+            NSLog(@"2");
+            break;
+        default:
+            break;
+    }
 }
 
 
