@@ -465,8 +465,15 @@ static NSString *CellIdentifier = @"Cell";
             UILabel *removeAllLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 200, optionsCell.frame.size.height)];
             removeAllLabel.text = @"Remove All";
             [optionsCell addSubview:removeAllLabel];
+            
+            UIButton *removeAllButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+            removeAllButton.frame = CGRectMake(self.view.frame.size.width - 110, 5, 100, 30);
+            [removeAllButton setTitle:@"Remove" forState:UIControlStateNormal];
+            [removeAllButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [removeAllButton addTarget:self action:@selector(removeAllAction:) forControlEvents:UIControlEventTouchUpInside];
+            [optionsCell addSubview:removeAllButton];
         }
-        else if (indexPath.row == 4){
+        else if (indexPath.row == 5){
             UILabel *autoSortLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 200, optionsCell.frame.size.height)];
             autoSortLabel.text = @"Auto Sort";
             [optionsCell addSubview:autoSortLabel];
@@ -526,6 +533,37 @@ static NSString *CellIdentifier = @"Cell";
     
 }
 
+
+- (void)removeAllAction:(UIButton *)button{
+    NSLog(@"removeAllAction pressed");
+
+    [anArray removeAllObjects];
+    
+    NSEntityDescription *entityDesc = [NSEntityDescription entityForName:@"Item" inManagedObjectContext:self.managedObjectContext];
+            
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entityDesc];
+            
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"TRUEPREDICATE"];
+        [request setPredicate:predicate];
+            
+        NSError *error;
+    
+        NSArray *matchingData = [self.managedObjectContext executeFetchRequest:request error:&error];
+            
+    if (matchingData.count <=0) {
+        NSLog(@"NO data to delete");
+    }
+    else{
+        for (NSManagedObject *obj in matchingData) {
+            [self.managedObjectContext deleteObject:obj];
+        }
+    }
+    
+    [self.managedObjectContext save:&error];
+            
+    [self.tableView reloadData];
+}
 
 - (void)ReadingModeSegmentControlAction:(UISegmentedControl *)segment{
     if (segment.selectedSegmentIndex == 1) {
