@@ -26,6 +26,7 @@
 @property (nonatomic, assign) BOOL modifying;
 @property (nonatomic, assign) BOOL lightMode;
 @property (nonatomic, assign) BOOL didSelect;
+@property (nonatomic, assign) BOOL checkLightMode;
 
 #pragma mark - Top Main
 @property (strong, nonatomic) IBOutlet UITextField *textField;

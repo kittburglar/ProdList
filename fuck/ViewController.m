@@ -216,10 +216,7 @@ static NSString *CellIdentifier = @"Cell";
         [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
         [self.collectionView setBackgroundColor:[UIColor grayColor]];
     }
-    
-    
-    
-    
+       
 }
 
 - (void)pickKeyboard:(UIButton*)button
@@ -505,10 +502,15 @@ static NSString *CellIdentifier = @"Cell";
             [optionsCell addSubview:removeButton];
             
         }
+        //Auto Reading Mode
         else if (indexPath.row == 3){
             UILabel *autoReadingModeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 200, optionsCell.frame.size.height)];
             autoReadingModeLabel.text = @"Auto Reading Mode";
             [optionsCell addSubview:autoReadingModeLabel];
+            
+            UISwitch *autoReadingSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 80, 5, 70, 30)];
+            [autoReadingSwitch addTarget:self action:@selector(autoReadingModeAction:) forControlEvents:UIControlEventValueChanged];
+            [optionsCell addSubview:autoReadingSwitch];
         }
         else if (indexPath.row == 4){
             UILabel *removeAllLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 200, optionsCell.frame.size.height)];
@@ -532,6 +534,80 @@ static NSString *CellIdentifier = @"Cell";
         return optionsCell;
     }
 
+}
+
+- (void)autoReadingModeAction:(UISwitch *)mySwitch{
+    if (mySwitch.on) {
+        NSLog(@"autoReadingModeAction switch is on");
+        NSDateComponents *components = [[NSCalendar currentCalendar] components:NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit fromDate:[NSDate date]];
+        NSInteger currentHour = [components hour];
+        NSInteger currentMinute = [components minute];
+        NSInteger currentSecond = [components second];
+        
+        self.checkLightMode = YES;
+        
+        if (currentHour < 7 || (currentHour > 21 || currentHour == 21 && (currentMinute > 0 || currentSecond > 0))) {
+            self.colorArray = [NSMutableArray arrayWithObjects:
+                               UIColorFromRGB(0xcc6666),
+                               UIColorFromRGB(0xde935f),
+                               UIColorFromRGB(0xf0c674),
+                               UIColorFromRGB(0xb5bd68),
+                               UIColorFromRGB(0x8abeb7),
+                               UIColorFromRGB(0x81a2be),
+                               UIColorFromRGB(0xb294bb),
+                               UIColorFromRGB(0xc5c8c6),
+                               UIColorFromRGB(0x969896),
+                               UIColorFromRGB(0x373b41),
+                               UIColorFromRGB(0x282a2e),
+                               UIColorFromRGB(0x1d1f21),nil];
+            //[self.firstViewController.modeLabel setTitle:@"Dark" forState:UIControlStateNormal];
+            self.lightMode = NO;
+            //UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+            //self.blurView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+            
+            
+        }
+        //Light Mode
+        else{
+            self.colorArray = [NSMutableArray arrayWithObjects:
+                               UIColorFromRGB(0xc82829),
+                               UIColorFromRGB(0xf5871f),
+                               UIColorFromRGB(0xeab700),
+                               UIColorFromRGB(0x718c00),
+                               UIColorFromRGB(0x3e999f),
+                               UIColorFromRGB(0x4271ae),
+                               UIColorFromRGB(0x8959a8),
+                               UIColorFromRGB(0x4d4d4c),
+                               UIColorFromRGB(0x8e908c),
+                               UIColorFromRGB(0xd6d6d6),
+                               UIColorFromRGB(0xefefef),
+                               UIColorFromRGB(0xffffff),nil];
+            //[self.firstViewController.modeLabel setTitle:@"Light" forState:UIControlStateNormal];
+            self.lightMode = YES;
+            //UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+            //self.blurView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+        }
+        //self.selectedColor = 7;
+        self.longPressCell.contentView.backgroundColor = [self.colorArray objectAtIndex:11];
+        self.view.backgroundColor = [self.colorArray objectAtIndex:11];
+        [self.view setNeedsDisplay];
+        [self.tableView reloadRowsAtIndexPaths:[self.tableView indexPathsForVisibleRows]
+                              withRowAnimation:UITableViewRowAnimationNone];
+        self.textField.backgroundColor = [self.colorArray objectAtIndex:8];
+        self.dateLabel.textColor = [self.colorArray objectAtIndex:7];
+        [self.editButton setTitleColor:[self.colorArray objectAtIndex:5] forState:UIControlStateNormal];
+        [self.editButton setTitleColor:[self.colorArray objectAtIndex:7] forState:UIControlStateSelected];
+        [self.modeButton setTitleColor:[self.colorArray objectAtIndex:5] forState:UIControlStateNormal];
+        [self.modeButton setTitleColor:[self.colorArray objectAtIndex:7] forState:UIControlStateSelected];
+        [self.collectionView reloadData];
+        [self.tableView reloadData];
+        [self setNeedsStatusBarAppearanceUpdate];
+    }
+    
+    else{
+        NSLog(@"autoReadingModeAction switch is off");
+        self.checkLightMode = NO;
+    }
 }
 
 - (void)sortAction:(UIButton *)button{
