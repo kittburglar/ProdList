@@ -363,8 +363,9 @@ static NSString *CellIdentifier = @"Cell";
             sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name"
                                                          ascending:YES];
             NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-            anArray = (NSMutableArray *)[anArray sortedArrayUsingDescriptors:sortDescriptors];
+            anArray = [[anArray sortedArrayUsingDescriptors:sortDescriptors] mutableCopy];
             [self.tableView reloadData];
+            [self saveAllData];
             break;
         }
         case 1:
@@ -374,7 +375,7 @@ static NSString *CellIdentifier = @"Cell";
             sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"buttonColor"
                                                          ascending:YES];
             NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-            anArray = (NSMutableArray *)[anArray sortedArrayUsingDescriptors:sortDescriptors];
+            anArray = [[anArray sortedArrayUsingDescriptors:sortDescriptors] mutableCopy];
             [self.tableView reloadData];
             break;
         }
@@ -385,7 +386,7 @@ static NSString *CellIdentifier = @"Cell";
             sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"date"
                                                          ascending:YES];
             NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-            anArray = (NSMutableArray *)[anArray sortedArrayUsingDescriptors:sortDescriptors];
+            anArray = [[anArray sortedArrayUsingDescriptors:sortDescriptors] mutableCopy];
             [self.tableView reloadData];
             break;
         }
@@ -578,7 +579,7 @@ static NSString *CellIdentifier = @"Cell";
     }
     [anArray removeObjectsAtIndexes:indexesToDelete];
     [self.tableView reloadData];
-    
+    [self saveAllData];
 }
 
 
