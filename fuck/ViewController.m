@@ -541,7 +541,7 @@ static NSString *CellIdentifier = @"Cell";
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:entity];
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"optionId == %d", [NSNumber numberWithInt:0]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"optionId == %d", [[NSNumber numberWithInt:0] integerValue]];
     [request setPredicate:predicate];
     NSError *error;
     NSArray *matchingData = [self.managedObjectContext executeFetchRequest:request error:&error];
@@ -553,7 +553,7 @@ static NSString *CellIdentifier = @"Cell";
         NSManagedObject *newItem = [[NSManagedObject alloc]initWithEntity:entity insertIntoManagedObjectContext:self.managedObjectContext];
         [newItem setValue:[NSNumber numberWithInt:0] forKey:@"optionId"];
         [newItem setValue:[NSNumber numberWithBool:mySwitch.on] forKey:@"optionBool"];
-        NSError *error;
+        
         [self.managedObjectContext save:&error];
     }
     else{
@@ -583,8 +583,11 @@ static NSString *CellIdentifier = @"Cell";
             NSLog(@"autoReadingModeAction switch is off");
             self.checkLightMode = NO;
         }
-        //[newItem setValue:[NSNumber numberWithBool:mySwitch.on] forKey:@"optionBool"];
-        //[self.managedObjectContext save:&error];
+        for (NSManagedObject *obj in matchingData) {
+            [obj setValue:[NSNumber numberWithBool:mySwitch.on] forKey:@"optionBool"];
+        }
+        
+        [self.managedObjectContext save:&error];
     }
 
     
