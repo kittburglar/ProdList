@@ -467,12 +467,12 @@ static NSString *CellIdentifier = @"Cell";
             
             
             NSArray *itemArray = [NSArray arrayWithObjects: @"Light", @"Dark", nil];
-            UISegmentedControl *readingModeSegmentControl = [[UISegmentedControl alloc] initWithItems:itemArray];
+            self.readingModeSegmentControl = [[UISegmentedControl alloc] initWithItems:itemArray];
             
-            [optionsCell addSubview:readingModeSegmentControl];
-            readingModeSegmentControl.frame = CGRectMake(self.view.frame.size.width - 110, 5, 100, 30);
-            [readingModeSegmentControl addTarget:self action:@selector(ReadingModeSegmentControlAction:) forControlEvents:UIControlEventValueChanged];
-            readingModeSegmentControl.selectedSegmentIndex = 0;
+            [optionsCell addSubview:self.readingModeSegmentControl];
+            self.readingModeSegmentControl.frame = CGRectMake(self.view.frame.size.width - 110, 5, 100, 30);
+            [self.readingModeSegmentControl addTarget:self action:@selector(ReadingModeSegmentControlAction:) forControlEvents:UIControlEventValueChanged];
+            self.readingModeSegmentControl.selectedSegmentIndex = 0;
             
         }
         //Sort
@@ -537,77 +537,57 @@ static NSString *CellIdentifier = @"Cell";
 }
 
 - (void)autoReadingModeAction:(UISwitch *)mySwitch{
-    if (mySwitch.on) {
-        NSLog(@"autoReadingModeAction switch is on");
-        NSDateComponents *components = [[NSCalendar currentCalendar] components:NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit fromDate:[NSDate date]];
-        NSInteger currentHour = [components hour];
-        NSInteger currentMinute = [components minute];
-        NSInteger currentSecond = [components second];
-        
-        self.checkLightMode = YES;
-        
-        if (currentHour < 7 || (currentHour > 21 || currentHour == 21 && (currentMinute > 0 || currentSecond > 0))) {
-            self.colorArray = [NSMutableArray arrayWithObjects:
-                               UIColorFromRGB(0xcc6666),
-                               UIColorFromRGB(0xde935f),
-                               UIColorFromRGB(0xf0c674),
-                               UIColorFromRGB(0xb5bd68),
-                               UIColorFromRGB(0x8abeb7),
-                               UIColorFromRGB(0x81a2be),
-                               UIColorFromRGB(0xb294bb),
-                               UIColorFromRGB(0xc5c8c6),
-                               UIColorFromRGB(0x969896),
-                               UIColorFromRGB(0x373b41),
-                               UIColorFromRGB(0x282a2e),
-                               UIColorFromRGB(0x1d1f21),nil];
-            //[self.firstViewController.modeLabel setTitle:@"Dark" forState:UIControlStateNormal];
-            self.lightMode = NO;
-            //UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-            //self.blurView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-            
-            
-        }
-        //Light Mode
-        else{
-            self.colorArray = [NSMutableArray arrayWithObjects:
-                               UIColorFromRGB(0xc82829),
-                               UIColorFromRGB(0xf5871f),
-                               UIColorFromRGB(0xeab700),
-                               UIColorFromRGB(0x718c00),
-                               UIColorFromRGB(0x3e999f),
-                               UIColorFromRGB(0x4271ae),
-                               UIColorFromRGB(0x8959a8),
-                               UIColorFromRGB(0x4d4d4c),
-                               UIColorFromRGB(0x8e908c),
-                               UIColorFromRGB(0xd6d6d6),
-                               UIColorFromRGB(0xefefef),
-                               UIColorFromRGB(0xffffff),nil];
-            //[self.firstViewController.modeLabel setTitle:@"Light" forState:UIControlStateNormal];
-            self.lightMode = YES;
-            //UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-            //self.blurView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-        }
-        //self.selectedColor = 7;
-        self.longPressCell.contentView.backgroundColor = [self.colorArray objectAtIndex:11];
-        self.view.backgroundColor = [self.colorArray objectAtIndex:11];
-        [self.view setNeedsDisplay];
-        [self.tableView reloadRowsAtIndexPaths:[self.tableView indexPathsForVisibleRows]
-                              withRowAnimation:UITableViewRowAnimationNone];
-        self.textField.backgroundColor = [self.colorArray objectAtIndex:8];
-        self.dateLabel.textColor = [self.colorArray objectAtIndex:7];
-        [self.editButton setTitleColor:[self.colorArray objectAtIndex:5] forState:UIControlStateNormal];
-        [self.editButton setTitleColor:[self.colorArray objectAtIndex:7] forState:UIControlStateSelected];
-        [self.modeButton setTitleColor:[self.colorArray objectAtIndex:5] forState:UIControlStateNormal];
-        [self.modeButton setTitleColor:[self.colorArray objectAtIndex:7] forState:UIControlStateSelected];
-        [self.collectionView reloadData];
-        [self.tableView reloadData];
-        [self setNeedsStatusBarAppearanceUpdate];
-    }
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Option" inManagedObjectContext:self.managedObjectContext];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entity];
     
-    else{
-        NSLog(@"autoReadingModeAction switch is off");
-        self.checkLightMode = NO;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"optionId == %d", [NSNumber numberWithInt:0]];
+    [request setPredicate:predicate];
+    NSError *error;
+    NSArray *matchingData = [self.managedObjectContext executeFetchRequest:request error:&error];
+    
+    if (matchingData.count <=0) {
+        //Add to core data
+        NSLog(@"No options entites. Must create them.");
+        //NSEntityDescription *entitydesc = [NSEntityDescription entityForName:@"" inManagedObjectContext:self.managedObjectContext];
+        NSManagedObject *newItem = [[NSManagedObject alloc]initWithEntity:entity insertIntoManagedObjectContext:self.managedObjectContext];
+        [newItem setValue:[NSNumber numberWithInt:0] forKey:@"optionId"];
+        [newItem setValue:[NSNumber numberWithBool:mySwitch.on] forKey:@"optionBool"];
+        NSError *error;
+        [self.managedObjectContext save:&error];
     }
+    else{
+        if (mySwitch.on) {
+            NSLog(@"autoReadingModeAction switch is on");
+            NSDateComponents *components = [[NSCalendar currentCalendar] components:NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit fromDate:[NSDate date]];
+            NSInteger currentHour = [components hour];
+            NSInteger currentMinute = [components minute];
+            NSInteger currentSecond = [components second];
+            
+            self.checkLightMode = YES;
+            
+            
+            if (currentHour < 7 || (currentHour > 21 || (currentHour == 21 && (currentMinute > 0 || currentSecond > 0)))) {
+                self.readingModeSegmentControl.selectedSegmentIndex = 1;
+                [self ReadingModeSegmentControlAction:self.readingModeSegmentControl];
+            }
+            //Light Mode
+            else{
+                self.readingModeSegmentControl.selectedSegmentIndex = 0;
+                [self ReadingModeSegmentControlAction:self.readingModeSegmentControl];
+            }
+            
+        }
+        
+        else{
+            NSLog(@"autoReadingModeAction switch is off");
+            self.checkLightMode = NO;
+        }
+        //[newItem setValue:[NSNumber numberWithBool:mySwitch.on] forKey:@"optionBool"];
+        //[self.managedObjectContext save:&error];
+    }
+
+    
 }
 
 - (void)sortAction:(UIButton *)button{
@@ -691,7 +671,7 @@ static NSString *CellIdentifier = @"Cell";
 }
 
 - (void)ReadingModeSegmentControlAction:(UISegmentedControl *)segment{
-    if (segment.selectedSegmentIndex == 1) {
+    if (self.readingModeSegmentControl.selectedSegmentIndex == 1) {
         self.colorArray = [NSMutableArray arrayWithObjects:
                                                UIColorFromRGB(0xcc6666),
                                                UIColorFromRGB(0xde935f),

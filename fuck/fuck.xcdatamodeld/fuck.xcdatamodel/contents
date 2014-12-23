@@ -9,8 +9,13 @@
     <entity name="Items" syncable="YES">
         <attribute name="count" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
+    <entity name="Option" syncable="YES">
+        <attribute name="optionBool" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="optionId" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
     <elements>
         <element name="Item" positionX="-63" positionY="-18" width="128" height="103"/>
         <element name="Items" positionX="-54" positionY="18" width="128" height="58"/>
+        <element name="Option" positionX="-54" positionY="9" width="128" height="73"/>
     </elements>
 </model>
