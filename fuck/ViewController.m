@@ -191,6 +191,7 @@ static NSString *CellIdentifier = @"Cell";
     }
     
     
+    
     self.tableView.delegate = self;
     self.secondTableView.delegate = self;
     self.secondTableView.dataSource = self;
@@ -507,10 +508,35 @@ static NSString *CellIdentifier = @"Cell";
             UILabel *autoReadingModeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 200, optionsCell.frame.size.height)];
             autoReadingModeLabel.text = @"Auto Reading Mode";
             [optionsCell addSubview:autoReadingModeLabel];
+            if (self.autoReadingModeSwitch == nil) {
+                self.autoReadingModeSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 80, 5, 70, 30)];
+            }
             
-            UISwitch *autoReadingSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 80, 5, 70, 30)];
-            [autoReadingSwitch addTarget:self action:@selector(autoReadingModeAction:) forControlEvents:UIControlEventValueChanged];
-            [optionsCell addSubview:autoReadingSwitch];
+            //Set Auto Reading Mode switch to it's last value
+            NSEntityDescription *entitydesc2 = [NSEntityDescription entityForName:@"Option" inManagedObjectContext:self.managedObjectContext];
+            NSFetchRequest *request2 = [[NSFetchRequest alloc] init];
+            [request2 setEntity:entitydesc2];
+            NSPredicate *predicate2 = [NSPredicate predicateWithFormat:@"(optionId == %d) AND (optionBool == YES)", [[NSNumber numberWithInt:0] integerValue]];
+            [request2 setPredicate:predicate2];
+            NSError *error2;
+            
+            NSArray *matchingData2 = [self.managedObjectContext executeFetchRequest:request2 error:&error2];
+            
+            if (matchingData2.count <= 0) {
+                
+                NSLog(@"No autoReadingMode data set");
+                
+            }
+            else{
+                NSLog(@"Found YES for autoReadingMode on startup");
+                [self.autoReadingModeSwitch setOn:YES animated:YES];
+                NSLog(@"The value of the switch is: %@", [NSNumber numberWithBool:self.autoReadingModeSwitch.on]);
+                [self autoReadingModeAction:self.autoReadingModeSwitch];
+                NSLog(@"autoReadingMode data found");
+                
+            }
+            [self.autoReadingModeSwitch addTarget:self action:@selector(autoReadingModeAction:) forControlEvents:UIControlEventValueChanged];
+            [optionsCell addSubview:self.autoReadingModeSwitch];
         }
         else if (indexPath.row == 4){
             UILabel *removeAllLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 200, optionsCell.frame.size.height)];
@@ -552,12 +578,12 @@ static NSString *CellIdentifier = @"Cell";
         //NSEntityDescription *entitydesc = [NSEntityDescription entityForName:@"" inManagedObjectContext:self.managedObjectContext];
         NSManagedObject *newItem = [[NSManagedObject alloc]initWithEntity:entity insertIntoManagedObjectContext:self.managedObjectContext];
         [newItem setValue:[NSNumber numberWithInt:0] forKey:@"optionId"];
-        [newItem setValue:[NSNumber numberWithBool:mySwitch.on] forKey:@"optionBool"];
+        [newItem setValue:[NSNumber numberWithBool:self.autoReadingModeSwitch.on] forKey:@"optionBool"];
         
         [self.managedObjectContext save:&error];
     }
     else{
-        if (mySwitch.on) {
+        if (self.autoReadingModeSwitch.on) {
             NSLog(@"autoReadingModeAction switch is on");
             NSDateComponents *components = [[NSCalendar currentCalendar] components:NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit fromDate:[NSDate date]];
             NSInteger currentHour = [components hour];
@@ -584,7 +610,7 @@ static NSString *CellIdentifier = @"Cell";
             self.checkLightMode = NO;
         }
         for (NSManagedObject *obj in matchingData) {
-            [obj setValue:[NSNumber numberWithBool:mySwitch.on] forKey:@"optionBool"];
+            [obj setValue:[NSNumber numberWithBool:self.autoReadingModeSwitch.on] forKey:@"optionBool"];
         }
         
         [self.managedObjectContext save:&error];

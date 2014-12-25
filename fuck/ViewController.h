@@ -62,6 +62,7 @@
 @property (nonatomic, strong) UITextField *pickerViewTextField;
 @property (strong, nonatomic) UIPickerView *sortPickerView;
 @property (nonatomic, strong) UISegmentedControl *readingModeSegmentControl;
+@property (nonatomic,strong) UISwitch *autoReadingModeSwitch;
 - (IBAction)doneOptionsButton:(UIButton *)sender;
 
 #pragma mark - Core Data
