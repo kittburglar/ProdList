@@ -18,6 +18,7 @@
     //NSMutableArray *colorArray;
     NSMutableArray *optionsArray;
     NSMutableArray *sortOptionsArray;
+    NSMutableArray *autoSortOptionsArray;
     NSFetchedResultsController *fetchedResultsController;
     NSManagedObjectContext *managedObjectContext;
 }
@@ -27,6 +28,7 @@
 @property (nonatomic, assign) BOOL lightMode;
 @property (nonatomic, assign) BOOL didSelect;
 @property (nonatomic, assign) BOOL checkLightMode;
+
 
 #pragma mark - Top Main
 @property (strong, nonatomic) IBOutlet UITextField *textField;
@@ -62,7 +64,10 @@
 @property (nonatomic, strong) UITextField *pickerViewTextField;
 @property (strong, nonatomic) UIPickerView *sortPickerView;
 @property (nonatomic, strong) UISegmentedControl *readingModeSegmentControl;
-@property (nonatomic,strong) UISwitch *autoReadingModeSwitch;
+@property (nonatomic, strong) UISwitch *autoReadingModeSwitch;
+@property (nonatomic, strong) UISwitch *autoSortSwitch;
+@property (nonatomic, assign) NSInteger pickerMode;
+@property (nonatomic, assign) NSMutableArray *pickerArray;
 - (IBAction)doneOptionsButton:(UIButton *)sender;
 
 #pragma mark - Core Data

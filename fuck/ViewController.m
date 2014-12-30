@@ -108,7 +108,7 @@ static NSString *CellIdentifier = @"Cell";
     anArray = [[NSMutableArray alloc] init];
     optionsArray = [[NSMutableArray alloc] init];
     sortOptionsArray = [[NSMutableArray alloc] init];
-
+    autoSortOptionsArray = [[NSMutableArray alloc] init];
     
     //add swipe detection to tableview
     UISwipeGestureRecognizer *swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipe:)];
@@ -136,6 +136,12 @@ static NSString *CellIdentifier = @"Cell";
     [sortOptionsArray addObject: @"Name"];
     [sortOptionsArray addObject: @"Color"];
     [sortOptionsArray addObject: @"Due Date"];
+    
+    //add autoSortOptions
+    [autoSortOptionsArray addObject:@"None"];
+    [autoSortOptionsArray addObject: @"Name"];
+    [autoSortOptionsArray addObject: @"Color"];
+    [autoSortOptionsArray addObject: @"Due Date"];
     
     //Set up picker view for options
     self.pickerViewTextField = [[UITextField alloc] initWithFrame:CGRectZero];
@@ -317,15 +323,49 @@ static NSString *CellIdentifier = @"Cell";
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return [sortOptionsArray count];
+    NSLog(@"numberOfRowsInComponent pickerView");
+    /*
+    NSInteger rowCount;
+    switch ([self pickerMode]) {
+        case 0:
+        {
+            rowCount = [sortOptionsArray count];
+            //return [sortOptionsArray count];
+            break;
+        }
+        case 1:
+            rowCount = [autoSortOptionsArray count];
+            break;
+        default:
+            break;
+    }
+     */
+    
+    return [self.pickerArray count];
 }
 
 #pragma mark - UIPickerViewDelegate
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    NSString *item = [sortOptionsArray objectAtIndex:row];
+    /*
+    NSString *item;
+    switch ([self pickerMode]) {
+        case 0:
+        {
+            item = [sortOptionsArray objectAtIndex:row];
+            break;
+        }
+        case 1:
+        {
+            item = [autoSortOptionsArray objectAtIndex:row];
+            break;
+        }
+        default:
+            break;
+    }
+    */
     
-    return item;
+    return [self.pickerArray objectAtIndex:row];
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
@@ -345,51 +385,55 @@ static NSString *CellIdentifier = @"Cell";
     // hide the picker view
     [self.pickerViewTextField resignFirstResponder];
     
-    NSString *testString = [sortOptionsArray objectAtIndex:[self.sortPickerView selectedRowInComponent:0]];
+    NSString *testString = [self.pickerArray objectAtIndex:[self.sortPickerView selectedRowInComponent:0]];
     
     
     
     NSLog(@"%@", testString);
     // perform some action
-    
-    switch ([self.sortPickerView selectedRowInComponent:0]) {
-        //Name
-        case 0:
-        {
-            NSLog(@"0");
-            NSSortDescriptor *sortDescriptor;
-            sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name"
-                                                         ascending:YES];
-            NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-            anArray = [[anArray sortedArrayUsingDescriptors:sortDescriptors] mutableCopy];
-            [self.tableView reloadData];
-            [self saveAllData];
-            break;
+    if ([self.pickerArray isEqualToArray:sortOptionsArray]) {
+        switch ([self.sortPickerView selectedRowInComponent:0]) {
+                        //Name
+                    case 0:
+                    {
+                        NSLog(@"0");
+                        NSSortDescriptor *sortDescriptor;
+                        sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name"
+                                                                     ascending:YES];
+                        NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+                        anArray = [[anArray sortedArrayUsingDescriptors:sortDescriptors] mutableCopy];
+                        [self.tableView reloadData];
+                        [self saveAllData];
+                        break;
+                    }
+                    case 1:
+                    {
+                        NSLog(@"1");
+                        NSSortDescriptor *sortDescriptor;
+                        sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"buttonColor"
+                                                                     ascending:YES];
+                        NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+                        anArray = [[anArray sortedArrayUsingDescriptors:sortDescriptors] mutableCopy];
+                        [self.tableView reloadData];
+                        break;
+                    }
+                    case 2:
+                    {
+                        NSLog(@"2");
+                        NSSortDescriptor *sortDescriptor;
+                        sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"date"
+                                                                     ascending:YES];
+                        NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+                        anArray = [[anArray sortedArrayUsingDescriptors:sortDescriptors] mutableCopy];
+                        [self.tableView reloadData];
+                        break;
+                    }
+                    default:
+                        break;
         }
-        case 1:
-        {
-            NSLog(@"1");
-            NSSortDescriptor *sortDescriptor;
-            sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"buttonColor"
-                                                         ascending:YES];
-            NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-            anArray = [[anArray sortedArrayUsingDescriptors:sortDescriptors] mutableCopy];
-            [self.tableView reloadData];
-            break;
-        }
-        case 2:
-        {
-            NSLog(@"2");
-            NSSortDescriptor *sortDescriptor;
-            sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"date"
-                                                         ascending:YES];
-            NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-            anArray = [[anArray sortedArrayUsingDescriptors:sortDescriptors] mutableCopy];
-            [self.tableView reloadData];
-            break;
-        }
-        default:
-            break;
+    }
+    else if ([self.pickerArray isEqualToArray:autoSortOptionsArray]){
+        NSLog(@"not yet implemented");
     }
 }
 
@@ -508,6 +552,7 @@ static NSString *CellIdentifier = @"Cell";
             UILabel *autoReadingModeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 200, optionsCell.frame.size.height)];
             autoReadingModeLabel.text = @"Auto Reading Mode";
             [optionsCell addSubview:autoReadingModeLabel];
+            
             if (self.autoReadingModeSwitch == nil) {
                 self.autoReadingModeSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 80, 5, 70, 30)];
             }
@@ -538,6 +583,7 @@ static NSString *CellIdentifier = @"Cell";
             [self.autoReadingModeSwitch addTarget:self action:@selector(autoReadingModeAction:) forControlEvents:UIControlEventValueChanged];
             [optionsCell addSubview:self.autoReadingModeSwitch];
         }
+        //Remove All
         else if (indexPath.row == 4){
             UILabel *removeAllLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 200, optionsCell.frame.size.height)];
             removeAllLabel.text = @"Remove All";
@@ -550,12 +596,22 @@ static NSString *CellIdentifier = @"Cell";
             [removeAllButton addTarget:self action:@selector(removeAllAction:) forControlEvents:UIControlEventTouchUpInside];
             [optionsCell addSubview:removeAllButton];
         }
+        //Auto Sort
         else if (indexPath.row == 5){
             UILabel *autoSortLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 200, optionsCell.frame.size.height)];
             autoSortLabel.text = @"Auto Sort";
             [optionsCell addSubview:autoSortLabel];
+            
+            UIButton *sortButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+            sortButton.frame = CGRectMake(self.view.frame.size.width - 110, 5, 100, 30);
+            [sortButton setTitle:@"Sort" forState:UIControlStateNormal];
+            [sortButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [sortButton addTarget:self action:@selector(autoSortAction:) forControlEvents:UIControlEventTouchUpInside];
+            [optionsCell addSubview:sortButton];
         }
-        optionsCell.optionsLabel.text = [optionsArray objectAtIndex:indexPath.row];
+        
+        
+
         //[optionsCell.optionsControl addTarget:self action:@selector(yourSegmentPicked:) forControlEvents:UIControlEventTouchUpInside];
         return optionsCell;
     }
@@ -621,10 +677,20 @@ static NSString *CellIdentifier = @"Cell";
 
 - (void)sortAction:(UIButton *)button{
     NSLog(@"sortAction pressed");
+    [self setPickerMode:0];
+    self.pickerArray = sortOptionsArray;
     [self.pickerViewTextField becomeFirstResponder];
+    [self.sortPickerView reloadAllComponents];
+    
 }
 
-
+- (void)autoSortAction:(UIButton *)button{
+    NSLog(@"autoSortAction pressed");
+    [self setPickerMode:1];
+    self.pickerArray = autoSortOptionsArray;
+    [self.pickerViewTextField becomeFirstResponder];
+    [self.sortPickerView reloadAllComponents];
+}
 
 
 
