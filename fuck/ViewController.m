@@ -380,6 +380,14 @@ static NSString *CellIdentifier = @"Cell";
     [self.pickerViewTextField resignFirstResponder];
 }
 
+- (void)sortArray:(NSString *)key{
+    NSSortDescriptor *sortDescriptor;
+    sortDescriptor = [[NSSortDescriptor alloc] initWithKey:key
+                                                 ascending:YES];
+    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    anArray = [[anArray sortedArrayUsingDescriptors:sortDescriptors] mutableCopy];
+}
+
 - (void)doneTouched:(UIBarButtonItem *)sender
 {
     // hide the picker view
@@ -396,36 +404,26 @@ static NSString *CellIdentifier = @"Cell";
                         //Name
                     case 0:
                     {
-                        NSLog(@"0");
-                        NSSortDescriptor *sortDescriptor;
-                        sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name"
-                                                                     ascending:YES];
-                        NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-                        anArray = [[anArray sortedArrayUsingDescriptors:sortDescriptors] mutableCopy];
+                        NSLog(@"sort by namme");
+                        [self sortArray:@"name"];
                         [self.tableView reloadData];
                         [self saveAllData];
                         break;
                     }
                     case 1:
                     {
-                        NSLog(@"1");
-                        NSSortDescriptor *sortDescriptor;
-                        sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"buttonColor"
-                                                                     ascending:YES];
-                        NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-                        anArray = [[anArray sortedArrayUsingDescriptors:sortDescriptors] mutableCopy];
+                        NSLog(@"sort by buttonColor");
+                        [self sortArray:@"buttonColor"];
                         [self.tableView reloadData];
+                        [self saveAllData];
                         break;
                     }
                     case 2:
                     {
-                        NSLog(@"2");
-                        NSSortDescriptor *sortDescriptor;
-                        sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"date"
-                                                                     ascending:YES];
-                        NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-                        anArray = [[anArray sortedArrayUsingDescriptors:sortDescriptors] mutableCopy];
+                        NSLog(@"sort by date");
+                        [self sortArray:@"date"];
                         [self.tableView reloadData];
+                        [self saveAllData];
                         break;
                     }
                     default:
@@ -433,7 +431,39 @@ static NSString *CellIdentifier = @"Cell";
         }
     }
     else if ([self.pickerArray isEqualToArray:autoSortOptionsArray]){
-        NSLog(@"not yet implemented");
+        switch ([self.sortPickerView selectedRowInComponent:0]) {
+            //Name
+            case 0:
+            {
+                break;
+            }
+            case 1:
+            {
+                NSLog(@"auto sort by name");
+                [self sortArray:@"name"];
+                [self.tableView reloadData];
+                [self saveAllData];
+                break;
+            }
+            case 2:
+            {
+                NSLog(@"auto sort by buttonColor");
+                [self sortArray:@"buttonColor"];
+                [self.tableView reloadData];
+                [self saveAllData];
+                break;
+            }
+            case 3:
+            {
+                NSLog(@"autosort by date");
+                [self sortArray:@"date"];
+                [self.tableView reloadData];
+                [self saveAllData];
+                break;
+            }
+            default:
+                break;
+        }
     }
 }
 
