@@ -51,9 +51,12 @@ static NSString *CellIdentifier = @"Cell";
     self.selectedColor = 7;
     
     
-    //Add accessory view (bar on top of keyboard)
-    self.inputAccView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, [[UIScreen mainScreen] bounds].size.width, 50.0)];
-    [self.inputAccView setBackgroundColor:[UIColor lightGrayColor]];
+    
+    //Add accessory view (bar on top of keyboard
+    
+    self.inputAccView = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0, 0.0, [[UIScreen mainScreen] bounds].size.width, 50.0)];
+    self.inputAccView.barStyle = UIBarStyleDefault;
+    
     //[self.inputAccView setAlpha: 0.8];
     
     //Create keyboard Button programmically
@@ -591,7 +594,7 @@ static NSString *CellIdentifier = @"Cell";
             NSEntityDescription *entitydesc2 = [NSEntityDescription entityForName:@"Option" inManagedObjectContext:self.managedObjectContext];
             NSFetchRequest *request2 = [[NSFetchRequest alloc] init];
             [request2 setEntity:entitydesc2];
-            NSPredicate *predicate2 = [NSPredicate predicateWithFormat:@"(optionId == %d) AND (optionBool == YES)", [[NSNumber numberWithInt:0] integerValue]];
+            NSPredicate *predicate2 = [NSPredicate predicateWithFormat:@"(optionId == %d) AND (optionData == YES)", [[NSNumber numberWithInt:0] integerValue]];
             [request2 setPredicate:predicate2];
             NSError *error2;
             
@@ -627,6 +630,7 @@ static NSString *CellIdentifier = @"Cell";
             [optionsCell addSubview:removeAllButton];
         }
         //Auto Sort
+        /*
         else if (indexPath.row == 5){
             UILabel *autoSortLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 200, optionsCell.frame.size.height)];
             autoSortLabel.text = @"Auto Sort";
@@ -639,7 +643,7 @@ static NSString *CellIdentifier = @"Cell";
             [sortButton addTarget:self action:@selector(autoSortAction:) forControlEvents:UIControlEventTouchUpInside];
             [optionsCell addSubview:sortButton];
         }
-        
+        */
         
 
         //[optionsCell.optionsControl addTarget:self action:@selector(yourSegmentPicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -664,7 +668,7 @@ static NSString *CellIdentifier = @"Cell";
         //NSEntityDescription *entitydesc = [NSEntityDescription entityForName:@"" inManagedObjectContext:self.managedObjectContext];
         NSManagedObject *newItem = [[NSManagedObject alloc]initWithEntity:entity insertIntoManagedObjectContext:self.managedObjectContext];
         [newItem setValue:[NSNumber numberWithInt:0] forKey:@"optionId"];
-        [newItem setValue:[NSNumber numberWithBool:self.autoReadingModeSwitch.on] forKey:@"optionBool"];
+        [newItem setValue:[NSNumber numberWithBool:self.autoReadingModeSwitch.on] forKey:@"optionData"];
         
         [self.managedObjectContext save:&error];
     }
@@ -696,7 +700,7 @@ static NSString *CellIdentifier = @"Cell";
             self.checkLightMode = NO;
         }
         for (NSManagedObject *obj in matchingData) {
-            [obj setValue:[NSNumber numberWithBool:self.autoReadingModeSwitch.on] forKey:@"optionBool"];
+            [obj setValue:[NSNumber numberWithBool:self.autoReadingModeSwitch.on] forKey:@"optionData"];
         }
         
         [self.managedObjectContext save:&error];
@@ -814,7 +818,7 @@ static NSString *CellIdentifier = @"Cell";
         self.lightMode = NO;
         //UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
         //self.blurView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-        
+        self.inputAccView.barStyle = UIBarStyleBlack;
         
     }
     //Light Mode
@@ -836,6 +840,7 @@ static NSString *CellIdentifier = @"Cell";
         self.lightMode = YES;
         //UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
         //self.blurView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+        self.inputAccView.barStyle = UIBarStyleDefault;
     }
     //self.selectedColor = 7;
     self.longPressCell.contentView.backgroundColor = [self.colorArray objectAtIndex:11];

@@ -55,7 +55,7 @@
 @property (strong, nonatomic) IBOutlet UIDatePicker *pickerView;
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong, nonatomic) IBOutlet UICollectionViewFlowLayout *collectionFlowLayout;
-@property (strong, nonatomic) UIView *inputAccView;
+@property (strong, nonatomic) UIToolbar *inputAccView;
 
 #pragma mark - Option View
 @property (strong, nonatomic) IBOutlet UIView *optionView;

@@ -10,7 +10,7 @@
         <attribute name="count" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="Option" syncable="YES">
-        <attribute name="optionBool" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="optionData" optional="YES" attributeType="Integer 16" syncable="YES"/>
         <attribute name="optionId" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
     <elements>
