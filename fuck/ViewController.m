@@ -224,7 +224,7 @@ static NSString *CellIdentifier = @"Cell";
         [self.collectionView setDataSource:self];
         [self.collectionView setDelegate:self];
         [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
-        [self.collectionView setBackgroundColor:[UIColor grayColor]];
+        [self.collectionView setBackgroundColor:UIBarStyleDefault];
     }
        
 }
@@ -279,7 +279,7 @@ static NSString *CellIdentifier = @"Cell";
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(115, 50);
+    return CGSizeMake([[UIScreen mainScreen] bounds].size.width/3 - 20, self.collectionView.bounds.size.height/3 - 20);
 }
 
 
@@ -307,7 +307,10 @@ static NSString *CellIdentifier = @"Cell";
     
 }
 
-
+- (UIEdgeInsets)collectionView:
+(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+    return UIEdgeInsetsMake(20, 20, 20, 20);
+}
 
 - (void)collectionView:(UICollectionView *)colView didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath {
     
