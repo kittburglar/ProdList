@@ -1039,12 +1039,13 @@ static NSString *CellIdentifier = @"Cell";
          */
         
         self.colorButton.backgroundColor = self.longPressCell.colorButton.backgroundColor;
-        
+        [self.pickerView setDate:[[anArray objectAtIndex:self.longPressIndexPath.row] date]];
         [self setModifying:YES];
         [self setLastModified:self.longPressIndexPath.row];
         MyTableViewCell *cell = (MyTableViewCell *)[self.tableView cellForRowAtIndexPath:self.longPressIndexPath];
         cell.contentView.backgroundColor = [self.colorArray objectAtIndex:10];
         self.textField.text = cell.titleLabel.text;
+        //[myDatePicker reloadInputViews];
         [self.textField becomeFirstResponder];
         [self.tableView setEditing:NO];
         
