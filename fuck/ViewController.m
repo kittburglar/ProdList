@@ -60,9 +60,12 @@ static NSString *CellIdentifier = @"Cell";
     //[self.inputAccView setAlpha: 0.8];
     
     //Create keyboard Button programmically
+    
     UIButton *keyboardButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     keyboardButton.frame = CGRectMake(10, CGRectGetMaxY(self.inputAccView.bounds)/2 - 40/2, 40, 40);
-    [keyboardButton setBackgroundColor:[UIColor darkGrayColor]];
+    //[keyboardButton setBackgroundColor:[UIColor darkGrayColor]];
+    UIImage *keyboardImage = [UIImage imageNamed:@"Keyboard"];
+    [keyboardButton setBackgroundImage:keyboardImage forState:UIControlStateNormal];
     [keyboardButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [keyboardButton addTarget:self action:@selector(pickKeyboard:) forControlEvents:UIControlEventTouchUpInside];
     [self.inputAccView addSubview:keyboardButton];
@@ -70,9 +73,14 @@ static NSString *CellIdentifier = @"Cell";
     
     
     //Create date Button programmically
+    
     UIButton *dateButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    
     dateButton.frame = CGRectMake(60, CGRectGetMaxY(self.inputAccView.bounds)/2 - 40/2, 40, 40);
-    [dateButton setBackgroundColor:[UIColor darkGrayColor]];
+    UIImage *calendarImage = [UIImage imageNamed:@"Calendar"];
+    [dateButton setImage:[calendarImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
+    
+    //[dateButton setBackgroundColor:[UIColor darkGrayColor]];
     [dateButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [dateButton addTarget:self action:@selector(pickDate:) forControlEvents:UIControlEventTouchUpInside];
     [self.inputAccView addSubview:dateButton];
@@ -91,7 +99,7 @@ static NSString *CellIdentifier = @"Cell";
     //Create finish Button programmically
     UIButton *finishButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     finishButton.frame = CGRectMake(self.inputAccView.bounds.size.width - 50, CGRectGetMaxY(self.inputAccView.bounds)/2 - 40/2, 40, 40);
-    [finishButton setBackgroundColor:[UIColor darkGrayColor]];
+    //[finishButton setBackgroundColor:[UIColor darkGrayColor]];
     [finishButton setTitle:@"Done" forState:UIControlStateNormal];
     [finishButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [finishButton addTarget:self action:@selector(textReturn:) forControlEvents:UIControlEventTouchUpInside];
@@ -821,7 +829,7 @@ static NSString *CellIdentifier = @"Cell";
         self.lightMode = NO;
         //UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
         //self.blurView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-        self.inputAccView.barStyle = UIBarStyleBlack;
+        //self.inputAccView.barStyle = UIBarStyleBlack;
         
     }
     //Light Mode
