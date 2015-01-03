@@ -273,14 +273,19 @@ static NSString *CellIdentifier = @"Cell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 7;
+    return 9;
 }
 
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UICollectionViewCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
+    if (indexPath.row == 8) {
+        cell.backgroundColor = [self.colorArray objectAtIndex:11];
+    }
+    else{
         cell.backgroundColor = [self.colorArray objectAtIndex:indexPath.row];
+    }
     return cell;
 }
 
@@ -301,7 +306,15 @@ static NSString *CellIdentifier = @"Cell";
         self.selectedColor = 7;
     }
     self.didSelect = YES;
-    self.selectedColor = indexPath.row;
+    
+    if (indexPath.row == 8) {
+        self.selectedColor = 11;
+    }
+    else{
+        self.selectedColor = indexPath.row;
+    }
+    
+    
     self.colorButton.backgroundColor = [self.colorArray objectAtIndex:self.selectedColor];
     [cell setHighlighted:YES];
 }
