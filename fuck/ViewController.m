@@ -56,8 +56,7 @@ static NSString *CellIdentifier = @"Cell";
     
     self.inputAccView = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0, 0.0, [[UIScreen mainScreen] bounds].size.width, 50.0)];
     self.inputAccView.barStyle = UIBarStyleDefault;
-    
-    //[self.inputAccView setAlpha: 0.8];
+
     
     //Create keyboard Button programmically
     
@@ -201,7 +200,9 @@ static NSString *CellIdentifier = @"Cell";
             NSDate *itemDate = [obj valueForKey:@"itemDate"];
             NSInteger itemColor = [[obj valueForKey:@"itemColor"] integerValue];
             NSInteger itemPid = [[obj valueForKey:@"itemPid"] integerValue];
-            Item * i = [[Item alloc] initWithNameAndColorAndDateAndPid:itemText withColor:itemColor withDate:itemDate withPid:itemPid];
+            BOOL itemFinished = [[obj valueForKey:@"itemFinished"] boolValue];
+            NSLog(@"Itemfinished is %d", itemFinished);
+            Item * i = [[Item alloc] initWithNameAndColorAndDateAndPidAndBool:itemText withColor:itemColor withDate:itemDate withPid:itemPid withBool:itemFinished];
             [anArray insertObject:i atIndex:anArray.count];
 
             [self.tableView reloadData];
@@ -511,6 +512,10 @@ static NSString *CellIdentifier = @"Cell";
 
 #pragma mark - UITableView Datasource
 
+- (void)strikeoutLabels{
+    
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSLog(@"%lu",(unsigned long)[anArray count]);
@@ -561,6 +566,22 @@ static NSString *CellIdentifier = @"Cell";
         }
         cell.contentView.backgroundColor = [self.colorArray objectAtIndex:11];
         cell.titleLabel.textColor = [self.colorArray objectAtIndex:7];
+        
+        NSDictionary* attributes = @{
+                                     NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle]
+                                     };
+        
+        NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:cell.titleLabel.text attributes:attributes];
+        NSAttributedString* attrText2 = [[NSAttributedString alloc] initWithString:cell.titleLabel.text attributes:nil];
+        
+        if ([[anArray objectAtIndex:indexPath.row] finishedBool]) {
+            NSLog(@"the row %ld was finished", (long)indexPath.row);
+            cell.titleLabel.attributedText = attrText;
+        }
+        else{
+            NSLog(@"the row %ld was no finished", (long)indexPath.row);
+            cell.titleLabel.attributedText = attrText2;
+        }
         return cell;
     }
     else {
@@ -1157,6 +1178,7 @@ static NSString *CellIdentifier = @"Cell";
                 [obj setValue:[[anArray objectAtIndex:i] name] forKey:@"itemText"];
                 [obj setValue:[NSNumber numberWithInteger:[[anArray objectAtIndex:i] buttonColor]] forKey:@"itemColor"];
                 [obj setValue:[[anArray objectAtIndex:i] date] forKey:@"itemDate"];
+                [obj setValue:[NSNumber numberWithBool:[[anArray objectAtIndex:i] finishedBool]] forKey:@"itemFinished"];
             }
             //[self.managedObjectContext save:&error];
         }
@@ -1231,7 +1253,7 @@ static NSString *CellIdentifier = @"Cell";
         
         NSLog(@"creating item with pid %ld", (long)[[anArray objectAtIndex:[self lastModified]] pid]);
         
-        Item * i = [[Item alloc] initWithNameAndColorAndDateAndPid:self.textField.text withColor:self.selectedColor withDate:[self.pickerView date] withPid:[[anArray objectAtIndex:[self lastModified]] pid]];
+        Item * i = [[Item alloc] initWithNameAndColorAndDateAndPidAndBool:self.textField.text withColor:self.selectedColor withDate:[self.pickerView date] withPid:[[anArray objectAtIndex:[self lastModified]] pid] withBool:[[anArray objectAtIndex:indexPath.row] finishedBool]];
         
         [anArray removeObjectAtIndex:[self lastModified]];
         //Item * i = [[Item alloc] initWithNameAndColorAndDate:self.textField.text withColor:self.selectedColor withDate:[self.pickerView date]];
@@ -1260,6 +1282,7 @@ static NSString *CellIdentifier = @"Cell";
         [obj setValue:[NSNumber numberWithInteger:[i buttonColor]] forKey:@"itemColor"];
         [obj setValue:[i date] forKey:@"itemDate"];
         [obj setValue:[NSNumber numberWithInteger:[i pid]]  forKey:@"itemPid"];
+        [obj setValue:[NSNumber numberWithBool:[i finishedBool]] forKey:@"itemFinished"];
         
         [self.tableView reloadData];
         [self.managedObjectContext save:&error];
@@ -1285,7 +1308,7 @@ static NSString *CellIdentifier = @"Cell";
         
         //Item * i = [[Item alloc] initWithNameAndColorAndDate:self.textField.text withColor:self.selectedColor withDate:[self.pickerView date]];
         
-        Item * i = [[Item alloc] initWithNameAndColorAndDateAndPid:self.textField.text withColor:self.selectedColor withDate:[self.pickerView date] withPid:[[obj valueForKey:@"count"] integerValue]];
+        Item * i = [[Item alloc] initWithNameAndColorAndDateAndPidAndBool:self.textField.text withColor:self.selectedColor withDate:[self.pickerView date] withPid:[[obj valueForKey:@"count"] integerValue] withBool:NO];
         
         [anArray addObject: i];
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:([anArray count] - 1) inSection:0];
@@ -1300,6 +1323,7 @@ static NSString *CellIdentifier = @"Cell";
         [newItem setValue:[NSNumber numberWithInteger:[i buttonColor]] forKey:@"itemColor"];
         [newItem setValue:[i date] forKey:@"itemDate"];
         [newItem setValue:[NSNumber numberWithInteger:[i pid]] forKey:@"itemPid"];
+        [newItem setValue:[NSNumber numberWithBool:[i finishedBool]] forKey:@"itemFinished"];
         NSError *error2;
         [self.managedObjectContext save:&error2];
         

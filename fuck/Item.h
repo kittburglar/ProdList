@@ -31,6 +31,8 @@
 
 -(id)initWithNameAndColorAndDateAndPid:(NSString *)name withColor:(NSInteger)color withDate:(NSDate *)date withPid:(NSInteger)pid;
 
+-(id)initWithNameAndColorAndDateAndPidAndBool:(NSString *)name withColor:(NSInteger)color withDate:(NSDate *)date withPid:(NSInteger)pid withBool:(BOOL)isFinished;
+
 -(NSString *)returnDate;
 
 

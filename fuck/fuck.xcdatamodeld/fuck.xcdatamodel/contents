@@ -3,6 +3,7 @@
     <entity name="Item" syncable="YES">
         <attribute name="itemColor" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="itemDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="itemFinished" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="itemPid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="itemText" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
@@ -14,7 +15,7 @@
         <attribute name="optionId" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Item" positionX="-63" positionY="-18" width="128" height="103"/>
+        <element name="Item" positionX="-63" positionY="-18" width="128" height="120"/>
         <element name="Items" positionX="-54" positionY="18" width="128" height="58"/>
         <element name="Option" positionX="-54" positionY="9" width="128" height="73"/>
     </elements>
