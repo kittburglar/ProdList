@@ -130,6 +130,7 @@ static NSString *CellIdentifier = @"Cell";
     
     //Initalize datepicker stuff
     self.pickerView = [[UIDatePicker alloc] init];
+    [self.pickerView addTarget:self action:@selector(pickerViewChanged:) forControlEvents:UIControlEventValueChanged];
     
     //Initalize collectionview
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
@@ -398,6 +399,19 @@ static NSString *CellIdentifier = @"Cell";
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     // perform some action
+    NSLog(@"pickerView didselectrow");
+}
+
+
+- (IBAction)pickerViewChanged:(id)sender {
+    NSLog(@"pickerViewCHanged");
+    NSDate *today = [NSDate date];
+    NSComparisonResult result;
+    result = [today compare:self.pickerView.date];
+    if(result==NSOrderedDescending) {
+        NSLog(@"newDate is less");
+        [self.pickerView setDate:today];
+    }
 }
 
 
