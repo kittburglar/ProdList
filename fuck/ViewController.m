@@ -1111,6 +1111,22 @@ static NSString *CellIdentifier = @"Cell";
                 NSLog(@"Swiped regular word");
                 swipedCell.titleLabel.attributedText = attrText;
                 [[anArray objectAtIndex:swipedIndexPath.row] setFinishedBool:YES];
+                
+                Item *swipedItem = [anArray objectAtIndex:swipedIndexPath.row];
+                [anArray removeObjectAtIndex:swipedIndexPath.row];
+                [anArray insertObject:swipedItem atIndex: [anArray count]];
+                
+                //Move crossed out word to bottom
+                
+                [self.tableView beginUpdates];
+                [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:swipedIndexPath] withRowAnimation:UITableViewRowAnimationBottom];
+                [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[anArray count]-1 inSection:0]] withRowAnimation:UITableViewRowAnimationTop];
+                [self.tableView endUpdates];
+                
+                MyTableViewCell *cell = (MyTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:[anArray count]-1 inSection:0]];
+                
+                cell.titleLabel.attributedText = attrText;
+                [self saveAllData];
             }
         }
     }

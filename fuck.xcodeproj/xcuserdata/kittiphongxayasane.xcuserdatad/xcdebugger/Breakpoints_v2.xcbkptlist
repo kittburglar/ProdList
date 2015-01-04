@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fuck/ViewController.m"
-            timestampString = "442031761.67821"
+            timestampString = "442050411.538925"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1120"
-            endingLineNumber = "1120"
+            startingLineNumber = "1136"
+            endingLineNumber = "1136"
             landmarkName = "@implementation ViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -260,11 +260,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fuck/ViewController.m"
-            timestampString = "442031761.67821"
+            timestampString = "442034524.12239"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1113"
-            endingLineNumber = "1113"
+            startingLineNumber = "1116"
+            endingLineNumber = "1116"
             landmarkName = "-didSwipe:"
             landmarkType = "5">
          </BreakpointContent>
