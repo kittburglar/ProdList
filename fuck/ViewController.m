@@ -1127,6 +1127,7 @@ static NSString *CellIdentifier = @"Cell";
                 NSLog(@"Swiped crossed out word");
                 swipedCell.titleLabel.attributedText = attrText2;
                 [[anArray objectAtIndex:swipedIndexPath.row] setFinishedBool:NO];
+                [self saveAllData];
             }
             else{
                 NSLog(@"Swiped regular word");
