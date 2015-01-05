@@ -269,7 +269,17 @@ static NSString *CellIdentifier = @"Cell";
     
 }
 
+#pragma mark - Shake event
+- (void)motionBegan:(UIEventSubtype)motion withEvent:(UIEvent *)event{
+    if (event.type == UIEventSubtypeMotionShake) {
+        NSLog(@"shook the phone!");
+        [self removeAllCompletedAction:nil];
+    }
+}
 
+- (BOOL)canBecomeFirstResponder{
+    return YES;
+}
 
 #pragma mark - UICollectionView
 
@@ -1127,6 +1137,17 @@ static NSString *CellIdentifier = @"Cell";
                 NSLog(@"Swiped crossed out word");
                 swipedCell.titleLabel.attributedText = attrText2;
                 [[anArray objectAtIndex:swipedIndexPath.row] setFinishedBool:NO];
+                Item *swipedItem = [anArray objectAtIndex:swipedIndexPath.row];
+                //Move item to the beginning of the data source
+                [anArray removeObjectAtIndex:swipedIndexPath.row];
+                [anArray insertObject:swipedItem atIndex:0];
+                
+                //Move uncrossed item to the top of the tableview
+                [self.tableView beginUpdates];
+                [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:swipedIndexPath] withRowAnimation:UITableViewRowAnimationTop];
+                [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationBottom];
+                [self.tableView endUpdates];
+                
                 [self saveAllData];
             }
             else{
@@ -1135,6 +1156,8 @@ static NSString *CellIdentifier = @"Cell";
                 [[anArray objectAtIndex:swipedIndexPath.row] setFinishedBool:YES];
                 
                 Item *swipedItem = [anArray objectAtIndex:swipedIndexPath.row];
+
+                //Move item in datasource
                 [anArray removeObjectAtIndex:swipedIndexPath.row];
                 [anArray insertObject:swipedItem atIndex: [anArray count]];
                 
