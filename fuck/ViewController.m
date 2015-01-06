@@ -536,9 +536,14 @@ static NSString *CellIdentifier = @"Cell";
     }];
     moreAction.backgroundColor = [UIColor lightGrayColor];
     UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Delete" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
+        
         //Remove Core data entry
         Item *item = [anArray objectAtIndex:indexPath.row];
         NSEntityDescription *entityDesc = [NSEntityDescription entityForName:@"Item" inManagedObjectContext:self.managedObjectContext];
+        
+        //Remove notification
+        [self cancelLocalNotification:[NSString stringWithFormat: @"%ld", (long)[item pid]]];
+        
         
         NSLog(@"itemPid of item you want to delete is: %ld with itemName: %@", (long)[item pid], [item name]);
         
@@ -564,6 +569,8 @@ static NSString *CellIdentifier = @"Cell";
         //Remove array entry
         [anArray removeObjectAtIndex:indexPath.row];
         [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        
+        
     }];
     return @[deleteAction, moreAction];
 }
@@ -876,7 +883,7 @@ static NSString *CellIdentifier = @"Cell";
 #pragma mark - Nofications
 
 -(void) scheduleNotificationForDate:(NSDate *)date AlertBody:(NSString *)alertBody ActionButtonTitle:(NSString *)actionButtonTitle NotificationID:(NSString *)notificationID{
-    
+
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
     localNotification.fireDate = date;
     localNotification.timeZone = [NSTimeZone localTimeZone];
@@ -973,7 +980,7 @@ static NSString *CellIdentifier = @"Cell";
     NSLog(@"removeAllAction pressed");
     
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Warning!" message:@"Are you sure you want to delete everything?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
-
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
     [alert setTag:1];
     [alert show];
     
@@ -1008,6 +1015,7 @@ static NSString *CellIdentifier = @"Cell";
             else{
                 for (NSManagedObject *obj in matchingData) {
                     [self.managedObjectContext deleteObject:obj];
+                    
                 }
             }
             
@@ -1192,9 +1200,17 @@ static NSString *CellIdentifier = @"Cell";
             NSAttributedString* attrText2 = [[NSAttributedString alloc] initWithString:[anArray[swipedIndexPath.row] name] attributes:nil];
             if ([swipedCell.titleLabel.attributedText isEqualToAttributedString:(attrText)]) {
                 NSLog(@"Swiped crossed out word");
+                
+                
                 swipedCell.titleLabel.attributedText = attrText2;
                 [[anArray objectAtIndex:swipedIndexPath.row] setFinishedBool:NO];
                 Item *swipedItem = [anArray objectAtIndex:swipedIndexPath.row];
+                
+                //re-add local notifcation
+                NSLog(@"scheduling with pid %ld", (long)[swipedItem pid]);
+                
+                [self scheduleNotificationForDate:[swipedItem date] AlertBody:[swipedItem name] ActionButtonTitle:[swipedItem name] NotificationID:[NSString stringWithFormat: @"%ld", (long)[swipedItem pid]]];
+                
                 //Move item to the beginning of the data source
                 [anArray removeObjectAtIndex:swipedIndexPath.row];
                 [anArray insertObject:swipedItem atIndex:0];
@@ -1213,10 +1229,16 @@ static NSString *CellIdentifier = @"Cell";
                 [[anArray objectAtIndex:swipedIndexPath.row] setFinishedBool:YES];
                 
                 Item *swipedItem = [anArray objectAtIndex:swipedIndexPath.row];
+                
+                //Remove notification
+                NSLog(@"removing with pid %ld", (long)[swipedItem pid]);
+                
+                [self cancelLocalNotification:[NSString stringWithFormat: @"%ld", (long)[swipedItem pid]]];
 
                 //Move item in datasource
                 [anArray removeObjectAtIndex:swipedIndexPath.row];
                 [anArray insertObject:swipedItem atIndex: [anArray count]];
+                
                 
                 //Move crossed out word to bottom
                 
@@ -1226,6 +1248,8 @@ static NSString *CellIdentifier = @"Cell";
                 [self.tableView endUpdates];
                 
                 MyTableViewCell *cell = (MyTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:[anArray count]-1 inSection:0]];
+                
+                
                 
                 cell.titleLabel.attributedText = attrText;
                 [self saveAllData];
@@ -1260,6 +1284,15 @@ static NSString *CellIdentifier = @"Cell";
                 [obj setValue:[NSNumber numberWithInteger:[[anArray objectAtIndex:i] buttonColor]] forKey:@"itemColor"];
                 [obj setValue:[[anArray objectAtIndex:i] date] forKey:@"itemDate"];
                 [obj setValue:[NSNumber numberWithBool:[[anArray objectAtIndex:i] finishedBool]] forKey:@"itemFinished"];
+                
+                //Fix local nofications
+                [self cancelLocalNotification:[NSString stringWithFormat: @"%ld", (long)[[anArray objectAtIndex:i] pid]]];
+                
+                if (![[obj valueForKey:@"itemFinished"] boolValue]) {
+                    [self scheduleNotificationForDate:[[anArray objectAtIndex:i] date] AlertBody:[[anArray objectAtIndex:i] name] ActionButtonTitle:[[anArray objectAtIndex:i] name] NotificationID:[NSString stringWithFormat: @"%ld", (long)[[anArray objectAtIndex:i] pid]]];
+                }
+                
+                
             }
             //[self.managedObjectContext save:&error];
         }
@@ -1324,6 +1357,7 @@ static NSString *CellIdentifier = @"Cell";
     //Add add to core data and list
     else if ([self modifying]) {
         NSLog(@"textReturn while modifying!");
+        
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self lastModified] inSection:0];
         MyTableViewCell *cell = (MyTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
         cell.titleLabel.textColor = [self.colorArray objectAtIndex:7];
@@ -1336,6 +1370,8 @@ static NSString *CellIdentifier = @"Cell";
         
         Item * i = [[Item alloc] initWithNameAndColorAndDateAndPidAndBool:self.textField.text withColor:self.selectedColor withDate:[self.pickerView date] withPid:[[anArray objectAtIndex:[self lastModified]] pid] withBool:[[anArray objectAtIndex:indexPath.row] finishedBool]];
         
+        
+        
         //Remove noficiation
         Item *removedItem = [anArray objectAtIndex:[self lastModified]];
         [self cancelLocalNotification:[NSString stringWithFormat: @"%ld", (long)[removedItem pid]]];
@@ -1345,7 +1381,14 @@ static NSString *CellIdentifier = @"Cell";
         
         [anArray insertObject:i atIndex:[self lastModified]];
         
-        [self scheduleNotificationForDate:[i date] AlertBody:@"Reminder" ActionButtonTitle:[i name] NotificationID:[NSString stringWithFormat: @"%ld", (long)[i pid]]];
+        if (![i finishedBool]) {
+            NSLog(@"Editing a non strikedout word");
+            [self scheduleNotificationForDate:[i date] AlertBody:[i name] ActionButtonTitle:[i name] NotificationID:[NSString stringWithFormat: @"%ld", (long)[i pid]]];
+        }
+        NSLog(@"scheduling with pid %ld", (long)[i pid]);
+        
+        
+        
         
         //Edit core data record
         NSEntityDescription *entityDesc = [NSEntityDescription entityForName:@"Item" inManagedObjectContext:self.managedObjectContext];
@@ -1394,7 +1437,9 @@ static NSString *CellIdentifier = @"Cell";
         
         [anArray addObject: i];
         
-        [self scheduleNotificationForDate:[i date] AlertBody:@"Reminder" ActionButtonTitle:[i name] NotificationID:[NSString stringWithFormat: @"%ld", (long)[i pid]]];
+        NSLog(@"scheduling with pid %ld", (long)[i pid]);
+        
+        [self scheduleNotificationForDate:[i date] AlertBody:[i name] ActionButtonTitle:[i name] NotificationID:[NSString stringWithFormat: @"%ld", (long)[i pid]]];
         
         //Add to tableView
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:([anArray count] - 1) inSection:0];
