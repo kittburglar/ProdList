@@ -521,6 +521,101 @@ static NSString *CellIdentifier = @"Cell";
 
 
 #pragma mark - UITableView Datasource
+- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewRowAction *moreAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"Modify" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
+        
+        // maybe show an action sheet with more options
+        NSLog(@"Modify pressed");
+        [self setModifying:YES];
+        [self setLastModified:indexPath.row];
+        MyTableViewCell *cell = (MyTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+        self.textField.text = cell.titleLabel.text;
+        cell.contentView.backgroundColor = [self.colorArray objectAtIndex:10];
+        [self.textField becomeFirstResponder];
+        [self.tableView setEditing:NO];
+    }];
+    moreAction.backgroundColor = [UIColor lightGrayColor];
+    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Delete" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
+        //Remove Core data entry
+        Item *item = [anArray objectAtIndex:indexPath.row];
+        NSEntityDescription *entityDesc = [NSEntityDescription entityForName:@"Item" inManagedObjectContext:self.managedObjectContext];
+        
+        NSLog(@"itemPid of item you want to delete is: %ld with itemName: %@", (long)[item pid], [item name]);
+        
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        [request setEntity:entityDesc];
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"itemPid == %ld", (long)[item pid]];
+        [request setPredicate:predicate];
+        
+        NSError *error;
+        
+        NSManagedObject *obj = [[self.managedObjectContext executeFetchRequest:request error:&error] objectAtIndex:0];
+        NSLog(@"obj itemPid is: %@",[obj valueForKey:@"itemPid"]);
+        if (obj == nil) {
+            NSLog(@"No match for pid");
+        }
+        else{
+            NSLog(@"Match for pid");
+        }
+        [self.managedObjectContext deleteObject:obj];
+        
+        [self.managedObjectContext save:&error];
+        //Remove array entry
+        [anArray removeObjectAtIndex:indexPath.row];
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }];
+    return @[deleteAction, moreAction];
+}
+
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [anArray removeObjectAtIndex:indexPath.row];
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+    }
+}
+
+-(void)tableView:(UITableView *)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"Editing ended for row %lu", indexPath.row);
+}
+
+
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return YES;
+    
+}
+
+
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
+    
+    self.userDrivenDataModelChange = YES;
+    
+    NSLog(@"moveRowAtIndexPath called");
+    
+    Item *itemSource = [anArray objectAtIndex:sourceIndexPath.row];
+    
+    Item *itemDest = [anArray objectAtIndex:destinationIndexPath.row];
+    
+    
+    
+    
+    
+    
+    
+    [anArray removeObjectAtIndex:sourceIndexPath.row];
+    [anArray insertObject:itemSource atIndex:destinationIndexPath.row];
+    
+    
+    
+    self.userDrivenDataModelChange = NO;
+}
+
 
 - (void)strikeoutLabels{
     
@@ -778,6 +873,43 @@ static NSString *CellIdentifier = @"Cell";
     
 }
 
+#pragma mark - Nofications
+
+-(void) scheduleNotificationForDate:(NSDate *)date AlertBody:(NSString *)alertBody ActionButtonTitle:(NSString *)actionButtonTitle NotificationID:(NSString *)notificationID{
+    
+    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+    localNotification.fireDate = date;
+    localNotification.timeZone = [NSTimeZone localTimeZone];
+    localNotification.alertBody = alertBody;
+    localNotification.alertAction = actionButtonTitle;
+    //localNotification.soundName = @"yourSound.wav";
+    
+    NSDictionary *infoDict = [NSDictionary dictionaryWithObject:notificationID forKey:notificationID];
+    localNotification.userInfo = infoDict;
+    
+    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+}
+
+- (void)cancelLocalNotification:(NSString*)notificationID {
+    //loop through all scheduled notifications and cancel the one we're looking for
+    UILocalNotification *cancelThisNotification = nil;
+    BOOL hasNotification = NO;
+    
+    for (UILocalNotification *someNotification in [[UIApplication sharedApplication] scheduledLocalNotifications]) {
+        if([[someNotification.userInfo objectForKey:notificationID] isEqualToString:notificationID]) {
+            cancelThisNotification = someNotification;
+            hasNotification = YES;
+            break;
+        }
+    }
+    if (hasNotification == YES) {
+        NSLog(@"%@ ",cancelThisNotification);
+        [[UIApplication sharedApplication] cancelLocalNotification:cancelThisNotification];
+    }
+}
+
+#pragma mark - Options Stuffs
+
 - (void)sortAction:(UIButton *)button{
     NSLog(@"sortAction pressed");
     [self setPickerMode:0];
@@ -839,33 +971,51 @@ static NSString *CellIdentifier = @"Cell";
 
 - (void)removeAllAction:(UIButton *)button{
     NSLog(@"removeAllAction pressed");
+    
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Warning!" message:@"Are you sure you want to delete everything?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
 
-    [anArray removeAllObjects];
+    [alert setTag:1];
+    [alert show];
     
-    NSEntityDescription *entityDesc = [NSEntityDescription entityForName:@"Item" inManagedObjectContext:self.managedObjectContext];
-            
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    [request setEntity:entityDesc];
-            
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"TRUEPREDICATE"];
-        [request setPredicate:predicate];
-            
-        NSError *error;
     
-        NSArray *matchingData = [self.managedObjectContext executeFetchRequest:request error:&error];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (alertView.tag == 1) { //Remove All Alert!
+        if (buttonIndex == 0) {
+            NSLog(@"pressed button 0");
+        }
+        else{
+            NSLog(@"pressed button 1");
+            [anArray removeAllObjects];
             
-    if (matchingData.count <=0) {
-        NSLog(@"NO data to delete");
-    }
-    else{
-        for (NSManagedObject *obj in matchingData) {
-            [self.managedObjectContext deleteObject:obj];
+            //Remove all data from core data
+            NSEntityDescription *entityDesc = [NSEntityDescription entityForName:@"Item" inManagedObjectContext:self.managedObjectContext];
+            
+            NSFetchRequest *request = [[NSFetchRequest alloc] init];
+            [request setEntity:entityDesc];
+            
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"TRUEPREDICATE"];
+            [request setPredicate:predicate];
+            
+            NSError *error;
+            
+            NSArray *matchingData = [self.managedObjectContext executeFetchRequest:request error:&error];
+            
+            if (matchingData.count <=0) {
+                NSLog(@"NO data to delete");
+            }
+            else{
+                for (NSManagedObject *obj in matchingData) {
+                    [self.managedObjectContext deleteObject:obj];
+                }
+            }
+            
+            [self.managedObjectContext save:&error];
+            
+            [self.tableView reloadData];
         }
     }
-    
-    [self.managedObjectContext save:&error];
-            
-    [self.tableView reloadData];
 }
 
 - (void)ReadingModeSegmentControlAction:(UISegmentedControl *)segment{
@@ -969,100 +1119,7 @@ static NSString *CellIdentifier = @"Cell";
     */
 }
 
-- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewRowAction *moreAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"Modify" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
-        
-        // maybe show an action sheet with more options
-        NSLog(@"Modify pressed");
-        [self setModifying:YES];
-        [self setLastModified:indexPath.row];
-        MyTableViewCell *cell = (MyTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-        self.textField.text = cell.titleLabel.text;
-        cell.contentView.backgroundColor = [self.colorArray objectAtIndex:10];
-        [self.textField becomeFirstResponder];
-        [self.tableView setEditing:NO];
-    }];
-    moreAction.backgroundColor = [UIColor lightGrayColor];
-       UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Delete" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
-           //Remove Core data entry
-           Item *item = [anArray objectAtIndex:indexPath.row];
-           NSEntityDescription *entityDesc = [NSEntityDescription entityForName:@"Item" inManagedObjectContext:self.managedObjectContext];
-           
-           NSLog(@"itemPid of item you want to delete is: %ld with itemName: %@", (long)[item pid], [item name]);
-           
-           NSFetchRequest *request = [[NSFetchRequest alloc] init];
-           [request setEntity:entityDesc];
-           
-           NSPredicate *predicate = [NSPredicate predicateWithFormat:@"itemPid == %ld", (long)[item pid]];
-           [request setPredicate:predicate];
-           
-           NSError *error;
-          
-           NSManagedObject *obj = [[self.managedObjectContext executeFetchRequest:request error:&error] objectAtIndex:0];
-           NSLog(@"obj itemPid is: %@",[obj valueForKey:@"itemPid"]);
-           if (obj == nil) {
-               NSLog(@"No match for pid");
-           }
-           else{
-               NSLog(@"Match for pid");
-           }
-           [self.managedObjectContext deleteObject:obj];
-           
-           [self.managedObjectContext save:&error];
-        //Remove array entry
-        [anArray removeObjectAtIndex:indexPath.row];
-        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    }];
-    return @[deleteAction, moreAction];
-}
 
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [anArray removeObjectAtIndex:indexPath.row];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-    }
-}
-
--(void)tableView:(UITableView *)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSLog(@"Editing ended for row %lu", indexPath.row);
-}
-
-
-
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    return YES;
-    
-}
-
-
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
-    
-    self.userDrivenDataModelChange = YES;
-    
-    NSLog(@"moveRowAtIndexPath called");
-    
-    Item *itemSource = [anArray objectAtIndex:sourceIndexPath.row];
-    
-    Item *itemDest = [anArray objectAtIndex:destinationIndexPath.row];
-    
-    
-    
-    
-    
-    
-    
-    [anArray removeObjectAtIndex:sourceIndexPath.row];
-    [anArray insertObject:itemSource atIndex:destinationIndexPath.row];
-    
-    
-    
-    self.userDrivenDataModelChange = NO;
-}
 
 
 
@@ -1279,15 +1336,18 @@ static NSString *CellIdentifier = @"Cell";
         
         Item * i = [[Item alloc] initWithNameAndColorAndDateAndPidAndBool:self.textField.text withColor:self.selectedColor withDate:[self.pickerView date] withPid:[[anArray objectAtIndex:[self lastModified]] pid] withBool:[[anArray objectAtIndex:indexPath.row] finishedBool]];
         
+        //Remove noficiation
+        Item *removedItem = [anArray objectAtIndex:[self lastModified]];
+        [self cancelLocalNotification:[NSString stringWithFormat: @"%ld", (long)[removedItem pid]]];
+        
+        
         [anArray removeObjectAtIndex:[self lastModified]];
-        //Item * i = [[Item alloc] initWithNameAndColorAndDate:self.textField.text withColor:self.selectedColor withDate:[self.pickerView date]];
-        //Item * i = [[Item alloc] initWithNameAndColorAndDateAndPid:self.textField.text withColor:self.selectedColor withDate:[self.pickerView date] withPid:[[anArray objectAtIndex:[self lastModified]] pid]];
         
         [anArray insertObject:i atIndex:[self lastModified]];
         
-        //Edit core data record
-        //Item *item = [anArray objectAtIndex:[self lastModified]];
+        [self scheduleNotificationForDate:[i date] AlertBody:@"Reminder" ActionButtonTitle:[i name] NotificationID:[NSString stringWithFormat: @"%ld", (long)[i pid]]];
         
+        //Edit core data record
         NSEntityDescription *entityDesc = [NSEntityDescription entityForName:@"Item" inManagedObjectContext:self.managedObjectContext];
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
         [request setEntity:entityDesc];
@@ -1316,7 +1376,8 @@ static NSString *CellIdentifier = @"Cell";
     else{
         
         [self incrementItemsCount];
-        //fetch core data stuff
+        
+        //Fetch core data stuff
         NSEntityDescription *entity = [NSEntityDescription entityForName:@"Items" inManagedObjectContext:self.managedObjectContext];
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
         [request setEntity:entity];
@@ -1326,15 +1387,16 @@ static NSString *CellIdentifier = @"Cell";
         NSError *error;
         
         NSManagedObject *obj = [[self.managedObjectContext executeFetchRequest:request error:&error] objectAtIndex:0];
-        //NSNumber *itemCount = [obj valueForKey:@"count"];
-        //
         
         
-        //Item * i = [[Item alloc] initWithNameAndColorAndDate:self.textField.text withColor:self.selectedColor withDate:[self.pickerView date]];
-        
+        //Create item and add it to array
         Item * i = [[Item alloc] initWithNameAndColorAndDateAndPidAndBool:self.textField.text withColor:self.selectedColor withDate:[self.pickerView date] withPid:[[obj valueForKey:@"count"] integerValue] withBool:NO];
         
         [anArray addObject: i];
+        
+        [self scheduleNotificationForDate:[i date] AlertBody:@"Reminder" ActionButtonTitle:[i name] NotificationID:[NSString stringWithFormat: @"%ld", (long)[i pid]]];
+        
+        //Add to tableView
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:([anArray count] - 1) inSection:0];
         [self.tableView beginUpdates];
         [self.tableView insertRowsAtIndexPaths:@[indexPath]withRowAnimation:UITableViewRowAnimationAutomatic];
