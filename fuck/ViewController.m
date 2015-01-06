@@ -892,45 +892,49 @@ static NSString *CellIdentifier = @"Cell";
 
 #pragma mark - Nofications
 
--(void) scheduleNotificationForDate:(NSDate *)date AlertBody:(NSString *)alertBody ActionButtonTitle:(NSString *)actionButtonTitle NotificationID:(NSString *)notificationID {
+-(void) scheduleNotificationForDate:(NSDate *)date AlertBody:(NSString *)alertBody ActionButtonTitle:(NSString *)actionButtonTitle NotificationID:(NSString *)notificationID NotificationInterval:(NSInteger)notificationInterval{
 
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
     localNotification.fireDate = date;
     localNotification.timeZone = [NSTimeZone localTimeZone];
     localNotification.alertBody = alertBody;
     localNotification.alertAction = actionButtonTitle;
-    /*
+    
     switch (notificationInterval) {
             //Name
         case 0:
         {
             NSLog(@"None");
+            localNotification.repeatInterval = 0;
             break;
         }
         case 1:
         {
             NSLog(@"Daily");
+            localNotification.repeatInterval = NSCalendarUnitDay;
             break;
         }
         case 2:
         {
             NSLog(@"Weekly");
+            localNotification.repeatInterval = NSCalendarUnitWeekOfYear;
             break;
         }
         case 3:
         {
             NSLog(@"Monthly");
+            localNotification.repeatInterval = NSCalendarUnitMonth;
             break;
         }
-        case 2:
+        case 4:
         {
             NSLog(@"Yearly");
+            localNotification.repeatInterval = NSCalendarUnitYear;
             break;
         }
         default:
             break;
     }
-     */
 
     //localNotification.soundName = @"yourSound.wav";
     
@@ -1253,7 +1257,7 @@ static NSString *CellIdentifier = @"Cell";
                 //re-add local notifcation
                 NSLog(@"scheduling with pid %ld", (long)[swipedItem pid]);
                 
-                [self scheduleNotificationForDate:[swipedItem date] AlertBody:[swipedItem name] ActionButtonTitle:[swipedItem name] NotificationID:[NSString stringWithFormat: @"%ld", (long)[swipedItem pid]]];
+                [self scheduleNotificationForDate:[swipedItem date] AlertBody:[swipedItem name] ActionButtonTitle:[swipedItem name] NotificationID:[NSString stringWithFormat: @"%ld", (long)[swipedItem pid]] NotificationInterval:[swipedItem interval]];
                 
                 //Move item to the beginning of the data source
                 [anArray removeObjectAtIndex:swipedIndexPath.row];
@@ -1334,7 +1338,7 @@ static NSString *CellIdentifier = @"Cell";
                 [self cancelLocalNotification:[NSString stringWithFormat: @"%ld", (long)[[anArray objectAtIndex:i] pid]]];
                 
                 if (![[obj valueForKey:@"itemFinished"] boolValue]) {
-                    [self scheduleNotificationForDate:[[anArray objectAtIndex:i] date] AlertBody:[[anArray objectAtIndex:i] name] ActionButtonTitle:[[anArray objectAtIndex:i] name] NotificationID:[NSString stringWithFormat: @"%ld", (long)[[anArray objectAtIndex:i] pid]]];
+                    [self scheduleNotificationForDate:[[anArray objectAtIndex:i] date] AlertBody:[[anArray objectAtIndex:i] name] ActionButtonTitle:[[anArray objectAtIndex:i] name] NotificationID:[NSString stringWithFormat: @"%ld", (long)[[anArray objectAtIndex:i] pid]] NotificationInterval:[[anArray objectAtIndex:i] interval]];
                 }
                 
                 
@@ -1428,7 +1432,7 @@ static NSString *CellIdentifier = @"Cell";
         
         if (![i finishedBool]) {
             NSLog(@"Editing a non strikedout word");
-            [self scheduleNotificationForDate:[i date] AlertBody:[i name] ActionButtonTitle:[i name] NotificationID:[NSString stringWithFormat: @"%ld", (long)[i pid]]];
+            [self scheduleNotificationForDate:[i date] AlertBody:[i name] ActionButtonTitle:[i name] NotificationID:[NSString stringWithFormat: @"%ld", (long)[i pid]] NotificationInterval:[i interval]];
         }
         NSLog(@"scheduling with pid %ld", (long)[i pid]);
         
@@ -1487,7 +1491,7 @@ static NSString *CellIdentifier = @"Cell";
         
         
         
-        [self scheduleNotificationForDate:[i date] AlertBody:[i name] ActionButtonTitle:[i name] NotificationID:[NSString stringWithFormat: @"%ld", (long)[i pid]] ];
+        [self scheduleNotificationForDate:[i date] AlertBody:[i name] ActionButtonTitle:[i name] NotificationID:[NSString stringWithFormat: @"%ld", (long)[i pid]] NotificationInterval:[i interval]];
         
         //Add to tableView
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:([anArray count] - 1) inSection:0];
