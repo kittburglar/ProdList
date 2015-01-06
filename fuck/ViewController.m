@@ -85,14 +85,29 @@ static NSString *CellIdentifier = @"Cell";
     [self.inputAccView addSubview:dateButton];
     //self.textField.inputAccessoryView = self.inputAccView;
     
+    //Create repeat button programmatically
+    UIButton *repeatButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    
+    repeatButton.frame = CGRectMake(110, CGRectGetMaxY(self.inputAccView.bounds)/2 - 40/2, 40, 40);
+    //UIImage *calendarImage = [UIImage imageNamed:@"Calendar"];
+    //[dateButton setImage:[calendarImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
+    
+    [repeatButton setBackgroundColor:[UIColor darkGrayColor]];
+    [repeatButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [repeatButton addTarget:self action:@selector(pickRepeat:) forControlEvents:UIControlEventTouchUpInside];
+    [self.inputAccView addSubview:repeatButton];
+    
+    
     //Create color Button programmically
     self.colorButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    self.colorButton.frame = CGRectMake(110, CGRectGetMaxY(self.inputAccView.bounds)/2 - 40/2, 40, 40);
+    self.colorButton.frame = CGRectMake(160, CGRectGetMaxY(self.inputAccView.bounds)/2 - 40/2, 40, 40);
     [self.colorButton setBackgroundColor:[UIColor darkGrayColor]];
     [self.colorButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.colorButton addTarget:self action:@selector(pickColor:) forControlEvents:UIControlEventTouchUpInside];
 
     [self.inputAccView addSubview:self.colorButton];
+    
+    
     //self.textField.inputAccessoryView = self.inputAccView;
     
     //Create finish Button programmically
@@ -119,6 +134,7 @@ static NSString *CellIdentifier = @"Cell";
     optionsArray = [[NSMutableArray alloc] init];
     sortOptionsArray = [[NSMutableArray alloc] init];
     autoSortOptionsArray = [[NSMutableArray alloc] init];
+    repeatArray = [[NSMutableArray alloc] init];
     
     //add swipe detection to tableview
     UISwipeGestureRecognizer *swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipe:)];
@@ -130,6 +146,10 @@ static NSString *CellIdentifier = @"Cell";
     //Initalize datepicker stuff
     self.pickerView = [[UIDatePicker alloc] init];
     [self.pickerView addTarget:self action:@selector(pickerViewChanged:) forControlEvents:UIControlEventValueChanged];
+    
+    //Initialize repeatPicker Stuff
+    self.repeatPickerView = [[UIPickerView alloc] init];
+    self.repeatPickerView.delegate = self;
     
     //Initalize collectionview
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
@@ -153,6 +173,14 @@ static NSString *CellIdentifier = @"Cell";
     [autoSortOptionsArray addObject: @"Name"];
     [autoSortOptionsArray addObject: @"Color"];
     [autoSortOptionsArray addObject: @"Due Date"];
+    
+    //add repeatArray
+    [repeatArray addObject:@"None"];
+    [repeatArray addObject:@"Daily"];
+    [repeatArray addObject:@"Weekly"];
+    [repeatArray addObject:@"Monthly"];
+    [repeatArray addObject:@"Yearly"];
+    
     
     //Set up picker view for options
     self.pickerViewTextField = [[UITextField alloc] initWithFrame:CGRectZero];
@@ -193,16 +221,22 @@ static NSString *CellIdentifier = @"Cell";
     }
     else{
         for (NSManagedObject *obj in matchingData) {
-            NSLog(@"%@", [obj valueForKey:@"itemText"]);
-            NSLog(@"%@", [obj valueForKey:@"itemDate"]);
-            NSLog(@"%@", [obj valueForKey:@"itemColor"]);
+            NSLog(@"itemText %@", [obj valueForKey:@"itemText"]);
+            NSLog(@"itemDate %@", [obj valueForKey:@"itemDate"]);
+            NSLog(@"itemColor %@", [obj valueForKey:@"itemColor"]);
+            NSLog(@"itemPid %@", [obj valueForKey:@"itemPid"]);
+            NSLog(@"itemFinished %@", [obj valueForKey:@"itemFinished"]);
+            NSLog(@"itemInterval %@", [obj valueForKey:@"itemInterval"]);
+            
             NSString *itemText = [obj valueForKey:@"itemText"];
             NSDate *itemDate = [obj valueForKey:@"itemDate"];
             NSInteger itemColor = [[obj valueForKey:@"itemColor"] integerValue];
             NSInteger itemPid = [[obj valueForKey:@"itemPid"] integerValue];
             BOOL itemFinished = [[obj valueForKey:@"itemFinished"] boolValue];
             NSLog(@"Itemfinished is %d", itemFinished);
-            Item * i = [[Item alloc] initWithNameAndColorAndDateAndPidAndBool:itemText withColor:itemColor withDate:itemDate withPid:itemPid withBool:itemFinished];
+            NSInteger itemInterval = [[obj valueForKey:@"itemInterval"] integerValue];
+            
+            Item * i = [[Item alloc] initWithNameAndColorAndDateAndPidAndBoolAndInterval:itemText withColor:itemColor withDate:itemDate withPid:itemPid withBool:itemFinished withInterval:itemInterval];
             [anArray insertObject:i atIndex:anArray.count];
 
             [self.tableView reloadData];
@@ -258,6 +292,16 @@ static NSString *CellIdentifier = @"Cell";
     
 }
 
+- (void)pickRepeat:(UIButton*)button
+{
+    NSLog(@"Repeat button clicked.");
+    [self.textField resignFirstResponder];
+    self.pickerArray = repeatArray;
+    //[self.repeatPickerView reloadAllComponents];
+    self.textField.inputView = self.repeatPickerView;
+    [self.textField becomeFirstResponder];
+    
+}
 
 
 - (void)pickColor:(UIButton*)button
@@ -363,22 +407,6 @@ static NSString *CellIdentifier = @"Cell";
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
     NSLog(@"numberOfRowsInComponent pickerView");
-    /*
-    NSInteger rowCount;
-    switch ([self pickerMode]) {
-        case 0:
-        {
-            rowCount = [sortOptionsArray count];
-            //return [sortOptionsArray count];
-            break;
-        }
-        case 1:
-            rowCount = [autoSortOptionsArray count];
-            break;
-        default:
-            break;
-    }
-     */
     
     return [self.pickerArray count];
 }
@@ -386,24 +414,6 @@ static NSString *CellIdentifier = @"Cell";
 #pragma mark - UIPickerViewDelegate
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    /*
-    NSString *item;
-    switch ([self pickerMode]) {
-        case 0:
-        {
-            item = [sortOptionsArray objectAtIndex:row];
-            break;
-        }
-        case 1:
-        {
-            item = [autoSortOptionsArray objectAtIndex:row];
-            break;
-        }
-        default:
-            break;
-    }
-    */
-    
     return [self.pickerArray objectAtIndex:row];
 }
 
@@ -882,13 +892,46 @@ static NSString *CellIdentifier = @"Cell";
 
 #pragma mark - Nofications
 
--(void) scheduleNotificationForDate:(NSDate *)date AlertBody:(NSString *)alertBody ActionButtonTitle:(NSString *)actionButtonTitle NotificationID:(NSString *)notificationID{
+-(void) scheduleNotificationForDate:(NSDate *)date AlertBody:(NSString *)alertBody ActionButtonTitle:(NSString *)actionButtonTitle NotificationID:(NSString *)notificationID {
 
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
     localNotification.fireDate = date;
     localNotification.timeZone = [NSTimeZone localTimeZone];
     localNotification.alertBody = alertBody;
     localNotification.alertAction = actionButtonTitle;
+    /*
+    switch (notificationInterval) {
+            //Name
+        case 0:
+        {
+            NSLog(@"None");
+            break;
+        }
+        case 1:
+        {
+            NSLog(@"Daily");
+            break;
+        }
+        case 2:
+        {
+            NSLog(@"Weekly");
+            break;
+        }
+        case 3:
+        {
+            NSLog(@"Monthly");
+            break;
+        }
+        case 2:
+        {
+            NSLog(@"Yearly");
+            break;
+        }
+        default:
+            break;
+    }
+     */
+
     //localNotification.soundName = @"yourSound.wav";
     
     NSDictionary *infoDict = [NSDictionary dictionaryWithObject:notificationID forKey:notificationID];
@@ -1157,12 +1200,13 @@ static NSString *CellIdentifier = @"Cell";
         self.longPressIndexPath = [self.tableView indexPathForRowAtPoint:swipeLocation];
         
         self.longPressCell = (MyTableViewCell *)[self.tableView cellForRowAtIndexPath:[self longPressIndexPath]];
-        /*
-        self.longPressCell.titleLabel.text = [anArray[self.longPressIndexPath.row] returnDate];
-         */
         
+        
+        //Reload the values of the item in each view
         self.colorButton.backgroundColor = self.longPressCell.colorButton.backgroundColor;
         [self.pickerView setDate:[[anArray objectAtIndex:self.longPressIndexPath.row] date]];
+        self.pickerArray = repeatArray;
+        [self.repeatPickerView selectRow:[[anArray objectAtIndex:self.longPressIndexPath.row] interval] inComponent:0 animated:NO];
         [self setModifying:YES];
         [self setLastModified:self.longPressIndexPath.row];
         MyTableViewCell *cell = (MyTableViewCell *)[self.tableView cellForRowAtIndexPath:self.longPressIndexPath];
@@ -1284,6 +1328,7 @@ static NSString *CellIdentifier = @"Cell";
                 [obj setValue:[NSNumber numberWithInteger:[[anArray objectAtIndex:i] buttonColor]] forKey:@"itemColor"];
                 [obj setValue:[[anArray objectAtIndex:i] date] forKey:@"itemDate"];
                 [obj setValue:[NSNumber numberWithBool:[[anArray objectAtIndex:i] finishedBool]] forKey:@"itemFinished"];
+                [obj setValue:[NSNumber numberWithInteger:[[anArray objectAtIndex:i] interval]] forKey:@"itemInterval"];
                 
                 //Fix local nofications
                 [self cancelLocalNotification:[NSString stringWithFormat: @"%ld", (long)[[anArray objectAtIndex:i] pid]]];
@@ -1368,7 +1413,7 @@ static NSString *CellIdentifier = @"Cell";
         
         NSLog(@"creating item with pid %ld", (long)[[anArray objectAtIndex:[self lastModified]] pid]);
         
-        Item * i = [[Item alloc] initWithNameAndColorAndDateAndPidAndBool:self.textField.text withColor:self.selectedColor withDate:[self.pickerView date] withPid:[[anArray objectAtIndex:[self lastModified]] pid] withBool:[[anArray objectAtIndex:indexPath.row] finishedBool]];
+        Item * i = [[Item alloc] initWithNameAndColorAndDateAndPidAndBoolAndInterval:self.textField.text withColor:self.selectedColor withDate:[self.pickerView date] withPid:[[anArray objectAtIndex:[self lastModified]] pid] withBool:[[anArray objectAtIndex:indexPath.row] finishedBool] withInterval:[self.repeatPickerView selectedRowInComponent:0]];
         
         
         
@@ -1410,6 +1455,7 @@ static NSString *CellIdentifier = @"Cell";
         [obj setValue:[i date] forKey:@"itemDate"];
         [obj setValue:[NSNumber numberWithInteger:[i pid]]  forKey:@"itemPid"];
         [obj setValue:[NSNumber numberWithBool:[i finishedBool]] forKey:@"itemFinished"];
+        [obj setValue:[NSNumber numberWithInteger:[i interval]] forKey:@"itemInterval"];
         
         [self.tableView reloadData];
         [self.managedObjectContext save:&error];
@@ -1433,13 +1479,15 @@ static NSString *CellIdentifier = @"Cell";
         
         
         //Create item and add it to array
-        Item * i = [[Item alloc] initWithNameAndColorAndDateAndPidAndBool:self.textField.text withColor:self.selectedColor withDate:[self.pickerView date] withPid:[[obj valueForKey:@"count"] integerValue] withBool:NO];
+        Item * i = [[Item alloc] initWithNameAndColorAndDateAndPidAndBoolAndInterval:self.textField.text withColor:self.selectedColor withDate:[self.pickerView date] withPid:[[obj valueForKey:@"count"] integerValue] withBool:NO withInterval:[self.repeatPickerView selectedRowInComponent:0]];
         
         [anArray addObject: i];
         
         NSLog(@"scheduling with pid %ld", (long)[i pid]);
         
-        [self scheduleNotificationForDate:[i date] AlertBody:[i name] ActionButtonTitle:[i name] NotificationID:[NSString stringWithFormat: @"%ld", (long)[i pid]]];
+        
+        
+        [self scheduleNotificationForDate:[i date] AlertBody:[i name] ActionButtonTitle:[i name] NotificationID:[NSString stringWithFormat: @"%ld", (long)[i pid]] ];
         
         //Add to tableView
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:([anArray count] - 1) inSection:0];
@@ -1455,6 +1503,8 @@ static NSString *CellIdentifier = @"Cell";
         [newItem setValue:[i date] forKey:@"itemDate"];
         [newItem setValue:[NSNumber numberWithInteger:[i pid]] forKey:@"itemPid"];
         [newItem setValue:[NSNumber numberWithBool:[i finishedBool]] forKey:@"itemFinished"];
+        [newItem setValue:[NSNumber numberWithInteger:[i interval]] forKey:@"itemInterval"];
+        
         NSError *error2;
         [self.managedObjectContext save:&error2];
         

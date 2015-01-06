@@ -66,6 +66,16 @@
     return self;
 }
 
+-(id)initWithNameAndColorAndDateAndPidAndBoolAndInterval:(NSString *)name withColor:(NSInteger)color withDate:(NSDate *)date withPid:(NSInteger)pid withBool:(BOOL)isFinished withInterval:(NSInteger)interval{
+    self = [super init];
+    self.name = name;
+    self.buttonColor = color;
+    self.date = date;
+    self.pid = pid;
+    self.finishedBool = isFinished;
+    self.interval = interval;
+    return self;
+}
 
 -(NSString *)returnDate{
     //Days

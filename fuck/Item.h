@@ -19,6 +19,8 @@
 
 @property (nonatomic, assign) NSInteger pid;
 
+@property (nonatomic, assign) NSInteger interval;
+
 @property (nonatomic, assign) BOOL finishedBool;
 
 -(id)initWithName:(NSString *)name;
@@ -32,6 +34,8 @@
 -(id)initWithNameAndColorAndDateAndPid:(NSString *)name withColor:(NSInteger)color withDate:(NSDate *)date withPid:(NSInteger)pid;
 
 -(id)initWithNameAndColorAndDateAndPidAndBool:(NSString *)name withColor:(NSInteger)color withDate:(NSDate *)date withPid:(NSInteger)pid withBool:(BOOL)isFinished;
+
+-(id)initWithNameAndColorAndDateAndPidAndBoolAndInterval:(NSString *)name withColor:(NSInteger)color withDate:(NSDate *)date withPid:(NSInteger)pid withBool:(BOOL)isFinished withInterval:(NSInteger)interval;
 
 -(NSString *)returnDate;
 

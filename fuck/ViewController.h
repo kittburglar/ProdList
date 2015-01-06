@@ -19,6 +19,7 @@
     NSMutableArray *optionsArray;
     NSMutableArray *sortOptionsArray;
     NSMutableArray *autoSortOptionsArray;
+    NSMutableArray *repeatArray;
     NSFetchedResultsController *fetchedResultsController;
     NSManagedObjectContext *managedObjectContext;
 }
@@ -53,6 +54,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *colorButton;
 @property (assign, nonatomic) NSInteger selectedColor;
 @property (strong, nonatomic) IBOutlet UIDatePicker *pickerView;
+@property (strong, nonatomic) IBOutlet UIPickerView * repeatPickerView;
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong, nonatomic) IBOutlet UICollectionViewFlowLayout *collectionFlowLayout;
 @property (strong, nonatomic) UIToolbar *inputAccView;
