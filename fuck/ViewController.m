@@ -938,6 +938,8 @@ static NSString *CellIdentifier = @"Cell";
 
     //localNotification.soundName = @"yourSound.wav";
     
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 23;
+    //localNotification.applicationIconBadgeNumber = 1;
     NSDictionary *infoDict = [NSDictionary dictionaryWithObject:notificationID forKey:notificationID];
     localNotification.userInfo = infoDict;
     
