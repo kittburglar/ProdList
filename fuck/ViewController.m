@@ -261,7 +261,7 @@ static NSString *CellIdentifier = @"Cell";
     
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
     
-    localNotification.applicationIconBadgeNumber = 2;// set here the value of badge
+    localNotification.applicationIconBadgeNumber = [self numberofActiveItems];// set here the value of badge
     //[UIApplication sharedApplication].applicationIconBadgeNumber = self.activeItems;
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
 }
