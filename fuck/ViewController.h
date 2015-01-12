@@ -24,6 +24,9 @@
     NSManagedObjectContext *managedObjectContext;
 }
 
+#pragma mark - Application Badge
+@property (nonatomic, assign) NSInteger activeItems;
+
 #pragma mark - Boolean Values
 @property (nonatomic, assign) BOOL modifying;
 @property (nonatomic, assign) BOOL lightMode;

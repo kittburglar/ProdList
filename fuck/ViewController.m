@@ -243,6 +243,10 @@ static NSString *CellIdentifier = @"Cell";
         }
     }
     
+    //Register notification for entering background
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillResignActive) name:UIApplicationWillResignActiveNotification object:nil];
+    self.activeItems = [self numberofActiveItems];
+
     
     
     self.tableView.delegate = self;
@@ -250,6 +254,31 @@ static NSString *CellIdentifier = @"Cell";
     self.secondTableView.dataSource = self;
 }
 
+#pragma mark - Notifaction stuffs
+
+-(void)appWillResignActive{
+    NSLog(@"appWillResignActive");
+    
+    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+    
+    localNotification.applicationIconBadgeNumber = 2;// set here the value of badge
+    //[UIApplication sharedApplication].applicationIconBadgeNumber = self.activeItems;
+    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+}
+
+-(NSInteger)numberofActiveItems{
+    NSInteger activeItems = 0;
+    for (Item *obj in anArray) {
+        if (![obj finishedBool]) {
+            activeItems++;
+        }
+    }
+    self.activeItems = activeItems;
+    return activeItems;
+}
+
+
+#pragma mark - input accessory view buttons
 //Set up the collection view to be the same size as keyboard view
 -(void)keyboardOnScreen:(NSNotification *)notification
 {
@@ -938,7 +967,7 @@ static NSString *CellIdentifier = @"Cell";
 
     //localNotification.soundName = @"yourSound.wav";
     
-    [UIApplication sharedApplication].applicationIconBadgeNumber = 23;
+    
     //localNotification.applicationIconBadgeNumber = 1;
     NSDictionary *infoDict = [NSDictionary dictionaryWithObject:notificationID forKey:notificationID];
     localNotification.userInfo = infoDict;
