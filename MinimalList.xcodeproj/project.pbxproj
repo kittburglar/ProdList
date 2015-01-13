@@ -13,12 +13,12 @@
 		F8A30FDC1A35C3A600F7BA46 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A30FDB1A35C3A600F7BA46 /* CoreData.framework */; };
 		F8AA3B701A19C50A00C934E0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F8AA3B6F1A19C50A00C934E0 /* main.m */; };
 		F8AA3B731A19C50A00C934E0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F8AA3B721A19C50A00C934E0 /* AppDelegate.m */; };
-		F8AA3B761A19C50A00C934E0 /* fuck.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F8AA3B741A19C50A00C934E0 /* fuck.xcdatamodeld */; };
+		F8AA3B761A19C50A00C934E0 /* MinimalList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F8AA3B741A19C50A00C934E0 /* MinimalList.xcdatamodeld */; };
 		F8AA3B791A19C50A00C934E0 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8AA3B781A19C50A00C934E0 /* ViewController.m */; };
 		F8AA3B7C1A19C50A00C934E0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8AA3B7A1A19C50A00C934E0 /* Main.storyboard */; };
 		F8AA3B7E1A19C50A00C934E0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8AA3B7D1A19C50A00C934E0 /* Images.xcassets */; };
 		F8AA3B811A19C50A00C934E0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8AA3B7F1A19C50A00C934E0 /* LaunchScreen.xib */; };
-		F8AA3B8D1A19C50B00C934E0 /* fuckTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F8AA3B8C1A19C50B00C934E0 /* fuckTests.m */; };
+		F8AA3B8D1A19C50B00C934E0 /* MinimalListTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F8AA3B8C1A19C50B00C934E0 /* MinimalListTests.m */; };
 		F8C168C51A31D51400E80986 /* OptionsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C168C41A31D51400E80986 /* OptionsTableViewCell.m */; };
 /* End PBXBuildFile section */
 
@@ -39,20 +39,20 @@
 		F806EA0D1A264E4D00A8CCFB /* Item.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Item.m; sourceTree = "<group>"; };
 		F84B4CB21A39756300D64A6E /* screenshot1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screenshot1.png; sourceTree = "<group>"; };
 		F8A30FDB1A35C3A600F7BA46 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		F8AA3B6A1A19C50900C934E0 /* fuck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fuck.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8AA3B6A1A19C50900C934E0 /* MinimalList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MinimalList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8AA3B6E1A19C50A00C934E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F8AA3B6F1A19C50A00C934E0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F8AA3B711A19C50A00C934E0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F8AA3B721A19C50A00C934E0 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		F8AA3B751A19C50A00C934E0 /* fuck.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = fuck.xcdatamodel; sourceTree = "<group>"; };
+		F8AA3B751A19C50A00C934E0 /* MinimalList.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MinimalList.xcdatamodel; sourceTree = "<group>"; };
 		F8AA3B771A19C50A00C934E0 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		F8AA3B781A19C50A00C934E0 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		F8AA3B7B1A19C50A00C934E0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F8AA3B7D1A19C50A00C934E0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F8AA3B801A19C50A00C934E0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		F8AA3B861A19C50B00C934E0 /* fuckTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = fuckTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8AA3B861A19C50B00C934E0 /* MinimalListTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MinimalListTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8AA3B8B1A19C50B00C934E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F8AA3B8C1A19C50B00C934E0 /* fuckTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = fuckTests.m; sourceTree = "<group>"; };
+		F8AA3B8C1A19C50B00C934E0 /* MinimalListTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MinimalListTests.m; sourceTree = "<group>"; };
 		F8C168C31A31D51400E80986 /* OptionsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionsTableViewCell.h; sourceTree = "<group>"; };
 		F8C168C41A31D51400E80986 /* OptionsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionsTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -88,8 +88,8 @@
 			isa = PBXGroup;
 			children = (
 				F8A30FDB1A35C3A600F7BA46 /* CoreData.framework */,
-				F8AA3B6C1A19C50900C934E0 /* fuck */,
-				F8AA3B891A19C50B00C934E0 /* fuckTests */,
+				F8AA3B6C1A19C50900C934E0 /* MinimalList */,
+				F8AA3B891A19C50B00C934E0 /* MinimalListTests */,
 				F8AA3B6B1A19C50900C934E0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -97,13 +97,13 @@
 		F8AA3B6B1A19C50900C934E0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F8AA3B6A1A19C50900C934E0 /* fuck.app */,
-				F8AA3B861A19C50B00C934E0 /* fuckTests.xctest */,
+				F8AA3B6A1A19C50900C934E0 /* MinimalList.app */,
+				F8AA3B861A19C50B00C934E0 /* MinimalListTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		F8AA3B6C1A19C50900C934E0 /* fuck */ = {
+		F8AA3B6C1A19C50900C934E0 /* MinimalList */ = {
 			isa = PBXGroup;
 			children = (
 				F84B4CB41A39759C00D64A6E /* Screenshots */,
@@ -114,7 +114,7 @@
 				F8AA3B7A1A19C50A00C934E0 /* Main.storyboard */,
 				F8AA3B7D1A19C50A00C934E0 /* Images.xcassets */,
 				F8AA3B7F1A19C50A00C934E0 /* LaunchScreen.xib */,
-				F8AA3B741A19C50A00C934E0 /* fuck.xcdatamodeld */,
+				F8AA3B741A19C50A00C934E0 /* MinimalList.xcdatamodeld */,
 				F8AA3B6D1A19C50A00C934E0 /* Supporting Files */,
 				F806EA0C1A264E4D00A8CCFB /* Item.h */,
 				F806EA0D1A264E4D00A8CCFB /* Item.m */,
@@ -123,6 +123,7 @@
 				F8C168C31A31D51400E80986 /* OptionsTableViewCell.h */,
 				F8C168C41A31D51400E80986 /* OptionsTableViewCell.m */,
 			);
+			name = MinimalList;
 			path = fuck;
 			sourceTree = "<group>";
 		};
@@ -135,12 +136,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		F8AA3B891A19C50B00C934E0 /* fuckTests */ = {
+		F8AA3B891A19C50B00C934E0 /* MinimalListTests */ = {
 			isa = PBXGroup;
 			children = (
-				F8AA3B8C1A19C50B00C934E0 /* fuckTests.m */,
+				F8AA3B8C1A19C50B00C934E0 /* MinimalListTests.m */,
 				F8AA3B8A1A19C50B00C934E0 /* Supporting Files */,
 			);
+			name = MinimalListTests;
 			path = fuckTests;
 			sourceTree = "<group>";
 		};
@@ -155,9 +157,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		F8AA3B691A19C50900C934E0 /* fuck */ = {
+		F8AA3B691A19C50900C934E0 /* MinimalList */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F8AA3B901A19C50B00C934E0 /* Build configuration list for PBXNativeTarget "fuck" */;
+			buildConfigurationList = F8AA3B901A19C50B00C934E0 /* Build configuration list for PBXNativeTarget "MinimalList" */;
 			buildPhases = (
 				F8AA3B661A19C50900C934E0 /* Sources */,
 				F8AA3B671A19C50900C934E0 /* Frameworks */,
@@ -167,14 +169,14 @@
 			);
 			dependencies = (
 			);
-			name = fuck;
+			name = MinimalList;
 			productName = fuck;
-			productReference = F8AA3B6A1A19C50900C934E0 /* fuck.app */;
+			productReference = F8AA3B6A1A19C50900C934E0 /* MinimalList.app */;
 			productType = "com.apple.product-type.application";
 		};
-		F8AA3B851A19C50B00C934E0 /* fuckTests */ = {
+		F8AA3B851A19C50B00C934E0 /* MinimalListTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F8AA3B931A19C50B00C934E0 /* Build configuration list for PBXNativeTarget "fuckTests" */;
+			buildConfigurationList = F8AA3B931A19C50B00C934E0 /* Build configuration list for PBXNativeTarget "MinimalListTests" */;
 			buildPhases = (
 				F8AA3B821A19C50B00C934E0 /* Sources */,
 				F8AA3B831A19C50B00C934E0 /* Frameworks */,
@@ -185,9 +187,9 @@
 			dependencies = (
 				F8AA3B881A19C50B00C934E0 /* PBXTargetDependency */,
 			);
-			name = fuckTests;
+			name = MinimalListTests;
 			productName = fuckTests;
-			productReference = F8AA3B861A19C50B00C934E0 /* fuckTests.xctest */;
+			productReference = F8AA3B861A19C50B00C934E0 /* MinimalListTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -208,7 +210,7 @@
 					};
 				};
 			};
-			buildConfigurationList = F8AA3B651A19C50900C934E0 /* Build configuration list for PBXProject "fuck" */;
+			buildConfigurationList = F8AA3B651A19C50900C934E0 /* Build configuration list for PBXProject "MinimalList" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -221,8 +223,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				F8AA3B691A19C50900C934E0 /* fuck */,
-				F8AA3B851A19C50B00C934E0 /* fuckTests */,
+				F8AA3B691A19C50900C934E0 /* MinimalList */,
+				F8AA3B851A19C50B00C934E0 /* MinimalListTests */,
 			);
 		};
 /* End PBXProject section */
@@ -255,7 +257,7 @@
 			files = (
 				F806EA0E1A264E4D00A8CCFB /* Item.m in Sources */,
 				F8AA3B731A19C50A00C934E0 /* AppDelegate.m in Sources */,
-				F8AA3B761A19C50A00C934E0 /* fuck.xcdatamodeld in Sources */,
+				F8AA3B761A19C50A00C934E0 /* MinimalList.xcdatamodeld in Sources */,
 				F80314A51A26D78B00E68248 /* MyTableViewCell.m in Sources */,
 				F8AA3B791A19C50A00C934E0 /* ViewController.m in Sources */,
 				F8C168C51A31D51400E80986 /* OptionsTableViewCell.m in Sources */,
@@ -267,7 +269,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F8AA3B8D1A19C50B00C934E0 /* fuckTests.m in Sources */,
+				F8AA3B8D1A19C50B00C934E0 /* MinimalListTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,7 +278,7 @@
 /* Begin PBXTargetDependency section */
 		F8AA3B881A19C50B00C934E0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = F8AA3B691A19C50900C934E0 /* fuck */;
+			target = F8AA3B691A19C50900C934E0 /* MinimalList */;
 			targetProxy = F8AA3B871A19C50B00C934E0 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -383,7 +385,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = fuck/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = fuck;
+				PRODUCT_NAME = MinimalList;
 			};
 			name = Debug;
 		};
@@ -393,7 +395,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = fuck/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = fuck;
+				PRODUCT_NAME = MinimalList;
 			};
 			name = Release;
 		};
@@ -411,7 +413,7 @@
 				);
 				INFOPLIST_FILE = fuckTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = fuckTests;
+				PRODUCT_NAME = MinimalListTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/fuck.app/fuck";
 			};
 			name = Debug;
@@ -426,7 +428,7 @@
 				);
 				INFOPLIST_FILE = fuckTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = fuckTests;
+				PRODUCT_NAME = MinimalListTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/fuck.app/fuck";
 			};
 			name = Release;
@@ -434,7 +436,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		F8AA3B651A19C50900C934E0 /* Build configuration list for PBXProject "fuck" */ = {
+		F8AA3B651A19C50900C934E0 /* Build configuration list for PBXProject "MinimalList" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F8AA3B8E1A19C50B00C934E0 /* Debug */,
@@ -443,7 +445,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F8AA3B901A19C50B00C934E0 /* Build configuration list for PBXNativeTarget "fuck" */ = {
+		F8AA3B901A19C50B00C934E0 /* Build configuration list for PBXNativeTarget "MinimalList" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F8AA3B911A19C50B00C934E0 /* Debug */,
@@ -452,7 +454,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F8AA3B931A19C50B00C934E0 /* Build configuration list for PBXNativeTarget "fuckTests" */ = {
+		F8AA3B931A19C50B00C934E0 /* Build configuration list for PBXNativeTarget "MinimalListTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F8AA3B941A19C50B00C934E0 /* Debug */,
@@ -464,13 +466,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		F8AA3B741A19C50A00C934E0 /* fuck.xcdatamodeld */ = {
+		F8AA3B741A19C50A00C934E0 /* MinimalList.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				F8AA3B751A19C50A00C934E0 /* fuck.xcdatamodel */,
+				F8AA3B751A19C50A00C934E0 /* MinimalList.xcdatamodel */,
 			);
-			currentVersion = F8AA3B751A19C50A00C934E0 /* fuck.xcdatamodel */;
-			path = fuck.xcdatamodeld;
+			currentVersion = F8AA3B751A19C50A00C934E0 /* MinimalList.xcdatamodel */;
+			path = MinimalList.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
