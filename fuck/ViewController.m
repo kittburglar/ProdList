@@ -89,10 +89,8 @@ static NSString *CellIdentifier = @"Cell";
     UIButton *repeatButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     
     repeatButton.frame = CGRectMake(110, CGRectGetMaxY(self.inputAccView.bounds)/2 - 40/2, 40, 40);
-    //UIImage *calendarImage = [UIImage imageNamed:@"Calendar"];
-    //[dateButton setImage:[calendarImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
-    
-    [repeatButton setBackgroundColor:[UIColor darkGrayColor]];
+    UIImage *repeatImage = [UIImage imageNamed:@"Return"];
+    [repeatButton setImage:[repeatImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
     [repeatButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [repeatButton addTarget:self action:@selector(pickRepeat:) forControlEvents:UIControlEventTouchUpInside];
     [self.inputAccView addSubview:repeatButton];
@@ -1226,7 +1224,7 @@ static NSString *CellIdentifier = @"Cell";
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
         
         NSLog(@"Holding Begins");
-        self.longPressCell.contentView.backgroundColor = [self.colorArray objectAtIndex:11];
+        //self.longPressCell.contentView.backgroundColor = [self.colorArray objectAtIndex:11];
         CGPoint swipeLocation = [gestureRecognizer locationInView:self.tableView];
         
         
