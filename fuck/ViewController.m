@@ -260,9 +260,9 @@ static NSString *CellIdentifier = @"Cell";
     NSLog(@"appWillResignActive");
     
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+    NSLog(@"numberofActiveItems is: %ld", (long)[self numberofActiveItems]);
     
     localNotification.applicationIconBadgeNumber = [self numberofActiveItems];// set here the value of badge
-    //[UIApplication sharedApplication].applicationIconBadgeNumber = self.activeItems;
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
 }
 
@@ -967,8 +967,6 @@ static NSString *CellIdentifier = @"Cell";
 
     //localNotification.soundName = @"yourSound.wav";
     
-    
-    //localNotification.applicationIconBadgeNumber = 1;
     NSDictionary *infoDict = [NSDictionary dictionaryWithObject:notificationID forKey:notificationID];
     localNotification.userInfo = infoDict;
     
