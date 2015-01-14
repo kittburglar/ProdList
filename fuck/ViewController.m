@@ -1230,6 +1230,12 @@ static NSString *CellIdentifier = @"Cell";
         
         self.longPressIndexPath = [self.tableView indexPathForRowAtPoint:swipeLocation];
         
+        //Slide tableview to tableview cell that is being held
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.longPressIndexPath.row inSection:0];
+        [self.tableView scrollToRowAtIndexPath:indexPath
+                             atScrollPosition:UITableViewScrollPositionTop
+                                     animated:YES];
+        
         self.longPressCell = (MyTableViewCell *)[self.tableView cellForRowAtIndexPath:[self longPressIndexPath]];
         
         
