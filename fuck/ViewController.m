@@ -635,6 +635,15 @@ static NSString *CellIdentifier = @"Cell";
     
 }
 
+-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (tableView == self.firstTableView) {
+        return YES;
+    }
+    else{
+        return NO;
+    }
+    
+}
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
     
@@ -1188,7 +1197,7 @@ static NSString *CellIdentifier = @"Cell";
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
         butn.tag = indexPath.row;
         NSLog(@"show detail for item at row %ld", (long)indexPath.row);
-        NSLog(@"button tag is: %lu", butn.tag);
+        NSLog(@"button tag is: %lu", (long)butn.tag);
     }
     
     
