@@ -50,6 +50,7 @@ static NSString *CellIdentifier = @"Cell";
     
     self.selectedColor = 7;
     
+    [self autoReadingModeAction:nil];
     
     
     //Add accessory view (bar on top of keyboard
@@ -837,6 +838,7 @@ static NSString *CellIdentifier = @"Cell";
         else{
             NSLog(@"the row %ld was no finished", (long)indexPath.row);
             cell.titleLabel.attributedText = attrText2;
+            cell.deleteButton.hidden = YES;
             
         }
         return cell;
@@ -970,7 +972,9 @@ static NSString *CellIdentifier = @"Cell";
 
 -(void)tableCellDeleteClicked:(UIButton*)sender
 {
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag inSection:0];
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    
     //Remove Core data entry
     Item *item = [anArray objectAtIndex:indexPath.row];
     NSEntityDescription *entityDesc = [NSEntityDescription entityForName:@"Item" inManagedObjectContext:self.managedObjectContext];
@@ -1001,8 +1005,9 @@ static NSString *CellIdentifier = @"Cell";
     
     [self.managedObjectContext save:&error];
     //Remove array entry
+    //[self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     [anArray removeObjectAtIndex:indexPath.row];
-    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView reloadData];
 }
 
 
