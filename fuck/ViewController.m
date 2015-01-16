@@ -558,6 +558,57 @@ static NSString *CellIdentifier = @"Cell";
 
 
 #pragma mark - UITableView Datasource
+
+
+
+- (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"willDisplayCell");
+    for (UIView * view in cell.subviews) {
+        if ([NSStringFromClass([view class]) rangeOfString: @"Reorder"].location != NSNotFound) {
+            for (UIView * subview in view.subviews) {
+                // Creates a new subview the size of the entire cell
+                UIView *movedReorderControl = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetMaxX(view.frame), CGRectGetMaxY(view.frame))];
+                // Adds the reorder control view to our new subview
+                //[movedReorderControl setBackgroundColor:[UIColor redColor]];
+                [movedReorderControl addSubview:view];
+                // Adds our new subview to the cell
+                [cell addSubview:movedReorderControl];
+                /*
+                // CGStuff to move it to the left
+                CGSize moveLeft = CGSizeMake(movedReorderControl.frame.size.width - view.frame.size.width, movedReorderControl.frame.size.height - view.frame.size.height);
+                CGAffineTransform transform = CGAffineTransformIdentity;
+                transform = CGAffineTransformTranslate(transform, -moveLeft.width, -moveLeft.height);
+                // Performs the transform
+                [movedReorderControl setTransform:transform];
+                 */
+                CGSize sizeDifference = CGSizeMake(movedReorderControl.frame.size.width - view.frame.size.width, movedReorderControl.frame.size.height - view.frame.size.height);
+                CGSize transformRatio = CGSizeMake(movedReorderControl.frame.size.width / view.frame.size.width, movedReorderControl.frame.size.height / view.frame.size.height);
+                
+                //	Original transform
+                CGAffineTransform transform = CGAffineTransformIdentity;
+                
+                //	Scale custom view so grip will fill entire cell
+                transform = CGAffineTransformScale(transform, transformRatio.width, transformRatio.height);
+                
+                //	Move custom view so the grip's top left aligns with the cell's top left
+                transform = CGAffineTransformTranslate(transform, -sizeDifference.width / 2.0, -sizeDifference.height / 2.0);
+                
+                [movedReorderControl setTransform:transform];
+                
+                //remove the grip image
+                for(UIImageView* cellGrip in view.subviews)
+                {
+                    if([cellGrip isKindOfClass:[UIImageView class]])
+                        [cellGrip setImage:nil];
+                }
+            }
+            
+        }
+    }
+    
+}
+
 - (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewRowAction *moreAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"Modify" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
         
@@ -612,6 +663,17 @@ static NSString *CellIdentifier = @"Cell";
     return @[deleteAction, moreAction];
 }
 
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    return NO;
+}
+
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return UITableViewCellEditingStyleNone;
+    //return UITableViewCellEditingStyleInsert;
+}
+
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
@@ -645,6 +707,38 @@ static NSString *CellIdentifier = @"Cell";
     
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+   
+    NSLog(@"didSelectRowAtIndex %ld", (long)indexPath.row);
+    self.longPressCell.contentView.backgroundColor = [self.colorArray objectAtIndex:11];
+    //CGPoint swipeLocation = [gestureRecognizer locationInView:self.tableView];
+    
+    //NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.longPressIndexPath.row inSection:0];
+    [self.tableView scrollToRowAtIndexPath:indexPath
+                          atScrollPosition:UITableViewScrollPositionTop
+                                  animated:YES];
+    
+    //self.longPressIndexPath = [self.tableView indexPathForRowAtPoint:swipeLocation];
+    
+    self.longPressCell = (MyTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    
+    
+    //Reload the values of the item in each view
+    self.colorButton.backgroundColor = self.longPressCell.colorButton.backgroundColor;
+    [self.pickerView setDate:[[anArray objectAtIndex:indexPath.row] date]];
+    self.pickerArray = repeatArray;
+    [self.repeatPickerView selectRow:[[anArray objectAtIndex:indexPath.row] interval] inComponent:0 animated:YES];
+    [self setModifying:YES];
+    [self setLastModified:indexPath.row];
+    MyTableViewCell *cell = (MyTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    cell.contentView.backgroundColor = [self.colorArray objectAtIndex:10];
+    self.textField.text = cell.titleLabel.text;
+    //[myDatePicker reloadInputViews];
+    [self.textField becomeFirstResponder];
+    [self.tableView setEditing:NO];
+    
+}
+
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
     
     self.userDrivenDataModelChange = YES;
@@ -654,12 +748,6 @@ static NSString *CellIdentifier = @"Cell";
     Item *itemSource = [anArray objectAtIndex:sourceIndexPath.row];
     
     Item *itemDest = [anArray objectAtIndex:destinationIndexPath.row];
-    
-    
-    
-    
-    
-    
     
     [anArray removeObjectAtIndex:sourceIndexPath.row];
     [anArray insertObject:itemSource atIndex:destinationIndexPath.row];
@@ -707,6 +795,7 @@ static NSString *CellIdentifier = @"Cell";
     
     if (tableView == self.firstTableView) {
         MyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         cell.backgroundColor = [self.colorArray objectAtIndex:11];
         [cell.titleLabel setText:[NSString stringWithFormat:@"Row %li in Section %li", (long)[indexPath row], (long)[indexPath section]]];
         
@@ -1054,7 +1143,9 @@ static NSString *CellIdentifier = @"Cell";
         }
     }
     [anArray removeObjectsAtIndexes:indexesToDelete];
+
     [self.tableView reloadData];
+    
     [self saveAllData];
 }
 
@@ -1233,6 +1324,7 @@ static NSString *CellIdentifier = @"Cell";
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
         
         NSLog(@"Holding Begins");
+        /*
         //self.longPressCell.contentView.backgroundColor = [self.colorArray objectAtIndex:11];
         CGPoint swipeLocation = [gestureRecognizer locationInView:self.tableView];
         
@@ -1261,6 +1353,10 @@ static NSString *CellIdentifier = @"Cell";
         //[myDatePicker reloadInputViews];
         [self.textField becomeFirstResponder];
         [self.tableView setEditing:NO];
+         */
+        [self.tableView setEditing:!self.tableView.editing animated:true];
+        [self.tableView reloadData];
+        
         
     }
     else if ((gestureRecognizer.state == UIGestureRecognizerStateEnded) || (gestureRecognizer.state == UIGestureRecognizerStateCancelled)){
@@ -1612,7 +1708,7 @@ static NSString *CellIdentifier = @"Cell";
 - (IBAction)editButton:(UIButton *)sender {
     [self saveAllData];
     [self.tableView setEditing:!self.tableView.editing animated:true];
-    
+    [self.tableView reloadData];
 }
 - (IBAction)testButtonPressed:(UIButton *)sender {
 }
