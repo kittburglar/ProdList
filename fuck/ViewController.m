@@ -85,6 +85,7 @@ static NSString *CellIdentifier = @"Cell";
     [self.inputAccView addSubview:dateButton];
     //self.textField.inputAccessoryView = self.inputAccView;
     
+    /*
     //Create repeat button programmatically
     UIButton *repeatButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     
@@ -94,11 +95,11 @@ static NSString *CellIdentifier = @"Cell";
     [repeatButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [repeatButton addTarget:self action:@selector(pickRepeat:) forControlEvents:UIControlEventTouchUpInside];
     [self.inputAccView addSubview:repeatButton];
-    
+    */
     
     //Create color Button programmically
     self.colorButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    self.colorButton.frame = CGRectMake(160, CGRectGetMaxY(self.inputAccView.bounds)/2 - 40/2, 40, 40);
+    self.colorButton.frame = CGRectMake(110, CGRectGetMaxY(self.inputAccView.bounds)/2 - 40/2, 40, 40);
     [self.colorButton setBackgroundColor:[UIColor darkGrayColor]];
     [self.colorButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.colorButton addTarget:self action:@selector(pickColor:) forControlEvents:UIControlEventTouchUpInside];
@@ -795,7 +796,14 @@ static NSString *CellIdentifier = @"Cell";
     
     if (tableView == self.firstTableView) {
         MyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        
+        //Tableview cell delte button
+        cell.deleteButton.tag = indexPath.row;
+        [cell.deleteButton addTarget:self action:@selector(tableCellDeleteClicked:) forControlEvents:UIControlEventTouchUpInside];
+        
+        //Remove Selection style
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        
         cell.backgroundColor = [self.colorArray objectAtIndex:11];
         [cell.titleLabel setText:[NSString stringWithFormat:@"Row %li in Section %li", (long)[indexPath row], (long)[indexPath section]]];
         
@@ -824,10 +832,12 @@ static NSString *CellIdentifier = @"Cell";
         if ([[anArray objectAtIndex:indexPath.row] finishedBool]) {
             NSLog(@"the row %ld was finished", (long)indexPath.row);
             cell.titleLabel.attributedText = attrText;
+            cell.deleteButton.hidden = NO;
         }
         else{
             NSLog(@"the row %ld was no finished", (long)indexPath.row);
             cell.titleLabel.attributedText = attrText2;
+            
         }
         return cell;
     }
@@ -957,6 +967,44 @@ static NSString *CellIdentifier = @"Cell";
     }
 
 }
+
+-(void)tableCellDeleteClicked:(UIButton*)sender
+{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag inSection:0];
+    //Remove Core data entry
+    Item *item = [anArray objectAtIndex:indexPath.row];
+    NSEntityDescription *entityDesc = [NSEntityDescription entityForName:@"Item" inManagedObjectContext:self.managedObjectContext];
+    
+    //Remove notification
+    [self cancelLocalNotification:[NSString stringWithFormat: @"%ld", (long)[item pid]]];
+    
+    
+    NSLog(@"itemPid of item you want to delete is: %ld with itemName: %@", (long)[item pid], [item name]);
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entityDesc];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"itemPid == %ld", (long)[item pid]];
+    [request setPredicate:predicate];
+    
+    NSError *error;
+    
+    NSManagedObject *obj = [[self.managedObjectContext executeFetchRequest:request error:&error] objectAtIndex:0];
+    NSLog(@"obj itemPid is: %@",[obj valueForKey:@"itemPid"]);
+    if (obj == nil) {
+        NSLog(@"No match for pid");
+    }
+    else{
+        NSLog(@"Match for pid");
+    }
+    [self.managedObjectContext deleteObject:obj];
+    
+    [self.managedObjectContext save:&error];
+    //Remove array entry
+    [anArray removeObjectAtIndex:indexPath.row];
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
 
 - (void)autoReadingModeAction:(UISwitch *)mySwitch{
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Option" inManagedObjectContext:self.managedObjectContext];
@@ -1503,7 +1551,7 @@ static NSString *CellIdentifier = @"Cell";
             NSAttributedString* attrText2 = [[NSAttributedString alloc] initWithString:[anArray[swipedIndexPath.row] name] attributes:nil];
             if ([swipedCell.titleLabel.attributedText isEqualToAttributedString:(attrText)]) {
                 NSLog(@"Swiped crossed out word");
-                
+                swipedCell.deleteButton.hidden = NO;
                 
                 swipedCell.titleLabel.attributedText = attrText2;
                 [[anArray objectAtIndex:swipedIndexPath.row] setFinishedBool:NO];
@@ -1528,6 +1576,7 @@ static NSString *CellIdentifier = @"Cell";
             }
             else{
                 NSLog(@"Swiped regular word");
+                swipedCell.deleteButton.hidden = YES;
                 swipedCell.titleLabel.attributedText = attrText;
                 [[anArray objectAtIndex:swipedIndexPath.row] setFinishedBool:YES];
                 
