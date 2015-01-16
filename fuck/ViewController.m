@@ -1377,6 +1377,8 @@ static NSString *CellIdentifier = @"Cell";
                 
                 // ... and update source so it is in sync with UI changes.
                 sourceIndexPath = indexPath;
+                
+                
             }
             break;
         }
@@ -1400,7 +1402,7 @@ static NSString *CellIdentifier = @"Cell";
                 sourceIndexPath = nil;
                 [snapshot removeFromSuperview];
                 snapshot = nil;
-                
+                [self saveAllData];
             }];
             break;
         }
