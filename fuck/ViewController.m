@@ -30,7 +30,7 @@ static NSString *CellIdentifier = @"Cell";
     AppDelegate* appDelegate = [[UIApplication sharedApplication] delegate];
     self.managedObjectContext = [appDelegate managedObjectContext];
     
-    
+    /*
     self.lightMode = YES;
     [self setNeedsStatusBarAppearanceUpdate];
     self.didSelect = NO;
@@ -49,8 +49,33 @@ static NSString *CellIdentifier = @"Cell";
                   UIColorFromRGB(0xffffff),nil];
     
     self.selectedColor = 7;
+    */
     
-    [self autoReadingModeAction:nil];
+
+    /*
+    NSEntityDescription *entitydesc3 = [NSEntityDescription entityForName:@"Option" inManagedObjectContext:self.managedObjectContext];
+    NSFetchRequest *request3 = [[NSFetchRequest alloc] init];
+    [request2 setEntity:entitydesc3];
+    NSPredicate *predicate3 = [NSPredicate predicateWithFormat:@"(optionId == %d) AND (optionData == NO)", [[NSNumber numberWithInt:1] integerValue]];
+    [request2 setPredicate:predicate3];
+    NSError *error3;
+    
+    NSArray *matchingData3 = [self.managedObjectContext executeFetchRequest:request3 error:&error3];
+
+    if (matchingData3.count <= 0) {
+        
+        NSLog(@"No Reading Mode data set");
+        
+    }
+    else{
+        NSLog(@"Found NO for Reading mode on startup");
+        [self.autoReadingModeSwitch setOn:YES animated:YES];
+        NSLog(@"The value of the switch is: %@", [NSNumber numberWithBool:self.autoReadingModeSwitch.on]);
+        [self autoReadingModeAction:self.autoReadingModeSwitch];
+        NSLog(@"Reading Mode data found");
+        
+    }
+    */
     
     
     //Add accessory view (bar on top of keyboard
@@ -870,6 +895,33 @@ static NSString *CellIdentifier = @"Cell";
             [self.readingModeSegmentControl addTarget:self action:@selector(ReadingModeSegmentControlAction:) forControlEvents:UIControlEventValueChanged];
             self.readingModeSegmentControl.selectedSegmentIndex = 0;
             
+            //Set Reading Mode switch to it's last value
+            NSEntityDescription *entitydesc2 = [NSEntityDescription entityForName:@"Option" inManagedObjectContext:self.managedObjectContext];
+            NSFetchRequest *request2 = [[NSFetchRequest alloc] init];
+            [request2 setEntity:entitydesc2];
+            NSPredicate *predicate2 = [NSPredicate predicateWithFormat:@"(optionId == %d) AND (optionData == YES)", [[NSNumber numberWithInt:1] integerValue]];
+            [request2 setPredicate:predicate2];
+            NSError *error2;
+            
+            NSArray *matchingData2 = [self.managedObjectContext executeFetchRequest:request2 error:&error2];
+            
+            if (matchingData2.count <= 0) {
+                
+                NSLog(@"No Reading Mode data set");
+                
+            }
+            else{
+                NSLog(@"Found YES for Reading Mode on startup");
+                //[self.autoReadingModeSwitch setOn:YES animated:YES];
+                NSLog(@"The value of the switch is: %@", [NSNumber numberWithBool:self.autoReadingModeSwitch.on]);
+                //[self autoReadingModeAction:self.autoReadingModeSwitch];
+                NSLog(@"Reading mode data found");
+                self.readingModeSegmentControl.selectedSegmentIndex = 1;
+                [self ReadingModeSegmentControlAction:self.readingModeSegmentControl];
+            }
+            
+            
+            
         }
         //Sort
         else if (indexPath.row == 1){
@@ -1254,6 +1306,37 @@ static NSString *CellIdentifier = @"Cell";
 }
 
 - (void)ReadingModeSegmentControlAction:(UISegmentedControl *)segment{
+    
+    //change core data
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Option" inManagedObjectContext:self.managedObjectContext];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entity];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"optionId == %d", [[NSNumber numberWithInt:1] integerValue]];
+    [request setPredicate:predicate];
+    NSError *error;
+    NSArray *matchingData = [self.managedObjectContext executeFetchRequest:request error:&error];
+    
+    if (matchingData.count <=0) {
+        //Add to core data
+        NSLog(@"No options entites. Must create them.");
+        //NSEntityDescription *entitydesc = [NSEntityDescription entityForName:@"" inManagedObjectContext:self.managedObjectContext];
+        NSManagedObject *newItem = [[NSManagedObject alloc]initWithEntity:entity insertIntoManagedObjectContext:self.managedObjectContext];
+        [newItem setValue:[NSNumber numberWithInt:1] forKey:@"optionId"];
+        [newItem setValue:[NSNumber numberWithBool:self.self.readingModeSegmentControl.selectedSegmentIndex] forKey:@"optionData"];
+        
+        [self.managedObjectContext save:&error];
+    }
+    else{
+        for (NSManagedObject *obj in matchingData) {
+            [obj setValue:[NSNumber numberWithBool:self.readingModeSegmentControl.selectedSegmentIndex] forKey:@"optionData"];
+        }
+        
+        [self.managedObjectContext save:&error];
+    }
+    
+    
+    //change colour scheme
     if (self.readingModeSegmentControl.selectedSegmentIndex == 1) {
         self.colorArray = [NSMutableArray arrayWithObjects:
                                                UIColorFromRGB(0xcc6666),
@@ -1312,6 +1395,7 @@ static NSString *CellIdentifier = @"Cell";
     [self.tableView reloadData];
     [self setNeedsStatusBarAppearanceUpdate];
     [self.blurView setNeedsDisplay];
+
 }
 
 -(void)yourSegmentPicked:(UISegmentedControl*)sender{
