@@ -30,7 +30,7 @@ static NSString *CellIdentifier = @"Cell";
     AppDelegate* appDelegate = [[UIApplication sharedApplication] delegate];
     self.managedObjectContext = [appDelegate managedObjectContext];
     
-    /*
+    
     self.lightMode = YES;
     [self setNeedsStatusBarAppearanceUpdate];
     self.didSelect = NO;
@@ -49,7 +49,7 @@ static NSString *CellIdentifier = @"Cell";
                   UIColorFromRGB(0xffffff),nil];
     
     self.selectedColor = 7;
-    */
+    
     
 
     /*
