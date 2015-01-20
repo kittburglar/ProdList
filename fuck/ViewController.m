@@ -827,6 +827,18 @@ static NSString *CellIdentifier = @"Cell";
         cell.deleteButton.tag = indexPath.row;
         [cell.deleteButton addTarget:self action:@selector(tableCellDeleteClicked:) forControlEvents:UIControlEventTouchUpInside];
         
+        //Set delete cell image
+        if (self.lightMode) {
+            UIImage *deleteImage = [UIImage imageNamed:@"Trash_dark"];
+            [cell.deleteButton setBackgroundImage:deleteImage forState:UIControlStateNormal];
+            [cell.deleteButton setTitleColor:[self.colorArray objectAtIndex:10] forState:UIControlStateNormal];
+        }
+        else{
+            UIImage *deleteImage = [UIImage imageNamed:@"Trash_light"];
+            [cell.deleteButton setBackgroundImage:deleteImage forState:UIControlStateNormal];
+            [cell.deleteButton setTitleColor:[self.colorArray objectAtIndex:10] forState:UIControlStateNormal];
+        }
+        
         //Remove Selection style
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         
@@ -977,7 +989,7 @@ static NSString *CellIdentifier = @"Cell";
             }
             else{
                 NSLog(@"Found YES for autoReadingMode on startup");
-                [self.autoReadingModeSwitch setOn:YES animated:YES];
+                
                 NSLog(@"The value of the switch is: %@", [NSNumber numberWithBool:self.autoReadingModeSwitch.on]);
                 [self autoReadingModeAction:self.autoReadingModeSwitch];
                 NSLog(@"autoReadingMode data found");
@@ -1306,7 +1318,7 @@ static NSString *CellIdentifier = @"Cell";
 }
 
 - (void)ReadingModeSegmentControlAction:(UISegmentedControl *)segment{
-    
+    //[self.autoReadingModeSwitch setOn:NO animated:YES];
     //change core data
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Option" inManagedObjectContext:self.managedObjectContext];
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -1395,7 +1407,8 @@ static NSString *CellIdentifier = @"Cell";
     [self.tableView reloadData];
     [self setNeedsStatusBarAppearanceUpdate];
     [self.blurView setNeedsDisplay];
-
+    //[self.autoReadingModeSwitch setOn:NO animated:YES];
+    
 }
 
 -(void)yourSegmentPicked:(UISegmentedControl*)sender{
