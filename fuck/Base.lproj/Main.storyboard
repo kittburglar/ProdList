@@ -58,7 +58,7 @@
                                 </connections>
                             </textField>
                             <tableView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="60" sectionHeaderHeight="30" sectionFooterHeight="30" translatesAutoresizingMaskIntoConstraints="NO" id="2eg-tG-lax">
-                                <rect key="frame" x="17" y="92" width="568" height="508"/>
+                                <rect key="frame" x="17" y="92" width="568" height="450"/>
                                 <color key="sectionIndexBackgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell opaque="NO" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="50" id="MBe-8A-15E" customClass="MyTableViewCell">
@@ -247,27 +247,51 @@
                                 </constraints>
                                 <blurEffect style="light"/>
                             </visualEffectView>
+                            <adBannerView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rsp-Ue-W6a">
+                                <rect key="frame" x="0.0" y="550" width="320" height="50"/>
+                            </adBannerView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="2eg-tG-lax" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="1qI-sk-Jre"/>
                             <constraint firstAttribute="centerX" secondItem="ySK-h2-KAR" secondAttribute="centerX" id="6aq-dL-yGN"/>
                             <constraint firstItem="yYI-Z8-eUB" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="8E6-c0-aAM"/>
+                            <constraint firstItem="Rsp-Ue-W6a" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="Bda-4N-GtZ"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="Rsp-Ue-W6a" secondAttribute="bottom" id="Bsc-oI-TUY"/>
                             <constraint firstAttribute="centerX" secondItem="DQC-TV-e4i" secondAttribute="centerX" id="N9K-Dq-jem"/>
                             <constraint firstItem="7Sc-3v-lMG" firstAttribute="top" secondItem="qi2-dV-Ff9" secondAttribute="top" id="Nal-8S-rOw"/>
+                            <constraint firstItem="Rsp-Ue-W6a" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="PBS-yP-Vdu"/>
+                            <constraint firstItem="Rsp-Ue-W6a" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="QWn-z9-dnN"/>
                             <constraint firstItem="ySK-h2-KAR" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="SPs-fi-72d"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="2eg-tG-lax" secondAttribute="bottom" id="WRm-Ni-Y5c"/>
+                            <constraint firstItem="Rsp-Ue-W6a" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="Xxc-ti-ADy"/>
+                            <constraint firstItem="Rsp-Ue-W6a" firstAttribute="top" secondItem="2eg-tG-lax" secondAttribute="bottom" id="cIr-t8-Qdy"/>
                             <constraint firstAttribute="centerX" secondItem="qi2-dV-Ff9" secondAttribute="centerX" constant="-1" id="cr3-Iu-Ug2"/>
+                            <constraint firstItem="Rsp-Ue-W6a" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="da9-lX-5dY"/>
                             <constraint firstItem="2eg-tG-lax" firstAttribute="top" secondItem="ySK-h2-KAR" secondAttribute="bottom" id="er3-cp-ZVK"/>
                             <constraint firstAttribute="height" secondItem="DQC-TV-e4i" secondAttribute="height" id="jIJ-Z1-KfS"/>
                             <constraint firstItem="qi2-dV-Ff9" firstAttribute="top" secondItem="yYI-Z8-eUB" secondAttribute="top" constant="-4" id="mM2-Cj-0Y5"/>
+                            <constraint firstAttribute="width" secondItem="Rsp-Ue-W6a" secondAttribute="width" id="n2G-3y-1pq"/>
+                            <constraint firstItem="Rsp-Ue-W6a" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="pro-R8-jcb"/>
                             <constraint firstItem="2eg-tG-lax" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="rEP-8K-SSg"/>
                             <constraint firstItem="ySK-h2-KAR" firstAttribute="top" secondItem="yYI-Z8-eUB" secondAttribute="bottom" constant="8" id="ruN-nZ-EFt"/>
+                            <constraint firstItem="Rsp-Ue-W6a" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="sjO-Ln-t08"/>
                             <constraint firstAttribute="centerY" secondItem="DQC-TV-e4i" secondAttribute="centerY" id="u7E-sD-KkO"/>
                             <constraint firstItem="7Sc-3v-lMG" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="wq4-JM-su4"/>
                             <constraint firstAttribute="width" secondItem="DQC-TV-e4i" secondAttribute="width" id="ytR-4v-Brz"/>
                             <constraint firstItem="qi2-dV-Ff9" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="zAh-fh-DF7"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Bda-4N-GtZ"/>
+                                <exclude reference="PBS-yP-Vdu"/>
+                                <exclude reference="Xxc-ti-ADy"/>
+                                <exclude reference="da9-lX-5dY"/>
+                                <exclude reference="pro-R8-jcb"/>
+                                <exclude reference="sjO-Ln-t08"/>
+                                <exclude reference="WRm-Ni-Y5c"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="blurView" destination="DQC-TV-e4i" id="Ndv-Db-gxT"/>
