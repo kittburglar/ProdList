@@ -55,10 +55,13 @@
 
 #pragma mark - Accessory View
 @property (strong, nonatomic) IBOutlet UIButton *colorButton;
+@property (strong, nonatomic) IBOutlet UIButton *reminderButton;
 @property (assign, nonatomic) NSInteger selectedColor;
+@property (assign, nonatomic) BOOL doRemind;
 @property (strong, nonatomic) IBOutlet UIDatePicker *pickerView;
 @property (strong, nonatomic) IBOutlet UIPickerView * repeatPickerView;
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (strong, nonatomic) IBOutlet  UIView * collectionView2;
 @property (strong, nonatomic) IBOutlet UICollectionViewFlowLayout *collectionFlowLayout;
 @property (strong, nonatomic) UIToolbar *inputAccView;
 

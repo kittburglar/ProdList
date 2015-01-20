@@ -77,6 +77,18 @@
     return self;
 }
 
+-(id)initWithNameAndColorAndDateAndPidAndBoolAndIntervalAndReminder:(NSString *)name withColor:(NSInteger)color withDate:(NSDate *)date withPid:(NSInteger)pid withBool:(BOOL)isFinished withInterval:(NSInteger)interval withReminder:(BOOL)reminder{
+    self = [super init];
+    self.name = name;
+    self.buttonColor = color;
+    self.date = date;
+    self.pid = pid;
+    self.finishedBool = isFinished;
+    self.interval = interval;
+    self.reminder = reminder;
+    return self;
+}
+
 -(NSString *)returnDate{
     //Days
     NSString *formatString = [NSDateFormatter dateFormatFromTemplate:@"EdMMMhh-mm" options:0 locale:[NSLocale currentLocale]];

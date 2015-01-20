@@ -23,6 +23,8 @@
 
 @property (nonatomic, assign) BOOL finishedBool;
 
+@property (nonatomic, assign) BOOL reminder;
+
 -(id)initWithName:(NSString *)name;
 
 -(id)initWithNameAndColor:(NSString *)name withColor:(NSInteger)buttonColor;
@@ -36,6 +38,8 @@
 -(id)initWithNameAndColorAndDateAndPidAndBool:(NSString *)name withColor:(NSInteger)color withDate:(NSDate *)date withPid:(NSInteger)pid withBool:(BOOL)isFinished;
 
 -(id)initWithNameAndColorAndDateAndPidAndBoolAndInterval:(NSString *)name withColor:(NSInteger)color withDate:(NSDate *)date withPid:(NSInteger)pid withBool:(BOOL)isFinished withInterval:(NSInteger)interval;
+
+-(id)initWithNameAndColorAndDateAndPidAndBoolAndIntervalAndReminder:(NSString *)name withColor:(NSInteger)color withDate:(NSDate *)date withPid:(NSInteger)pid withBool:(BOOL)isFinished withInterval:(NSInteger)interval withReminder:(BOOL)reminder;
 
 -(NSString *)returnDate;
 
