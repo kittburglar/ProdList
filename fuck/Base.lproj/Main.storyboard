@@ -294,6 +294,7 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="banner" destination="Rsp-Ue-W6a" id="QGu-cy-tL2"/>
                         <outlet property="blurView" destination="DQC-TV-e4i" id="Ndv-Db-gxT"/>
                         <outlet property="dateLabel" destination="yYI-Z8-eUB" id="Tg8-qz-N32"/>
                         <outlet property="editButton" destination="7Sc-3v-lMG" id="DzC-N2-53R"/>

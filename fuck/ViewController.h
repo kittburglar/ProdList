@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "MyTableViewCell.h"
 #import <CoreData/CoreData.h>
+#import <iAd/iAd.h>
 
 
-@interface ViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
+@interface ViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate, UIPickerViewDataSource, UIPickerViewDelegate, ADBannerViewDelegate>
 {
     NSMutableArray *anArray;
     #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
@@ -77,6 +78,10 @@
 @property (nonatomic, assign) NSInteger pickerMode;
 @property (nonatomic, assign) NSMutableArray *pickerArray;
 - (IBAction)doneOptionsButton:(UIButton *)sender;
+
+#pragma mark - iAD
+@property (strong, nonatomic) IBOutlet ADBannerView *banner;
+
 
 #pragma mark - Core Data
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;

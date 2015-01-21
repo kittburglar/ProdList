@@ -30,6 +30,8 @@ static NSString *CellIdentifier = @"Cell";
     AppDelegate* appDelegate = [[UIApplication sharedApplication] delegate];
     self.managedObjectContext = [appDelegate managedObjectContext];
     
+    //iAD banner stuff
+    self.banner.delegate = self;
     
     self.lightMode = YES;
     [self setNeedsStatusBarAppearanceUpdate];
@@ -205,7 +207,7 @@ static NSString *CellIdentifier = @"Cell";
     
     // add a toolbar with Cancel & Done button
     UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
-    //toolBar.barStyle = UIBarStyleBlack;
+    toolBar.barStyle = UIBarStyleDefault;
     
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneTouched:)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelTouched:)];
@@ -746,7 +748,7 @@ static NSString *CellIdentifier = @"Cell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.firstTableView) {
         NSLog(@"didSelectRowAtIndex %ld", (long)indexPath.row);
-        self.longPressCell.contentView.backgroundColor = [self.colorArray objectAtIndex:11];
+        //self.longPressCell.contentView.backgroundColor = [self.colorArray objectAtIndex:11];
         //CGPoint swipeLocation = [gestureRecognizer locationInView:self.tableView];
     
         //NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.longPressIndexPath.row inSection:0];
@@ -777,7 +779,7 @@ static NSString *CellIdentifier = @"Cell";
             //self.reminderButton.backgroundColor = [UIColor darkGrayColor];
         }
         self.pickerArray = repeatArray;
-        [self.repeatPickerView selectRow:[[anArray objectAtIndex:indexPath.row] interval] inComponent:0 animated:YES];
+        [self.repeatPickerView selectRow:[[anArray objectAtIndex:indexPath.row] remindInterval] inComponent:0 animated:YES];
         [self setModifying:YES];
         [self setLastModified:indexPath.row];
         MyTableViewCell *cell = (MyTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
@@ -815,7 +817,7 @@ static NSString *CellIdentifier = @"Cell";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSLog(@"%lu",(unsigned long)[anArray count]);
+    //NSLog(@"%lu",(unsigned long)[anArray count]);
     if (tableView == self.firstTableView) {
         return [anArray count];
     }
@@ -841,7 +843,7 @@ static NSString *CellIdentifier = @"Cell";
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath  *)indexPath
 {
-    NSLog(@"cellForRowAtIndexPath");
+    //NSLog(@"cellForRowAtIndexPath");
     static NSString *CellIdentifier = @"Cell";
     
     if (tableView == self.firstTableView) {
@@ -973,6 +975,9 @@ static NSString *CellIdentifier = @"Cell";
             sortButton.frame = CGRectMake(self.view.frame.size.width - 110, 5, 100, 30);
             [sortButton setTitle:@"Sort" forState:UIControlStateNormal];
             [sortButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [[sortButton layer] setBorderWidth:1.0f];
+            [[sortButton layer] setBorderColor:[UIColor blackColor].CGColor];
+            sortButton.layer.cornerRadius = 5;
             [sortButton addTarget:self action:@selector(sortAction:) forControlEvents:UIControlEventTouchUpInside];
             [optionsCell addSubview:sortButton];
         }
@@ -986,6 +991,9 @@ static NSString *CellIdentifier = @"Cell";
             removeButton.frame = CGRectMake(self.view.frame.size.width - 110, 5, 100, 30);
             [removeButton setTitle:@"Remove" forState:UIControlStateNormal];
             [removeButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [[removeButton layer] setBorderWidth:1.0f];
+            [[removeButton layer] setBorderColor:[UIColor blackColor].CGColor];
+            removeButton.layer.cornerRadius = 5;
             [removeButton addTarget:self action:@selector(removeAllCompletedAction:) forControlEvents:UIControlEventTouchUpInside];
             [optionsCell addSubview:removeButton];
             
@@ -1036,6 +1044,9 @@ static NSString *CellIdentifier = @"Cell";
             removeAllButton.frame = CGRectMake(self.view.frame.size.width - 110, 5, 100, 30);
             [removeAllButton setTitle:@"Remove" forState:UIControlStateNormal];
             [removeAllButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [[removeAllButton layer] setBorderWidth:1.0f];
+            [[removeAllButton layer] setBorderColor:[UIColor blackColor].CGColor];
+            removeAllButton.layer.cornerRadius = 5;
             [removeAllButton addTarget:self action:@selector(removeAllAction:) forControlEvents:UIControlEventTouchUpInside];
             [optionsCell addSubview:removeAllButton];
         }
@@ -1227,7 +1238,7 @@ static NSString *CellIdentifier = @"Cell";
         }
     }
     if (hasNotification == YES) {
-        NSLog(@"%@ ",cancelThisNotification);
+        //NSLog(@"%@ ",cancelThisNotification);
         [[UIApplication sharedApplication] cancelLocalNotification:cancelThisNotification];
     }
 }
@@ -1433,8 +1444,11 @@ static NSString *CellIdentifier = @"Cell";
     [self.modeButton setTitleColor:[self.colorArray objectAtIndex:7] forState:UIControlStateSelected];
     [self.collectionView reloadData];
     [self.tableView reloadData];
+    //[self.secondTableView reloadData];
+    [self.optionView setNeedsDisplay];
     [self setNeedsStatusBarAppearanceUpdate];
     [self.blurView setNeedsDisplay];
+    //
     //[self.autoReadingModeSwitch setOn:NO animated:YES];
     
 }
@@ -1533,7 +1547,7 @@ static NSString *CellIdentifier = @"Cell";
                 } completion:^(BOOL finished) {
                     
                     cell.hidden = YES;
-                    
+                    //[self saveAllData];
                 }];
             }
             break;
@@ -1548,7 +1562,10 @@ static NSString *CellIdentifier = @"Cell";
             if (indexPath && ![indexPath isEqual:sourceIndexPath]) {
                 
                 // ... update data source.
-                [anArray exchangeObjectAtIndex:indexPath.row withObjectAtIndex:sourceIndexPath.row];
+                //[anArray exchangeObjectAtIndex:indexPath.row withObjectAtIndex:sourceIndexPath.row];
+                id object = [anArray objectAtIndex:sourceIndexPath.row];
+                [anArray removeObjectAtIndex:sourceIndexPath.row];
+                [anArray insertObject:object atIndex:indexPath.row];
                 
                 // ... move the rows.
                 [self.tableView moveRowAtIndexPath:sourceIndexPath toIndexPath:indexPath];
@@ -1576,15 +1593,18 @@ static NSString *CellIdentifier = @"Cell";
                 cell.alpha = 1.0;
                 
             } completion:^(BOOL finished) {
-                
+                NSLog(@"Completion swap");
+                [self saveAllData];
                 sourceIndexPath = nil;
                 [snapshot removeFromSuperview];
                 snapshot = nil;
-                [self saveAllData];
+                //[self saveAllData];
             }];
             break;
         }
+            
     }
+    
 }
 
 - (UIView *)customSnapshotFromView:(UIView *)inputView {
@@ -1691,7 +1711,7 @@ static NSString *CellIdentifier = @"Cell";
                 
                 if (swipedItem.reminder) {
                     NSLog(@"scheduling with pid %ld", (long)[swipedItem pid]);
-                    [self scheduleNotificationForDate:[swipedItem date] AlertBody:[swipedItem name] ActionButtonTitle:[swipedItem name] NotificationID:[NSString stringWithFormat: @"%ld", (long)[swipedItem pid]] NotificationInterval:[swipedItem interval]];
+                    [self scheduleNotificationForDate:[swipedItem date] AlertBody:[swipedItem name] ActionButtonTitle:[swipedItem name] NotificationID:[NSString stringWithFormat: @"%ld", (long)[swipedItem pid]] NotificationInterval:[swipedItem remindInterval]];
                 }
                 
                 
@@ -1764,12 +1784,13 @@ static NSString *CellIdentifier = @"Cell";
         }
         else{
             for (int i = 0; i < matchingData.count; i++) {
+                NSLog(@"Item at index %d is %@", i, [[anArray objectAtIndex:i] name]);
                 NSManagedObject *obj = [matchingData objectAtIndex:i];
                 [obj setValue:[[anArray objectAtIndex:i] name] forKey:@"itemText"];
                 [obj setValue:[NSNumber numberWithInteger:[[anArray objectAtIndex:i] buttonColor]] forKey:@"itemColor"];
                 [obj setValue:[[anArray objectAtIndex:i] date] forKey:@"itemDate"];
                 [obj setValue:[NSNumber numberWithBool:[[anArray objectAtIndex:i] finishedBool]] forKey:@"itemFinished"];
-                [obj setValue:[NSNumber numberWithInteger:[[anArray objectAtIndex:i] interval]] forKey:@"itemInterval"];
+                [obj setValue:[NSNumber numberWithInteger:[[anArray objectAtIndex:i] remindInterval]] forKey:@"itemInterval"];
                 [obj setValue:[NSNumber numberWithBool:[[anArray objectAtIndex:i] reminder]] forKey:@"itemReminder"];
                 
                 //Fix local nofications
@@ -1777,7 +1798,7 @@ static NSString *CellIdentifier = @"Cell";
                 
                 if (![[obj valueForKey:@"itemFinished"] boolValue]) {
                     if ([[obj valueForKey:@"itemReminder"] boolValue]) {
-                        [self scheduleNotificationForDate:[[anArray objectAtIndex:i] date] AlertBody:[[anArray objectAtIndex:i] name] ActionButtonTitle:[[anArray objectAtIndex:i] name] NotificationID:[NSString stringWithFormat: @"%ld", (long)[[anArray objectAtIndex:i] pid]] NotificationInterval:[[anArray objectAtIndex:i] interval]];
+                        [self scheduleNotificationForDate:[[anArray objectAtIndex:i] date] AlertBody:[[anArray objectAtIndex:i] name] ActionButtonTitle:[[anArray objectAtIndex:i] name] NotificationID:[NSString stringWithFormat: @"%ld", (long)[[anArray objectAtIndex:i] pid]] NotificationInterval:[[anArray objectAtIndex:i] remindInterval]];
                     }
                 }
                 
@@ -1873,7 +1894,7 @@ static NSString *CellIdentifier = @"Cell";
         if (![i finishedBool]) {
             if ([i reminder]) {
                 NSLog(@"Editing a non strikedout word");
-                [self scheduleNotificationForDate:[i date] AlertBody:[i name] ActionButtonTitle:[i name] NotificationID:[NSString stringWithFormat: @"%ld", (long)[i pid]] NotificationInterval:[i interval]];
+                [self scheduleNotificationForDate:[i date] AlertBody:[i name] ActionButtonTitle:[i name] NotificationID:[NSString stringWithFormat: @"%ld", (long)[i pid]] NotificationInterval:[i remindInterval]];
             }
             
         }
@@ -1902,7 +1923,7 @@ static NSString *CellIdentifier = @"Cell";
         [obj setValue:[i date] forKey:@"itemDate"];
         [obj setValue:[NSNumber numberWithInteger:[i pid]]  forKey:@"itemPid"];
         [obj setValue:[NSNumber numberWithBool:[i finishedBool]] forKey:@"itemFinished"];
-        [obj setValue:[NSNumber numberWithInteger:[i interval]] forKey:@"itemInterval"];
+        [obj setValue:[NSNumber numberWithInteger:[i remindInterval]] forKey:@"itemInterval"];
         [obj setValue:[NSNumber numberWithBool:[i reminder]] forKey:@"itemReminder"];
         
         [self.tableView reloadData];
@@ -1936,7 +1957,7 @@ static NSString *CellIdentifier = @"Cell";
         
         if (i.reminder) {
             NSLog(@"scheduling with pid %ld", (long)[i pid]);
-            [self scheduleNotificationForDate:[i date] AlertBody:[i name] ActionButtonTitle:[i name] NotificationID:[NSString stringWithFormat: @"%ld", (long)[i pid]] NotificationInterval:[i interval]];
+            [self scheduleNotificationForDate:[i date] AlertBody:[i name] ActionButtonTitle:[i name] NotificationID:[NSString stringWithFormat: @"%ld", (long)[i pid]] NotificationInterval:[i remindInterval]];
         }
         
         //Add to tableView
@@ -1953,7 +1974,7 @@ static NSString *CellIdentifier = @"Cell";
         [newItem setValue:[i date] forKey:@"itemDate"];
         [newItem setValue:[NSNumber numberWithInteger:[i pid]] forKey:@"itemPid"];
         [newItem setValue:[NSNumber numberWithBool:[i finishedBool]] forKey:@"itemFinished"];
-        [newItem setValue:[NSNumber numberWithInteger:[i interval]] forKey:@"itemInterval"];
+        [newItem setValue:[NSNumber numberWithInteger:[i remindInterval]] forKey:@"itemInterval"];
         [newItem setValue:[NSNumber numberWithBool:[i reminder]] forKey:@"itemReminder"];
         
         NSError *error2;
@@ -1999,6 +2020,21 @@ static NSString *CellIdentifier = @"Cell";
     if (self.userDrivenDataModelChange) return;
 }
 
+#pragma mark - iAD stuffs
+-(void) bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
+{
+    NSLog(@"iAdBanner failed");
+    
+    
+}
+-(void) bannerViewDidLoadAd:(ADBannerView *)banner
+{
+    
+    NSLog(@"iAdBanner loaded");
+    
+    
+    
+}
 
 #pragma mark -IBActions
 

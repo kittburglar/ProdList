@@ -19,7 +19,7 @@
 
 @property (nonatomic, assign) NSInteger pid;
 
-@property (nonatomic, assign) NSInteger interval;
+@property (nonatomic, assign) NSInteger remindInterval;
 
 @property (nonatomic, assign) BOOL finishedBool;
 

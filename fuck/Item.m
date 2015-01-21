@@ -73,7 +73,7 @@
     self.date = date;
     self.pid = pid;
     self.finishedBool = isFinished;
-    self.interval = interval;
+    self.remindInterval = interval;
     return self;
 }
 
@@ -84,7 +84,7 @@
     self.date = date;
     self.pid = pid;
     self.finishedBool = isFinished;
-    self.interval = interval;
+    self.remindInterval = interval;
     self.reminder = reminder;
     return self;
 }
