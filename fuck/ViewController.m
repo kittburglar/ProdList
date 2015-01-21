@@ -50,34 +50,6 @@ static NSString *CellIdentifier = @"Cell";
     
     self.selectedColor = 7;
     
-    
-
-    /*
-    NSEntityDescription *entitydesc3 = [NSEntityDescription entityForName:@"Option" inManagedObjectContext:self.managedObjectContext];
-    NSFetchRequest *request3 = [[NSFetchRequest alloc] init];
-    [request2 setEntity:entitydesc3];
-    NSPredicate *predicate3 = [NSPredicate predicateWithFormat:@"(optionId == %d) AND (optionData == NO)", [[NSNumber numberWithInt:1] integerValue]];
-    [request2 setPredicate:predicate3];
-    NSError *error3;
-    
-    NSArray *matchingData3 = [self.managedObjectContext executeFetchRequest:request3 error:&error3];
-
-    if (matchingData3.count <= 0) {
-        
-        NSLog(@"No Reading Mode data set");
-        
-    }
-    else{
-        NSLog(@"Found NO for Reading mode on startup");
-        [self.autoReadingModeSwitch setOn:YES animated:YES];
-        NSLog(@"The value of the switch is: %@", [NSNumber numberWithBool:self.autoReadingModeSwitch.on]);
-        [self autoReadingModeAction:self.autoReadingModeSwitch];
-        NSLog(@"Reading Mode data found");
-        
-    }
-    */
-    
-    
     //Add accessory view (bar on top of keyboard
     
     self.inputAccView = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0, 0.0, [[UIScreen mainScreen] bounds].size.width, 50.0)];
@@ -85,27 +57,28 @@ static NSString *CellIdentifier = @"Cell";
 
     
     //Create keyboard Button programmically
-    
     UIButton *keyboardButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     keyboardButton.frame = CGRectMake(10, CGRectGetMaxY(self.inputAccView.bounds)/2 - 40/2, 40, 40);
+    keyboardButton.layer.cornerRadius = 5;
     //[keyboardButton setBackgroundColor:[UIColor darkGrayColor]];
     UIImage *keyboardImage = [UIImage imageNamed:@"Keyboard"];
+    
     [keyboardButton setBackgroundImage:keyboardImage forState:UIControlStateNormal];
+    
     [keyboardButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    keyboardButton.backgroundColor = [UIColor whiteColor];
     [keyboardButton addTarget:self action:@selector(pickKeyboard:) forControlEvents:UIControlEventTouchUpInside];
     [self.inputAccView addSubview:keyboardButton];
     //self.textField.inputAccessoryView = self.inputAccView;
     
     
     //Create date Button programmically
-    
     UIButton *dateButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    
     dateButton.frame = CGRectMake(60, CGRectGetMaxY(self.inputAccView.bounds)/2 - 40/2, 40, 40);
     UIImage *calendarImage = [UIImage imageNamed:@"Calendar"];
     [dateButton setImage:[calendarImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
-    
-    //[dateButton setBackgroundColor:[UIColor darkGrayColor]];
+    dateButton.layer.cornerRadius = 5;
+    dateButton.backgroundColor = [UIColor whiteColor];
     [dateButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [dateButton addTarget:self action:@selector(pickDate:) forControlEvents:UIControlEventTouchUpInside];
     [self.inputAccView addSubview:dateButton];
@@ -126,6 +99,7 @@ static NSString *CellIdentifier = @"Cell";
     //Create color Button programmically
     self.colorButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     self.colorButton.frame = CGRectMake(110, CGRectGetMaxY(self.inputAccView.bounds)/2 - 40/2, 40, 40);
+    self.colorButton.layer.cornerRadius = 5;
     [self.colorButton setBackgroundColor:[UIColor darkGrayColor]];
     [self.colorButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.colorButton addTarget:self action:@selector(pickColor:) forControlEvents:UIControlEventTouchUpInside];
@@ -135,20 +109,22 @@ static NSString *CellIdentifier = @"Cell";
     //Make reminder button
     self.reminderButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     self.reminderButton.frame = CGRectMake(160, CGRectGetMaxY(self.inputAccView.bounds)/2 - 40/2, 40, 40);
-    [self.reminderButton setBackgroundColor:[UIColor darkGrayColor]];
+    UIImage *bellImage = [UIImage imageNamed:@"Bell"];
+    [self.reminderButton setImage:[bellImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
+    self.reminderButton.layer.cornerRadius = 5;
+    self.reminderButton.backgroundColor = [UIColor whiteColor];
     [self.reminderButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.reminderButton addTarget:self action:@selector(pickReminder:) forControlEvents:UIControlEventTouchUpInside];
-    
     [self.inputAccView addSubview:self.reminderButton];
     
-    
-    //self.textField.inputAccessoryView = self.inputAccView;
     
     //Create finish Button programmically
     UIButton *finishButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     finishButton.frame = CGRectMake(self.inputAccView.bounds.size.width - 50, CGRectGetMaxY(self.inputAccView.bounds)/2 - 40/2, 40, 40);
     //[finishButton setBackgroundColor:[UIColor darkGrayColor]];
     [finishButton setTitle:@"Done" forState:UIControlStateNormal];
+    finishButton.layer.cornerRadius = 5;
+    [finishButton setBackgroundColor:[UIColor whiteColor]];
     [finishButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [finishButton addTarget:self action:@selector(textReturn:) forControlEvents:UIControlEventTouchUpInside];
     [self.inputAccView addSubview:finishButton];
@@ -229,7 +205,7 @@ static NSString *CellIdentifier = @"Cell";
     
     // add a toolbar with Cancel & Done button
     UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
-    toolBar.barStyle = UIBarStyleDefault;
+    //toolBar.barStyle = UIBarStyleBlack;
     
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneTouched:)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelTouched:)];
@@ -384,10 +360,16 @@ static NSString *CellIdentifier = @"Cell";
     
     self.doRemind = !self.doRemind;
     if (self.doRemind) {
-        self.reminderButton.backgroundColor = [UIColor greenColor];
+        UIImage *bellImage = [UIImage imageNamed:@"Bell_green"];
+        [self.reminderButton setImage:[bellImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
+        [self.reminderButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        //self.reminderButton.backgroundColor = [UIColor greenColor];
     }
     else{
-        self.reminderButton.backgroundColor = [UIColor darkGrayColor];
+        UIImage *bellImage = [UIImage imageNamed:@"Bell"];
+        [self.reminderButton setImage:[bellImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
+        [self.reminderButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        //self.reminderButton.backgroundColor = [UIColor darkGrayColor];
     }
     NSLog(@"Reminder Button is at %d", self.doRemind);
 }
@@ -421,6 +403,8 @@ static NSString *CellIdentifier = @"Cell";
     else{
         cell.backgroundColor = [self.colorArray objectAtIndex:indexPath.row];
     }
+    cell.layer.cornerRadius = 5;
+    
     return cell;
 }
 
@@ -781,10 +765,16 @@ static NSString *CellIdentifier = @"Cell";
         self.doRemind = [[anArray objectAtIndex:indexPath.row] reminder];
         NSLog(@"didSelectRowAtIndex doRemind is:,%d", self.doRemind);
         if (self.doRemind) {
-            self.reminderButton.backgroundColor = [UIColor greenColor];
+            UIImage *bellImage = [UIImage imageNamed:@"Bell_green"];
+            [self.reminderButton setImage:[bellImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
+            [self.reminderButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            //self.reminderButton.backgroundColor = [UIColor greenColor];
         }
         else{
-            self.reminderButton.backgroundColor = [UIColor darkGrayColor];
+            UIImage *bellImage = [UIImage imageNamed:@"Bell"];
+            [self.reminderButton setImage:[bellImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
+            [self.reminderButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            //self.reminderButton.backgroundColor = [UIColor darkGrayColor];
         }
         self.pickerArray = repeatArray;
         [self.repeatPickerView selectRow:[[anArray objectAtIndex:indexPath.row] interval] inComponent:0 animated:YES];
@@ -863,16 +853,20 @@ static NSString *CellIdentifier = @"Cell";
         
         //Set delete cell image
         if (self.lightMode) {
-            UIImage *deleteImage = [UIImage imageNamed:@"Trash_dark"];
-            [cell.deleteButton setBackgroundImage:deleteImage forState:UIControlStateNormal];
-            [cell.deleteButton setTitleColor:[self.colorArray objectAtIndex:10] forState:UIControlStateNormal];
-        }
-        else{
             UIImage *deleteImage = [UIImage imageNamed:@"Trash_light"];
             [cell.deleteButton setBackgroundImage:deleteImage forState:UIControlStateNormal];
-            [cell.deleteButton setTitleColor:[self.colorArray objectAtIndex:10] forState:UIControlStateNormal];
+            [cell.deleteButton setTitle:@"" forState:UIControlStateNormal];
+            [cell.deleteButton setBackgroundColor:[self.colorArray objectAtIndex:7]];
+            [cell.deleteButton setTitleColor:[self.colorArray objectAtIndex:7] forState:UIControlStateNormal];
         }
-        
+        else{
+            UIImage *deleteImage = [UIImage imageNamed:@"Trash_dark"];
+            [cell.deleteButton setBackgroundImage:deleteImage forState:UIControlStateNormal];
+            [cell.deleteButton setBackgroundColor:[self.colorArray objectAtIndex:7]];
+            [cell.deleteButton setTitle:@"" forState:UIControlStateNormal];
+            [cell.deleteButton setTitleColor:[self.colorArray objectAtIndex:7] forState:UIControlStateNormal];
+        }
+        cell.deleteButton.layer.cornerRadius = 5;
         //Remove Selection style
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         
@@ -1974,7 +1968,9 @@ static NSString *CellIdentifier = @"Cell";
     self.selectedColor = 7;
     self.doRemind = NO;
     self.colorButton.backgroundColor = [UIColor darkGrayColor];
-    self.reminderButton.backgroundColor = [UIColor darkGrayColor];
+    UIImage *bellImage = [UIImage imageNamed:@"Bell"];
+    [self.reminderButton setImage:[bellImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
+    [self.reminderButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     self.didSelect = NO;
     //[sender resignFirstResponder];
     [self.textField resignFirstResponder];
