@@ -602,6 +602,10 @@ static NSString *CellIdentifier = @"Cell";
 - (void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //NSLog(@"willDisplayCell");
+    
+    //Remove Selection style
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    
     for (UIView * view in cell.subviews) {
         if ([NSStringFromClass([view class]) rangeOfString: @"Reorder"].location != NSNotFound) {
             for (UIView * subview in view.subviews) {
@@ -758,7 +762,8 @@ static NSString *CellIdentifier = @"Cell";
                           atScrollPosition:UITableViewScrollPositionTop
                                   animated:YES];
     
-        //self.longPressIndexPath = [self.tableView indexPathForRowAtPoint:swipeLocation];
+        
+        self.longPressIndexPath = [self.tableView indexPathForSelectedRow];
     
         self.longPressCell = (MyTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     
@@ -785,13 +790,13 @@ static NSString *CellIdentifier = @"Cell";
         self.pickerArray = repeatArray;
         [self.repeatPickerView selectRow:[[anArray objectAtIndex:indexPath.row] remindInterval] inComponent:0 animated:YES];
         [self setModifying:YES];
-        [self setLastModified:indexPath.row];
+        [self setLastModified:self.longPressIndexPath.row];
         MyTableViewCell *cell = (MyTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
         
         //Remove Selection style
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         
-        cell.contentView.backgroundColor = [self.colorArray objectAtIndex:10];
+        cell.contentView.backgroundColor = [self.colorArray objectAtIndex:11];
         self.textField.text = cell.titleLabel.text;
         //[myDatePicker reloadInputViews];
         [self.textField becomeFirstResponder];
@@ -1087,6 +1092,7 @@ static NSString *CellIdentifier = @"Cell";
 
 -(void)tableCellDeleteClicked:(UIButton*)sender
 {
+    [self.textField resignFirstResponder];
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
     
@@ -1520,7 +1526,8 @@ static NSString *CellIdentifier = @"Cell";
 #pragma mark - Touch Functions
 
 - (IBAction)longPressGestureRecognized:(id)sender {
-    
+    [self.textField resignFirstResponder];
+    self.textField.text = nil;
     UILongPressGestureRecognizer *longPress = (UILongPressGestureRecognizer *)sender;
     UIGestureRecognizerState state = longPress.state;
     
@@ -1914,7 +1921,7 @@ static NSString *CellIdentifier = @"Cell";
         
         
         
-        
+        /*
         //Edit core data record
         NSEntityDescription *entityDesc = [NSEntityDescription entityForName:@"Item" inManagedObjectContext:self.managedObjectContext];
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -1937,11 +1944,12 @@ static NSString *CellIdentifier = @"Cell";
         [obj setValue:[NSNumber numberWithBool:[i finishedBool]] forKey:@"itemFinished"];
         [obj setValue:[NSNumber numberWithInteger:[i remindInterval]] forKey:@"itemInterval"];
         [obj setValue:[NSNumber numberWithBool:[i reminder]] forKey:@"itemReminder"];
-        
-        [self.tableView reloadData];
         [self.managedObjectContext save:&error];
-        [self setModifying:NO];
+        */
+        [self.tableView reloadData];
         
+        [self setModifying:NO];
+        [self saveAllData];
     }
     else{
         
@@ -2007,6 +2015,7 @@ static NSString *CellIdentifier = @"Cell";
     self.didSelect = NO;
     //[sender resignFirstResponder];
     [self.textField resignFirstResponder];
+    self.textField.text = nil;
 }
 
 //If user touches anywhere else then close keyboard
@@ -2015,6 +2024,7 @@ static NSString *CellIdentifier = @"Cell";
     UITouch *touch = [[event allTouches] anyObject];
     if ([_textField isFirstResponder] && [touch view] != _textField) {
         [_textField resignFirstResponder];
+        self.textField.text = nil;
     }
     [super touchesBegan:touches withEvent:event];
 }
@@ -2061,6 +2071,7 @@ static NSString *CellIdentifier = @"Cell";
 }
 
 - (IBAction)doneOptionsButton:(UIButton *)sender {
+    
     [UIView animateWithDuration:0.2 animations:^() {
         self.optionView.alpha = 0.0;
     }];
@@ -2090,6 +2101,8 @@ static NSString *CellIdentifier = @"Cell";
 
 
 - (IBAction)modeButton:(id)sender {
+    [self.textField resignFirstResponder];
+    self.textField.text = nil;
     [UIView animateWithDuration:0.2 animations:^() {
         self.optionView.alpha = 1.0;
     }];
