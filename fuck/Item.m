@@ -90,13 +90,43 @@
 }
 
 -(NSString *)returnDate{
-    //Days
-    NSString *formatString = [NSDateFormatter dateFormatFromTemplate:@"EdMMMhh-mm" options:0 locale:[NSLocale currentLocale]];
+    //Set up first date string (hours,minutes)
+    NSString *formatString = [NSDateFormatter dateFormatFromTemplate:@"hh-mm" options:0 locale:[NSLocale currentLocale]];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:formatString];
-    NSString *todayString = [dateFormatter stringFromDate:self.date];
+    NSString *todayString;
+    todayString = [dateFormatter stringFromDate:self.date];
     
-    return todayString;
+    //Set up second date string (day,week,month)
+    NSString *formatString2 = [NSDateFormatter dateFormatFromTemplate:@"EdMMM" options:0 locale:[NSLocale currentLocale]];
+    NSDateFormatter *dateFormatter2 = [[NSDateFormatter alloc] init];
+    [dateFormatter2 setDateFormat:formatString2];
+    NSString *todayString2;
+    
+    //Check if date is today
+    BOOL today = [[NSCalendar currentCalendar] isDateInToday:self.date];
+    
+    if(today){
+        todayString2 = @"Today";
+    }
+    else{
+        todayString2 = [dateFormatter2 stringFromDate:self.date];
+    }
+    
+    //Check if date is less
+    NSDate *todayDate = [NSDate date];
+    NSComparisonResult result;
+    result = [todayDate compare:self.date]; // comparing two dates
+    
+    NSString *finalString;
+    if(result == NSOrderedDescending){
+        finalString = @"Today";
+    }
+    else{
+        finalString = [NSString stringWithFormat:@"%@ at %@", todayString2, todayString];
+    }
+    
+    return finalString;
 }
 
 

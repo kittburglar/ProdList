@@ -59,7 +59,7 @@
                             </textField>
                             <tableView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="60" sectionHeaderHeight="30" sectionFooterHeight="30" translatesAutoresizingMaskIntoConstraints="NO" id="2eg-tG-lax">
                                 <rect key="frame" x="17" y="92" width="568" height="450"/>
-                                <color key="sectionIndexBackgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell opaque="NO" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="50" id="MBe-8A-15E" customClass="MyTableViewCell">
                                         <rect key="frame" x="0.0" y="0.0" width="568" height="44"/>
@@ -247,7 +247,7 @@
                                 </constraints>
                                 <blurEffect style="light"/>
                             </visualEffectView>
-                            <adBannerView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rsp-Ue-W6a">
+                            <adBannerView hidden="YES" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rsp-Ue-W6a">
                                 <rect key="frame" x="0.0" y="550" width="320" height="50"/>
                             </adBannerView>
                         </subviews>

@@ -747,6 +747,8 @@ static NSString *CellIdentifier = @"Cell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.firstTableView) {
+        
+        
         NSLog(@"didSelectRowAtIndex %ld", (long)indexPath.row);
         //self.longPressCell.contentView.backgroundColor = [self.colorArray objectAtIndex:11];
         //CGPoint swipeLocation = [gestureRecognizer locationInView:self.tableView];
@@ -760,6 +762,8 @@ static NSString *CellIdentifier = @"Cell";
     
         self.longPressCell = (MyTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     
+        //Remove Selection style
+        //[self.longPressCell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
         //Reload the values of the item in each view
         self.colorButton.backgroundColor = self.longPressCell.colorButton.backgroundColor;
@@ -783,11 +787,17 @@ static NSString *CellIdentifier = @"Cell";
         [self setModifying:YES];
         [self setLastModified:indexPath.row];
         MyTableViewCell *cell = (MyTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+        
+        //Remove Selection style
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        
         cell.contentView.backgroundColor = [self.colorArray objectAtIndex:10];
         self.textField.text = cell.titleLabel.text;
         //[myDatePicker reloadInputViews];
         [self.textField becomeFirstResponder];
         [self.tableView setEditing:NO];
+        
+        
     }
     
 }
@@ -849,6 +859,9 @@ static NSString *CellIdentifier = @"Cell";
     if (tableView == self.firstTableView) {
         MyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         
+        //Remove Selection style
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        
         //Tableview cell delte button
         cell.deleteButton.tag = indexPath.row;
         [cell.deleteButton addTarget:self action:@selector(tableCellDeleteClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -869,8 +882,7 @@ static NSString *CellIdentifier = @"Cell";
             [cell.deleteButton setTitleColor:[self.colorArray objectAtIndex:7] forState:UIControlStateNormal];
         }
         cell.deleteButton.layer.cornerRadius = 5;
-        //Remove Selection style
-        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        
         
         cell.backgroundColor = [self.colorArray objectAtIndex:11];
         [cell.titleLabel setText:[NSString stringWithFormat:@"Row %li in Section %li", (long)[indexPath row], (long)[indexPath section]]];
@@ -1442,6 +1454,7 @@ static NSString *CellIdentifier = @"Cell";
     [self.editButton setTitleColor:[self.colorArray objectAtIndex:7] forState:UIControlStateSelected];
     [self.modeButton setTitleColor:[self.colorArray objectAtIndex:5] forState:UIControlStateNormal];
     [self.modeButton setTitleColor:[self.colorArray objectAtIndex:7] forState:UIControlStateSelected];
+    self.tableView.backgroundColor = [self.colorArray objectAtIndex:11];
     [self.collectionView reloadData];
     [self.tableView reloadData];
     //[self.secondTableView reloadData];
@@ -1594,11 +1607,10 @@ static NSString *CellIdentifier = @"Cell";
                 
             } completion:^(BOOL finished) {
                 NSLog(@"Completion swap");
-                [self saveAllData];
                 sourceIndexPath = nil;
                 [snapshot removeFromSuperview];
                 snapshot = nil;
-                //[self saveAllData];
+                [self saveAllData];
             }];
             break;
         }

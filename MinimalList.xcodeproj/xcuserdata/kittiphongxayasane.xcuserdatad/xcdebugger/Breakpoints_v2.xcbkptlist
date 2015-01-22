@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fuck/ViewController.m"
-            timestampString = "443513092.090364"
+            timestampString = "443613685.704368"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1691"
-            endingLineNumber = "1691"
+            startingLineNumber = "1703"
+            endingLineNumber = "1703"
             landmarkName = "-didSwipe:"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fuck/ViewController.m"
-            timestampString = "443513092.090364"
+            timestampString = "443613685.704368"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1763"
-            endingLineNumber = "1763"
+            startingLineNumber = "1775"
+            endingLineNumber = "1775"
             landmarkName = "-didSwipe:"
             landmarkType = "5">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fuck/ViewController.m"
-            timestampString = "443513092.090364"
+            timestampString = "443613685.704368"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1676"
-            endingLineNumber = "1676"
+            startingLineNumber = "1688"
+            endingLineNumber = "1688"
             landmarkName = "-didPressLong:"
             landmarkType = "5">
          </BreakpointContent>
@@ -244,11 +244,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fuck/ViewController.m"
-            timestampString = "443513092.090364"
+            timestampString = "443613685.704368"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1740"
-            endingLineNumber = "1740"
+            startingLineNumber = "1752"
+            endingLineNumber = "1752"
             landmarkName = "-didSwipe:"
             landmarkType = "5">
          </BreakpointContent>
@@ -308,11 +308,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fuck/ViewController.m"
-            timestampString = "443494751.408852"
+            timestampString = "443613685.704368"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "952"
-            endingLineNumber = "952"
+            startingLineNumber = "964"
+            endingLineNumber = "964"
             landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
