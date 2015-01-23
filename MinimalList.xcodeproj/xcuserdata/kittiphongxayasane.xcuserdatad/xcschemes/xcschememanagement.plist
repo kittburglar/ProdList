@@ -9,9 +9,19 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>MinimalListFull.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>F87C4DCA1A72598F0024A21A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>F8AA3B691A19C50900C934E0</key>
 		<dict>
 			<key>primary</key>

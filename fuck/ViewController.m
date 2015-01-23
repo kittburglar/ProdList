@@ -30,9 +30,19 @@ static NSString *CellIdentifier = @"Cell";
     AppDelegate* appDelegate = [[UIApplication sharedApplication] delegate];
     self.managedObjectContext = [appDelegate managedObjectContext];
     
-    //iAD banner stuff
-    self.banner.delegate = self;
     
+    
+    //iAD banner stuff
+    
+    #ifdef FULL
+        self.banner.delegate = nil;
+        self.banner = nil;
+        self.banner.hidden = YES;
+        NSLog(@"Full version");
+    #else
+        NSLog(@"Free Version");
+        self.banner.delegate = self;
+    #endif
     self.lightMode = YES;
     [self setNeedsStatusBarAppearanceUpdate];
     self.didSelect = NO;

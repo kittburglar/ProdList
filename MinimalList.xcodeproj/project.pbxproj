@@ -11,13 +11,26 @@
 		F806EA0E1A264E4D00A8CCFB /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = F806EA0D1A264E4D00A8CCFB /* Item.m */; };
 		F81ED8831A6DFB4000CE41B8 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F81ED8821A6DFB4000CE41B8 /* iAd.framework */; };
 		F84B4CB31A39756300D64A6E /* screenshot1.png in Resources */ = {isa = PBXBuildFile; fileRef = F84B4CB21A39756300D64A6E /* screenshot1.png */; };
+		F87C4DCC1A72598F0024A21A /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = F806EA0D1A264E4D00A8CCFB /* Item.m */; };
+		F87C4DCD1A72598F0024A21A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F8AA3B721A19C50A00C934E0 /* AppDelegate.m */; };
+		F87C4DCE1A72598F0024A21A /* MinimalList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F8AA3B741A19C50A00C934E0 /* MinimalList.xcdatamodeld */; };
+		F87C4DCF1A72598F0024A21A /* MyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F80314A41A26D78B00E68248 /* MyTableViewCell.m */; };
+		F87C4DD01A72598F0024A21A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8AA3B781A19C50A00C934E0 /* ViewController.m */; };
+		F87C4DD11A72598F0024A21A /* OptionsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C168C41A31D51400E80986 /* OptionsTableViewCell.m */; };
+		F87C4DD21A72598F0024A21A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F8AA3B6F1A19C50A00C934E0 /* main.m */; };
+		F87C4DD41A72598F0024A21A /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F81ED8821A6DFB4000CE41B8 /* iAd.framework */; };
+		F87C4DD51A72598F0024A21A /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A30FDB1A35C3A600F7BA46 /* CoreData.framework */; };
+		F87C4DD71A72598F0024A21A /* screenshot1.png in Resources */ = {isa = PBXBuildFile; fileRef = F84B4CB21A39756300D64A6E /* screenshot1.png */; };
+		F87C4DD91A72598F0024A21A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8AA3B7F1A19C50A00C934E0 /* LaunchScreen.xib */; };
+		F87C4DE41A7264E70024A21A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8AA3B7D1A19C50A00C934E0 /* Images.xcassets */; };
+		F87C4DE51A7264F80024A21A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8AA3B7D1A19C50A00C934E0 /* Images.xcassets */; };
+		F87C4DE61A7269B70024A21A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8AA3B7A1A19C50A00C934E0 /* Main.storyboard */; };
 		F8A30FDC1A35C3A600F7BA46 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A30FDB1A35C3A600F7BA46 /* CoreData.framework */; };
 		F8AA3B701A19C50A00C934E0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F8AA3B6F1A19C50A00C934E0 /* main.m */; };
 		F8AA3B731A19C50A00C934E0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F8AA3B721A19C50A00C934E0 /* AppDelegate.m */; };
 		F8AA3B761A19C50A00C934E0 /* MinimalList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F8AA3B741A19C50A00C934E0 /* MinimalList.xcdatamodeld */; };
 		F8AA3B791A19C50A00C934E0 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8AA3B781A19C50A00C934E0 /* ViewController.m */; };
 		F8AA3B7C1A19C50A00C934E0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8AA3B7A1A19C50A00C934E0 /* Main.storyboard */; };
-		F8AA3B7E1A19C50A00C934E0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8AA3B7D1A19C50A00C934E0 /* Images.xcassets */; };
 		F8AA3B811A19C50A00C934E0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8AA3B7F1A19C50A00C934E0 /* LaunchScreen.xib */; };
 		F8AA3B8D1A19C50B00C934E0 /* MinimalListTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F8AA3B8C1A19C50B00C934E0 /* MinimalListTests.m */; };
 		F8C168C51A31D51400E80986 /* OptionsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C168C41A31D51400E80986 /* OptionsTableViewCell.m */; };
@@ -40,6 +53,8 @@
 		F806EA0D1A264E4D00A8CCFB /* Item.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Item.m; sourceTree = "<group>"; };
 		F81ED8821A6DFB4000CE41B8 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		F84B4CB21A39756300D64A6E /* screenshot1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screenshot1.png; sourceTree = "<group>"; };
+		F87C4DDE1A72598F0024A21A /* MinimalListFull.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MinimalListFull.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F87C4DDF1A7259900024A21A /* MinimalListFull.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = MinimalListFull.plist; path = /Users/kittiphongxayasane/Desktop/ProdList/MinimalListFull.plist; sourceTree = "<absolute>"; };
 		F8A30FDB1A35C3A600F7BA46 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		F8AA3B6A1A19C50900C934E0 /* MinimalList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MinimalList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8AA3B6E1A19C50A00C934E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -60,6 +75,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		F87C4DD31A72598F0024A21A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F87C4DD41A72598F0024A21A /* iAd.framework in Frameworks */,
+				F87C4DD51A72598F0024A21A /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F8AA3B671A19C50900C934E0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -103,6 +127,7 @@
 			children = (
 				F8AA3B6A1A19C50900C934E0 /* MinimalList.app */,
 				F8AA3B861A19C50B00C934E0 /* MinimalListTests.xctest */,
+				F87C4DDE1A72598F0024A21A /* MinimalListFull.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -135,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				F8AA3B6E1A19C50A00C934E0 /* Info.plist */,
+				F87C4DDF1A7259900024A21A /* MinimalListFull.plist */,
 				F8AA3B6F1A19C50A00C934E0 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -161,6 +187,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		F87C4DCA1A72598F0024A21A /* MinimalListFull */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F87C4DDB1A72598F0024A21A /* Build configuration list for PBXNativeTarget "MinimalListFull" */;
+			buildPhases = (
+				F87C4DCB1A72598F0024A21A /* Sources */,
+				F87C4DD31A72598F0024A21A /* Frameworks */,
+				F87C4DD61A72598F0024A21A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MinimalListFull;
+			productName = fuck;
+			productReference = F87C4DDE1A72598F0024A21A /* MinimalListFull.app */;
+			productType = "com.apple.product-type.application";
+		};
 		F8AA3B691A19C50900C934E0 /* MinimalList */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F8AA3B901A19C50B00C934E0 /* Build configuration list for PBXNativeTarget "MinimalList" */;
@@ -230,19 +273,31 @@
 			targets = (
 				F8AA3B691A19C50900C934E0 /* MinimalList */,
 				F8AA3B851A19C50B00C934E0 /* MinimalListTests */,
+				F87C4DCA1A72598F0024A21A /* MinimalListFull */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		F87C4DD61A72598F0024A21A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F87C4DD71A72598F0024A21A /* screenshot1.png in Resources */,
+				F87C4DE41A7264E70024A21A /* Images.xcassets in Resources */,
+				F87C4DD91A72598F0024A21A /* LaunchScreen.xib in Resources */,
+				F87C4DE61A7269B70024A21A /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F8AA3B681A19C50900C934E0 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				F84B4CB31A39756300D64A6E /* screenshot1.png in Resources */,
+				F87C4DE51A7264F80024A21A /* Images.xcassets in Resources */,
 				F8AA3B7C1A19C50A00C934E0 /* Main.storyboard in Resources */,
 				F8AA3B811A19C50A00C934E0 /* LaunchScreen.xib in Resources */,
-				F8AA3B7E1A19C50A00C934E0 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,6 +311,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		F87C4DCB1A72598F0024A21A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F87C4DCC1A72598F0024A21A /* Item.m in Sources */,
+				F87C4DCD1A72598F0024A21A /* AppDelegate.m in Sources */,
+				F87C4DCE1A72598F0024A21A /* MinimalList.xcdatamodeld in Sources */,
+				F87C4DCF1A72598F0024A21A /* MyTableViewCell.m in Sources */,
+				F87C4DD01A72598F0024A21A /* ViewController.m in Sources */,
+				F87C4DD11A72598F0024A21A /* OptionsTableViewCell.m in Sources */,
+				F87C4DD21A72598F0024A21A /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F8AA3B661A19C50900C934E0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -308,6 +377,43 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		F87C4DDC1A72598F0024A21A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconFull;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImageFull;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"FULL=1",
+					"DEBUG=1",
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/MinimalListFull.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = MinimalListFull;
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F87C4DDD1A72598F0024A21A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconFull;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImageFull;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PREPROCESSOR_DEFINITIONS = "FULL=1";
+				INFOPLIST_FILE = "$(SRCROOT)/MinimalListFull.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = MinimalListFull;
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		F8AA3B8E1A19C50B00C934E0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -453,6 +559,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		F87C4DDB1A72598F0024A21A /* Build configuration list for PBXNativeTarget "MinimalListFull" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F87C4DDC1A72598F0024A21A /* Debug */,
+				F87C4DDD1A72598F0024A21A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F8AA3B651A19C50900C934E0 /* Build configuration list for PBXProject "MinimalList" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

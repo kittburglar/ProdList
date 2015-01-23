@@ -247,7 +247,7 @@
                                 </constraints>
                                 <blurEffect style="light"/>
                             </visualEffectView>
-                            <adBannerView hidden="YES" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rsp-Ue-W6a">
+                            <adBannerView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="center" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rsp-Ue-W6a">
                                 <rect key="frame" x="0.0" y="550" width="320" height="50"/>
                             </adBannerView>
                         </subviews>
