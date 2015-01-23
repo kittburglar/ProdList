@@ -11,6 +11,7 @@
 		F806EA0E1A264E4D00A8CCFB /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = F806EA0D1A264E4D00A8CCFB /* Item.m */; };
 		F81ED8831A6DFB4000CE41B8 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F81ED8821A6DFB4000CE41B8 /* iAd.framework */; };
 		F84B4CB31A39756300D64A6E /* screenshot1.png in Resources */ = {isa = PBXBuildFile; fileRef = F84B4CB21A39756300D64A6E /* screenshot1.png */; };
+		F8751A381A7285D8009C9DE2 /* Main2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8751A371A7285D8009C9DE2 /* Main2.storyboard */; };
 		F87C4DCC1A72598F0024A21A /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = F806EA0D1A264E4D00A8CCFB /* Item.m */; };
 		F87C4DCD1A72598F0024A21A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F8AA3B721A19C50A00C934E0 /* AppDelegate.m */; };
 		F87C4DCE1A72598F0024A21A /* MinimalList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F8AA3B741A19C50A00C934E0 /* MinimalList.xcdatamodeld */; };
@@ -24,7 +25,6 @@
 		F87C4DD91A72598F0024A21A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8AA3B7F1A19C50A00C934E0 /* LaunchScreen.xib */; };
 		F87C4DE41A7264E70024A21A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8AA3B7D1A19C50A00C934E0 /* Images.xcassets */; };
 		F87C4DE51A7264F80024A21A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8AA3B7D1A19C50A00C934E0 /* Images.xcassets */; };
-		F87C4DE61A7269B70024A21A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8AA3B7A1A19C50A00C934E0 /* Main.storyboard */; };
 		F8A30FDC1A35C3A600F7BA46 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A30FDB1A35C3A600F7BA46 /* CoreData.framework */; };
 		F8AA3B701A19C50A00C934E0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F8AA3B6F1A19C50A00C934E0 /* main.m */; };
 		F8AA3B731A19C50A00C934E0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F8AA3B721A19C50A00C934E0 /* AppDelegate.m */; };
@@ -35,6 +35,18 @@
 		F8AA3B8D1A19C50B00C934E0 /* MinimalListTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F8AA3B8C1A19C50B00C934E0 /* MinimalListTests.m */; };
 		F8C168C51A31D51400E80986 /* OptionsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C168C41A31D51400E80986 /* OptionsTableViewCell.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXBuildRule section */
+		F8751A341A72846A009C9DE2 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.xcode.tools.ibtool.storyboard.compiler;
+			fileType = file.storyboard;
+			isEditable = 1;
+			outputFiles = (
+			);
+			script = "# ibtool\n";
+		};
+/* End PBXBuildRule section */
 
 /* Begin PBXContainerItemProxy section */
 		F8AA3B871A19C50B00C934E0 /* PBXContainerItemProxy */ = {
@@ -53,6 +65,7 @@
 		F806EA0D1A264E4D00A8CCFB /* Item.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Item.m; sourceTree = "<group>"; };
 		F81ED8821A6DFB4000CE41B8 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		F84B4CB21A39756300D64A6E /* screenshot1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screenshot1.png; sourceTree = "<group>"; };
+		F8751A371A7285D8009C9DE2 /* Main2.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main2.storyboard; path = ../Main2.storyboard; sourceTree = "<group>"; };
 		F87C4DDE1A72598F0024A21A /* MinimalListFull.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MinimalListFull.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F87C4DDF1A7259900024A21A /* MinimalListFull.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = MinimalListFull.plist; path = /Users/kittiphongxayasane/Desktop/ProdList/MinimalListFull.plist; sourceTree = "<absolute>"; };
 		F8A30FDB1A35C3A600F7BA46 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -140,6 +153,7 @@
 				F8AA3B721A19C50A00C934E0 /* AppDelegate.m */,
 				F8AA3B771A19C50A00C934E0 /* ViewController.h */,
 				F8AA3B781A19C50A00C934E0 /* ViewController.m */,
+				F8751A371A7285D8009C9DE2 /* Main2.storyboard */,
 				F8AA3B7A1A19C50A00C934E0 /* Main.storyboard */,
 				F8AA3B7D1A19C50A00C934E0 /* Images.xcassets */,
 				F8AA3B7F1A19C50A00C934E0 /* LaunchScreen.xib */,
@@ -196,6 +210,7 @@
 				F87C4DD61A72598F0024A21A /* Resources */,
 			);
 			buildRules = (
+				F8751A341A72846A009C9DE2 /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -286,7 +301,7 @@
 				F87C4DD71A72598F0024A21A /* screenshot1.png in Resources */,
 				F87C4DE41A7264E70024A21A /* Images.xcassets in Resources */,
 				F87C4DD91A72598F0024A21A /* LaunchScreen.xib in Resources */,
-				F87C4DE61A7269B70024A21A /* Main.storyboard in Resources */,
+				F8751A381A7285D8009C9DE2 /* Main2.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
