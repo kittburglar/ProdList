@@ -1077,21 +1077,27 @@ static NSString *CellIdentifier = @"Cell";
             [removeAllButton addTarget:self action:@selector(removeAllAction:) forControlEvents:UIControlEventTouchUpInside];
             [optionsCell addSubview:removeAllButton];
         }
-        //Auto Sort
-        /*
+        
         else if (indexPath.row == 5){
-            UILabel *autoSortLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 200, optionsCell.frame.size.height)];
-            autoSortLabel.text = @"Auto Sort";
-            [optionsCell addSubview:autoSortLabel];
+            //Auto Sort
+            #ifdef FULL
+            #else
+                UILabel *fullVersionLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 200, optionsCell.frame.size.height)];
+                fullVersionLabel.text = @"Full Version";
+                [optionsCell addSubview:fullVersionLabel];
             
-            UIButton *sortButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-            sortButton.frame = CGRectMake(self.view.frame.size.width - 110, 5, 100, 30);
-            [sortButton setTitle:@"Sort" forState:UIControlStateNormal];
-            [sortButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-            [sortButton addTarget:self action:@selector(autoSortAction:) forControlEvents:UIControlEventTouchUpInside];
-            [optionsCell addSubview:sortButton];
+                UIButton *fullVersionButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+                fullVersionButton.frame = CGRectMake(self.view.frame.size.width - 110, 5, 100, 30);
+                [fullVersionButton setTitle:@"Download" forState:UIControlStateNormal];
+                [fullVersionButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                [[fullVersionButton layer] setBorderWidth:1.0f];
+                [[fullVersionButton layer] setBorderColor:[UIColor blackColor].CGColor];
+                fullVersionButton.layer.cornerRadius = 5;
+                [fullVersionButton addTarget:self action:@selector(downloadFullAction:) forControlEvents:UIControlEventTouchUpInside];
+                [optionsCell addSubview:fullVersionButton];
+            #endif
+            
         }
-        */
         
 
         //[optionsCell.optionsControl addTarget:self action:@selector(yourSegmentPicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -1291,6 +1297,12 @@ static NSString *CellIdentifier = @"Cell";
 }
 
 
+-(void)downloadFullAction:(UIButton *)button{
+    NSLog(@"downloadFullAction pressed");
+    NSString *iTunesLink = @"itms://itunes.apple.com/us/app/minimallist-to-do-list-ad-free/id961086688?mt=8";
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
+    
+}
 
 - (void)removeAllCompletedAction:(UIButton *)button{
     NSLog(@"removeAllCompletedAction pressed");
